@@ -46,3 +46,43 @@ https://drive.google.com/file/d/1eTsh1AchztAECoHgefr6N3PfTiwHTZDI/view?usp=shari
 
 ## Database Schema
 https://drive.google.com/file/d/1FSooS9udCPcSsObXODU5JpMr5S7AnoC_/view?usp=sharing
+
+#  Deployment Plan
+
+## Backend Deployment
+
+### Traditional Server
+```bash
+# Clone and install
+git clone [repository-url]
+cd backend
+npm install
+
+# Setup environment
+cp .env.example .env
+nano .env  # Configure environment variables
+
+# Start server
+npm start
+```
+
+### Docker
+```bash
+# Build and run
+docker build -t biodiversity-api .
+docker run -d -p 5000:5000 biodiversity-api
+```
+
+## Frontend Deployment
+
+### Build and Deploy
+```bash
+# Build
+cd frontend
+npm install
+npm run build
+
+# Deploy to hosting platforms
+npm run deploy   # Vercel
+```
+
