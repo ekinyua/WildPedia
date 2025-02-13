@@ -27,7 +27,7 @@ async function fetchFromGBIF(url) {
 app.get("/api/species", async (req, res) => {
   try {
     const query = req.query.q;
-    let apiUrl = `${GBIF_API_BASE_URL}/species/search?limit=10`;
+    let apiUrl = `${GBIF_API_BASE_URL}/species/search?limit=12`;
 
     if (query && query !== "random") {
       apiUrl += `&q=${query}`;
