@@ -1,0 +1,145 @@
+2025-02-20T10:13:44.110Z [ERROR]: Starting new log session...
+2025-02-20T10:13:44.112Z [INFO]: Application started successfully.
+2025-02-20T10:13:44.113Z [WARN]: This is a warning message.
+2025-02-20T10:13:44.113Z [ERROR]: An error occurred.
+2025-02-20T10:50:12.214Z [ERROR]: Starting new log session...
+2025-02-20T10:50:12.216Z [INFO]: Application started successfully.
+2025-02-20T10:50:12.216Z [WARN]: This is a warning message.
+2025-02-20T10:50:12.217Z [ERROR]: An error occurred.
+2025-02-20T11:03:43.041Z [ERROR]: Starting new log session...
+2025-02-20T11:03:43.044Z [INFO]: Application started successfully.
+2025-02-20T11:03:43.044Z [WARN]: This is a warning message.
+2025-02-20T11:03:43.045Z [ERROR]: An error occurred.
+2025-02-20T11:03:47.005Z [ERROR]: Starting new log session...
+2025-02-20T11:03:47.007Z [INFO]: Application started successfully.
+2025-02-20T11:03:47.008Z [WARN]: This is a warning message.
+2025-02-20T11:03:47.008Z [ERROR]: An error occurred.
+2025-02-20T11:08:43.637Z [ERROR]: Starting new log session...
+2025-02-20T11:08:43.640Z [INFO]: Application started successfully.
+2025-02-20T11:08:43.640Z [WARN]: This is a warning message.
+2025-02-20T11:08:43.641Z [ERROR]: An error occurred.
+2025-02-20T11:09:08.112Z [ERROR]: Starting new log session...
+2025-02-20T11:09:08.116Z [INFO]: Application started successfully.
+2025-02-20T11:09:08.117Z [WARN]: This is a warning message.
+2025-02-20T11:09:08.117Z [ERROR]: An error occurred.
+2025-02-20T11:17:18.431Z [ERROR]: Starting new log session...
+2025-02-20T11:17:18.433Z [INFO]: Application started successfully.
+2025-02-20T11:17:18.433Z [WARN]: This is a warning message.
+2025-02-20T11:17:18.434Z [ERROR]: An error occurred.
+2025-02-20T11:17:42.795Z [ERROR]: Starting new log session...
+2025-02-20T11:17:42.797Z [INFO]: Application started successfully.
+2025-02-20T11:17:42.798Z [WARN]: This is a warning message.
+2025-02-20T11:17:42.799Z [ERROR]: An error occurred.
+2025-02-20T11:19:09.290Z [ERROR]: Starting new log session...
+2025-02-20T11:19:09.293Z [INFO]: Application started successfully.
+2025-02-20T11:19:09.293Z [WARN]: This is a warning message.
+2025-02-20T11:19:09.294Z [ERROR]: An error occurred.
+2025-02-20T11:21:36.035Z [ERROR]: Starting new log session...
+2025-02-20T11:21:36.037Z [INFO]: Application started successfully.
+2025-02-20T11:21:36.038Z [WARN]: This is a warning message.
+2025-02-20T11:21:36.038Z [ERROR]: An error occurred.
+2025-02-20T11:22:27.523Z [ERROR]: Starting new log session...
+2025-02-20T11:22:27.526Z [INFO]: Application started successfully.
+2025-02-20T11:22:27.527Z [WARN]: This is a warning message.
+2025-02-20T11:22:27.528Z [ERROR]: An error occurred.
+2025-02-20T11:23:42.067Z [ERROR]: Starting new log session...
+2025-02-20T11:23:42.070Z [INFO]: Application started successfully.
+2025-02-20T11:23:42.070Z [WARN]: This is a warning message.
+2025-02-20T11:23:42.071Z [ERROR]: An error occurred.
+2025-02-20T11:24:20.142Z [ERROR]: Starting new log session...
+2025-02-20T11:24:20.145Z [INFO]: Application started successfully.
+2025-02-20T11:24:20.146Z [WARN]: This is a warning message.
+2025-02-20T11:24:20.147Z [ERROR]: An error occurred.
+2025-02-20T11:26:47.649Z [ERROR]: Starting new log session...
+2025-02-20T11:26:47.651Z [INFO]: Application started successfully.
+2025-02-20T11:26:47.652Z [WARN]: This is a warning message.
+2025-02-20T11:26:47.652Z [ERROR]: An error occurred.
+2025-02-20T11:27:07.409Z [ERROR]: Starting new log session...
+2025-02-20T11:27:07.411Z [INFO]: Application started successfully.
+2025-02-20T11:27:07.412Z [WARN]: This is a warning message.
+2025-02-20T11:27:07.412Z [ERROR]: An error occurred.
+2025-02-20T11:30:33.031Z [ERROR]: Starting new log session...
+2025-02-20T11:30:33.033Z [INFO]: Application started successfully.
+2025-02-20T11:30:33.034Z [WARN]: This is a warning message.
+2025-02-20T11:30:33.034Z [ERROR]: An error occurred.
+2025-02-20T11:30:42.537Z [ERROR]: Starting new log session...
+2025-02-20T11:30:42.540Z [INFO]: Application started successfully.
+2025-02-20T11:30:42.540Z [WARN]: This is a warning message.
+2025-02-20T11:30:42.540Z [ERROR]: An error occurred.
+2025-02-21T09:29:17.207Z [ERROR]: Starting new log session...
+2025-02-21T09:29:17.215Z [INFO]: Application started successfully.
+2025-02-21T09:29:17.216Z [WARN]: This is a warning message.
+2025-02-21T09:29:17.216Z [ERROR]: An error occurred.
+2025-02-21T09:38:39.289Z [ERROR]: Error creating cultural content: insert or update on table "cultural_content" violates foreign key constraint "cultural_content_species_id_fkey"
+2025-02-21T09:38:39.292Z [ERROR]: Error creating cultural content: insert or update on table "cultural_content" violates foreign key constraint "cultural_content_species_id_fkey"
+2025-02-21T09:40:12.642Z [ERROR]: Error creating cultural content: insert or update on table "cultural_content" violates foreign key constraint "cultural_content_species_id_fkey"
+2025-02-21T09:40:12.643Z [ERROR]: Error creating cultural content: insert or update on table "cultural_content" violates foreign key constraint "cultural_content_species_id_fkey"
+2025-02-21T09:44:40.563Z [INFO]: New cultural content created by user 3 for species 1030866_1_216
+2025-02-21T11:32:08.745Z [ERROR]: Starting new log session...
+2025-02-21T11:32:08.764Z [INFO]: Application started successfully.
+2025-02-21T11:32:08.765Z [WARN]: This is a warning message.
+2025-02-21T11:32:08.771Z [ERROR]: An error occurred.
+2025-02-21T11:33:44.516Z [ERROR]: Starting new log session...
+2025-02-21T11:33:44.520Z [INFO]: Application started successfully.
+2025-02-21T11:33:44.521Z [WARN]: This is a warning message.
+2025-02-21T11:33:44.522Z [ERROR]: An error occurred.
+2025-02-21T11:34:39.920Z [ERROR]: Starting new log session...
+2025-02-21T11:34:39.922Z [INFO]: Application started successfully.
+2025-02-21T11:34:39.923Z [WARN]: This is a warning message.
+2025-02-21T11:34:39.923Z [ERROR]: An error occurred.
+2025-02-21T11:36:08.594Z [ERROR]: Starting new log session...
+2025-02-21T11:36:08.599Z [INFO]: Application started successfully.
+2025-02-21T11:36:08.600Z [WARN]: This is a warning message.
+2025-02-21T11:36:08.600Z [ERROR]: An error occurred.
+2025-02-21T11:36:56.626Z [ERROR]: Starting new log session...
+2025-02-21T11:36:56.631Z [INFO]: Application started successfully.
+2025-02-21T11:36:56.634Z [WARN]: This is a warning message.
+2025-02-21T11:36:56.635Z [ERROR]: An error occurred.
+2025-02-21T11:40:48.128Z [ERROR]: Starting new log session...
+2025-02-21T11:40:48.131Z [INFO]: Application started successfully.
+2025-02-21T11:40:48.132Z [WARN]: This is a warning message.
+2025-02-21T11:40:48.132Z [ERROR]: An error occurred.
+2025-02-21T11:43:13.771Z [ERROR]: Starting new log session...
+2025-02-21T11:43:13.773Z [INFO]: Application started successfully.
+2025-02-21T11:43:13.774Z [WARN]: This is a warning message.
+2025-02-21T11:43:13.774Z [ERROR]: An error occurred.
+2025-02-21T11:43:33.929Z [ERROR]: Starting new log session...
+2025-02-21T11:43:33.932Z [INFO]: Application started successfully.
+2025-02-21T11:43:33.933Z [WARN]: This is a warning message.
+2025-02-21T11:43:33.934Z [ERROR]: An error occurred.
+2025-02-21T12:08:15.524Z [ERROR]: Starting new log session...
+2025-02-21T12:08:15.550Z [INFO]: Application started successfully.
+2025-02-21T12:08:15.551Z [WARN]: This is a warning message.
+2025-02-21T12:08:15.552Z [ERROR]: An error occurred.
+2025-02-21T12:08:36.673Z [ERROR]: Starting new log session...
+2025-02-21T12:08:36.679Z [INFO]: Application started successfully.
+2025-02-21T12:08:36.715Z [WARN]: This is a warning message.
+2025-02-21T12:08:36.716Z [ERROR]: An error occurred.
+2025-02-21T12:12:15.643Z [ERROR]: Starting new log session...
+2025-02-21T12:12:16.002Z [INFO]: Application started successfully.
+2025-02-21T12:12:16.010Z [INFO]: Server running on port 5000
+2025-02-21T12:12:30.152Z [ERROR]: Starting new log session...
+2025-02-21T12:12:30.285Z [INFO]: Application started successfully.
+2025-02-21T12:12:30.292Z [INFO]: Server running on port 5000
+2025-02-21T12:23:31.667Z [ERROR]: Starting new log session...
+2025-02-21T12:23:31.842Z [INFO]: Application started successfully.
+2025-02-21T12:23:31.847Z [INFO]: Server running on port 5000
+2025-02-21T12:23:59.558Z [ERROR]: Starting new log session...
+2025-02-21T12:23:59.716Z [INFO]: Application started successfully.
+2025-02-21T12:23:59.721Z [INFO]: Server running on port 5000
+2025-02-21T12:26:10.163Z [INFO]: New cultural content created by user 4 for species 1030866_1_216
+2025-02-21T12:32:08.849Z [ERROR]: Starting new log session...
+2025-02-21T12:32:09.070Z [INFO]: Application started successfully.
+2025-02-21T12:32:09.078Z [INFO]: Server running on port 5000
+2025-02-21T12:33:49.352Z [ERROR]: Starting new log session...
+2025-02-21T12:33:49.500Z [INFO]: Application started successfully.
+2025-02-21T12:33:49.510Z [INFO]: Server running on port 5000
+2025-02-21T12:35:32.436Z [ERROR]: Starting new log session...
+2025-02-21T12:35:32.603Z [INFO]: Application started successfully.
+2025-02-21T12:35:32.611Z [INFO]: Server running on port 5000
+2025-02-21T12:38:47.584Z [ERROR]: Starting new log session...
+2025-02-21T12:38:47.724Z [INFO]: Application started successfully.
+2025-02-21T12:38:47.728Z [INFO]: Server running on port 5000
+2025-02-23T19:14:14.924Z [ERROR]: Starting new log session...
+2025-02-23T19:14:15.243Z [INFO]: Application started successfully.
+2025-02-23T19:14:15.262Z [INFO]: Server running on port 5000

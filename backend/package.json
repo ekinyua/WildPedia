@@ -13,9 +13,18 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.9",
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "nodemon": "^3.1.9"
+    "ipapi": "^4.0.0",
+    "ipapi.co": "^0.3.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.9",
+    "pg": "^8.13.3",
+    "pg-pool": "^3.7.1",
+    "winston": "^3.17.0"
   }
 }
