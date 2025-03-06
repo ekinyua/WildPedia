@@ -6,19 +6,25 @@ const { validateRequest, schemas } = require('../middleware/validation.middlewar
 
 // Admin only routes
 router.get(
-  '/list',
-  [verifyToken, isAdmin],
-  userController.listUsers
+    '/list',
+    [verifyToken, isAdmin],
+    userController.listUsers
 );
 
 router.put(
-  '/:userId/role',
-  [
+    '/:userId/role',
+    [
+        verifyToken,
+        isAdmin,
+        validateRequest(schemas.updateRole)
+    ],
+    userController.updateUserRole
+);
+
+router.post(
+    '/profile-image',
     verifyToken,
-    isAdmin,
-    validateRequest(schemas.updateRole)
-  ],
-  userController.updateUserRole
+    userController.uploadProfileImage
 );
 
 module.exports = router;

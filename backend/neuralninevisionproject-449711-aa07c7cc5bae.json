@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "neuralninevisionproject-449711",
+  "private_key_id": "aa07c7cc5baee31e6c79459f75776595d83c4f37",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxeXrpSVVrgBcQ\nWkLj+aLtRl4tl5PdTxGWRSi+bj8IcATnoBjiHQT+Y6Bz+3N9wkj1pVlvgsakzLU0\nkfp0gzH0iONQQw3WOKm/sdo4UPgi3N1ZHY8ba3gbG3/8pEljBluQ++u+ijvMofPc\nDz2tVx2RqLo4smT5ClcaTfGoqC9IhWLDhM9u6V88mwqDWYOd6Cbzxmfbj1822nSE\nJZNoZB+7vVc2trLOcOXUr5mTesUhXWqMnmFwEyjDuLvSXuds4IBJuDwNuPQsEUTB\nI0kcQ5wLzbriOwrZHfTsoX91baRR7qX2lbBvcxo0X8GVuLUS0fLzivtVs9LFQwaK\nsXpU/e5zAgMBAAECggEAHc3m5FKac8k5FlfyL9L2l55fpox0GpByxaerpf9huosF\nZ9itFRwGgKo+gfvSc2YzVn2EPYPa1EZEkCWLyBFYTFbIxevc4QL3DuhRW2/NnB03\nVwXtyI8Nxo+huM3mPSkOK5UDDCau0DjKeURd+UROBO4vB+J9ro0b/6DjWo2UEzt7\nBLIOdsgKd9oBlW83jBTq8PBGI7fIBZKUPD61uvQkqoLl+XBMqcNHiS9Fv2FiMQnK\nYieOhQRyz4JCYjbwiMzlO06YQ9BuDHVl2RxwWJ/aLzXgAGdMnSBDJkGDgGDdWTQ9\n3cCSFVq0rzs66CyeQljqqb6VOpKluwqJTM9/yk8SkQKBgQD1NigiKJMwtYNFBW0l\nTUpvwb0TKmQY/Uwo6sJJ3gxi1kIic0WJN/rW7Eg6vkexe1Ec5LRPRlVW1+HHyEaE\nsLNnMPUGWOjRstb7tAHF8nC7nKzfxHvXvUJr55GHrIMhcbAH7HdCKfxPBAq759YR\nTFeuYgUDAg9kjIqr+N2Nsvpr9QKBgQC5SGTuMoHhrdVCyJHFX4nH/hd+j3GeZTlm\nj8hgQAGvQDSftIybX9kRvBkOMsWIK+7qhdzvxXfbmTHy9VzwWSXu5fd2OFsL+9KJ\n14h5Uqnrkv5zC1dX2YvLHN1/z+KzxFeS3/Yl7zKMP6OjTZmL7z+VIDfLLOTakvZ/\nJk0kRn0XxwKBgDby4d91tDYwFrB63NCFF28fvRz0XOX0rQJmSQ+AgMoNNVi++BAd\nyUosPKtdRHeTKMQOxBEXs7v4OJIqYRMO/cTcBaxcdB+5sc9JsTQIdha0r1CdmRrp\nQF8pz0TV9bSi402DQd5DxlR2lWkyNJg/wU5EjNb1uTlQ/So4ZH2CY/eZAoGAOVn9\nU/XyWibywk9PP+cIwQ0XvKcuJjdzAxoyjgiB/PtEzsKWW2nZyTGOF+UDW9kthQ6W\niul25lSPL4Nfl04g/cfVR5S+KgFy9BPxPIyn6DGB7Z5vFNRT/zUaIvv4UmjOKrqE\neM2Huf3g6yWUB8qwxbpJSuzEkhu3jTgP3NCs2/UCgYEAuPobCIWEpSJ7R/vRt3Fx\nW4/5577bfGoGGESNxgsPw0o2B4+mPUArG83Pwny4Nt3SjM8TlahAFXd0U7T0TSGM\nnEnX0BLqkFtsgqpeI8QvooNmMEQ4EbttFYmjeVxAhL6xhpFoP9uFt9PpB3IqVsKm\nnbHJOn78r1dc5eg57YAtHOI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "neuralninevisionservice@neuralninevisionproject-449711.iam.gserviceaccount.com",
+  "client_id": "108809700358776206465",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/neuralninevisionservice%40neuralninevisionproject-449711.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

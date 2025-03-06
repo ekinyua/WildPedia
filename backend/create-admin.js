@@ -1,10 +1,17 @@
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 
-async function hashPassword(password) {
-  const salt = await bcrypt.genSalt(10);
-  const hash = await bcrypt.hash(password, salt);
-  console.log('Hashed password:', hash);
-}
+// async function hashPassword(password) {
+//     const salt = await bcrypt.genSalt(10);
+//     const hash = await bcrypt.hash(password, salt);
+//     console.log('Hashed password:', hash);
+// }
 
-// Replace 'Admin123!' with whatever password you want to use
-hashPassword('kizangila');
+// hashPassword('kizangila');
+
+const crypto = require('crypto');
+
+// Generate a random value
+const randomValue = crypto.randomBytes(64).toString('hex');
+
+// Output it to the console
+console.log(randomValue);

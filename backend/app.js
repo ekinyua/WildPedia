@@ -4,6 +4,8 @@ const cors = require("cors");
 const ipapi = require('ipapi.co');
 const pool = require('./models/db');
 const logger = require("./logger");
+const passport = require('./config/passport');
+const session = require('express-session');
 
 // Import all routes
 const adminRoutes = require('./routes/adminRoutes');
@@ -15,11 +17,31 @@ const { verifyToken } = require('./middleware/auth.middleware');
 
 const app = express();
 
-app.use(cors());
+const path = require('path');
+
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true
+}));
 app.use(express.json());
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Session configuration
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'session-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV === 'production' }
+}));
+
+// Initialize Passport
+app.use(passport.initialize());
 
 // Log application start
 logger.info("Application started successfully.");
+
+const visionRoutes = require('./routes/vision.routes');
 
 // Mount all route groups
 app.use('/api/admin/species', adminRoutes);
@@ -27,6 +49,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/cultural-content', culturalContentRoutes);
 app.use('/api/species-facts', speciesFactsRoutes);
+app.use('/api/vision', visionRoutes);
 
 // Protected test route
 app.use('/api/protected', verifyToken, (req, res) => {
@@ -78,16 +101,16 @@ app.get("/api/species", async (req, res) => {
             compositeKey: species.composite_key
         }));
 
-        res.json({ 
-            results: formattedResults, 
-            location 
+        res.json({
+            results: formattedResults,
+            location
         });
 
     } catch (error) {
         logger.error(`Error fetching species: ${error.message}`);
-        res.status(500).json({ 
+        res.status(500).json({
             error: "Error fetching species data",
-            details: error.message 
+            details: error.message
         });
     }
 });
@@ -136,9 +159,9 @@ app.get("/api/species/:compositeKey", async (req, res) => {
 
     } catch (error) {
         logger.error(`Error fetching species details: ${error.message}`);
-        res.status(500).json({ 
+        res.status(500).json({
             error: "Error fetching species details",
-            details: error.message 
+            details: error.message
         });
     }
 });
