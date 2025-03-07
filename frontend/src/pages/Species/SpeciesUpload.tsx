@@ -1,4 +1,3 @@
-// src/pages/Species/SpeciesUpload.tsx
 import { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { identifySpeciesFromImage } from "../../services/speciesService";
@@ -72,19 +71,13 @@ const SpeciesUpload = () => {
       // Call API to identify species
       const result = await identifySpeciesFromImage(selectedFile);
 
-      //   const bestSpeciesName =
-      //     result.allDetections.find((d) => d.type === "object")?.name ||
-      //     result.species;
-
       const objectDetection = result.allDetections.find(
         (d) => d.type === "object"
       );
 
-      // Use object detection if available, otherwise use the top result
       const speciesName = objectDetection?.name || result.species;
       const confidenceValue = (objectDetection?.score ?? 0) * 100;
 
-      // Create a species object from the identification result
       const identifiedSpecies = {
         key: 0, // Temporary key
         scientificName: speciesName,
@@ -187,9 +180,9 @@ const SpeciesUpload = () => {
             {/* Identified Species */}
             <div className="border border-gray-200 rounded-md p-4">
               <img
-                src={previewUrl || "/placeholder.jpg"} // Use the preview URL of the uploaded image
+                src={previewUrl || "/placeholder.jpg"}
                 alt={identifiedSpecies.scientificName}
-                className="h-40 w-full object-contain rounded-md mb-4" // Changed to object-contain and reduced height
+                className="h-40 w-full object-contain rounded-md mb-4"
               />
               <h3 className="text-lg font-bold">Detected Species</h3>
               <p className="mb-2">
@@ -217,8 +210,7 @@ const SpeciesUpload = () => {
                 Search Database
               </button>
             </div>
-
-            {/* Species Information */}
+            s
             <div className="space-y-4">
               <div className="bg-gray-100 p-4 rounded-md">
                 <h3 className="font-bold mb-2">Species Information</h3>
@@ -227,7 +219,6 @@ const SpeciesUpload = () => {
                 </p>
               </div>
 
-              {/* All Detections */}
               {allDetections.length > 0 && (
                 <div className="bg-gray-100 p-4 rounded-md">
                   <h3 className="font-bold mb-2">All Detections</h3>

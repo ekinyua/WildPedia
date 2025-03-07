@@ -1,4 +1,3 @@
-// src/components/common/SpeciesCard/SpeciesCard.tsx
 import { Link } from "react-router-dom";
 import { Species } from "../../../models";
 
@@ -47,13 +46,13 @@ const SpeciesCard = ({ species, className = "" }: SpeciesCardProps) => {
             {species.vernacularNames?.[0] || "Unknown"}
           </h3>
           <p className="italic text-gray-600">{species.scientificName}</p>
-          {species.conservationStatus && (
+          {species.threat_status && (
             <span
               className={`${getStatusColor(
-                species.conservationStatus
+                species.threat_status
               )} rounded-md p-1 inline-block px-2 text-sm`}
             >
-              {species.conservationStatus}
+              {species.threat_status}
             </span>
           )}
         </div>

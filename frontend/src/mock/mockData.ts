@@ -1,4 +1,3 @@
-// src/mock/mockData.ts
 import {
   Species,
   CulturalContent,
@@ -26,7 +25,7 @@ export const mockSpecies: Species[] = [
       "The lion is a large cat of the genus Panthera native to Africa and India. It has a muscular, broad-chested body; short, rounded head; round ears; and a hairy tuft at the end of its tail.",
     image: "/lion.jpg",
     compositeKey: "1030866_1_216",
-    conservationStatus: "Vulnerable",
+    threat_status: "Vulnerable",
   },
   {
     key: 5231190,
@@ -45,7 +44,7 @@ export const mockSpecies: Species[] = [
       "The African bush elephant, also known as the African savanna elephant, is the largest living terrestrial animal, with bulls reaching a shoulder height of up to 3.96 m.",
     image: "/elephant.jpg",
     compositeKey: "5231190_1_216",
-    conservationStatus: "Endangered",
+    threat_status: "Endangered",
   },
   {
     key: 2480498,
@@ -64,7 +63,7 @@ export const mockSpecies: Species[] = [
       "A large evergreen tree native to the mountainous regions of Africa, reaching heights of up to 40 meters. The bark has medicinal properties and is used in traditional medicine.",
     image: "/prunus-africana.jpg",
     compositeKey: "2480498_1_null",
-    conservationStatus: "Vulnerable",
+    threat_status: "Vulnerable",
   },
 ];
 

@@ -1,4 +1,3 @@
-// src/components/common/OrganizationCard/OrganizationCard.tsx
 import { FaArrowRight } from "react-icons/fa6";
 import { Organization } from "../../../models";
 

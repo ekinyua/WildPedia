@@ -140,7 +140,12 @@ const schemas = {
 
     requestReset: Joi.object({
         email: Joi.string().email().required()
-    })
+    }),
+
+    quizResult: Joi.object({
+        correctAnswers: Joi.number().integer().min(0).required(),
+        totalQuestions: Joi.number().integer().min(1).required()
+    }),
 };
 
 const validateRequest = (schema) => {

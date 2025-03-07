@@ -1,4 +1,3 @@
-// backend/services/visionService.js
 const vision = require('@google-cloud/vision');
 const path = require('path');
 const logger = require('../logger');

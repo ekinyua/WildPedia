@@ -1,0 +1,39 @@
+Question 1: Which of the following is NOT a state of matter?
+A) Solid
+B) Liquid
+C) Force
+D) Gas
+Correct Answer: C
+Explanation: Solids, liquids, and gases are the three main states of matter. Force is a push or a pull.
+
+Question 2: What happens to the temperature of matter when its particles slow down?
+A) It increases
+B) It decreases
+C) It stays the same
+D) It fluctuates randomly
+Correct Answer: B
+Explanation: Temperature measures how hot or cold matter is. When particles slow down, the matter has less thermal energy, resulting in a lower temperature.
+
+Question 3: Two opposing forces acting on an object have different magnitudes. What can be said about the net force on the object?
+A) The net force is zero.
+B) The net force is balanced.
+C) The net force is unbalanced.
+D) The net force cannot be determined.
+Correct Answer: C
+Explanation: When opposing forces have different magnitudes, they are unbalanced, resulting in a net force acting on the object.
+
+Question 4:  If an object moves higher above the Earth's surface (further from the center of Earth), what happens to its gravitational potential energy?
+A) It increases
+B) It decreases
+C) It stays the same
+D) It depends on the object's mass
+Correct Answer: A
+Explanation: Gravitational potential energy increases as the distance between the object and the center of the Earth increases.
+
+Question 5: A car travels 100 miles in 2 hours. What is its speed?
+A) 200 miles per hour
+B) 100 miles per hour
+C) 50 miles per hour
+D) 25 miles per hour
+Correct Answer: C
+Explanation: Speed is calculated by dividing distance by time.  100 miles / 2 hours = 50 miles per hour.

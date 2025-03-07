@@ -1,4 +1,3 @@
-// src/pages/Learn/QuizPage.tsx
 import { useState, useEffect } from "react";
 import { useParams, useSearchParams, Link } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight, FaCheck, FaTimes } from "react-icons/fa";
@@ -8,6 +7,7 @@ import {
   submitQuizResults,
 } from "../../services/learnService";
 import { useAuth } from "../../store/AuthContext";
+import { QuizResult } from "../../models";
 
 const QuizPage = () => {
   const { category } = useParams<{ category: string }>();
@@ -22,6 +22,7 @@ const QuizPage = () => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [quizResult, setQuizResult] = useState<QuizResult | null>(null);
 
   useEffect(() => {
     const fetchQuizQuestions = async () => {
@@ -51,7 +52,6 @@ const QuizPage = () => {
   const getCategoryTitle = () => {
     if (!category) return "Quiz";
 
-    // Convert category ID to display name
     switch (category) {
       case "mammals":
         return "Mammals";
@@ -102,15 +102,10 @@ const QuizPage = () => {
     setQuizCompleted(true);
 
     // Submit results if user is logged in
-    if (user && category) {
+    if (user) {
       try {
-        await submitQuizResults(
-          user.id,
-          category,
-          score,
-          questions.length,
-          region || undefined
-        );
+        const result = await submitQuizResults(score, questions.length);
+        setQuizResult(result);
       } catch (err) {
         console.error("Error submitting quiz results:", err);
       }
@@ -152,7 +147,20 @@ const QuizPage = () => {
       <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-6 text-center">Quiz Completed!</h1>
 
-        <div className="text-center mb-8">
+        {quizResult && (
+          <div className="mt-4 bg-green-50 p-3 rounded-lg">
+            <p className="text-green-700 font-bold">
+              +{quizResult.xpEarned} XP Earned!
+            </p>
+            {quizResult.newBadges.length > 0 && (
+              <p className="text-green-700 mt-2">
+                🏆 New Badge: {quizResult.newBadges[0].name}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* <div className="text-center mb-8">
           <div className="inline-block bg-green-100 p-6 rounded-full mb-4">
             <FaCheck className="text-green-600 text-4xl" />
           </div>
@@ -164,7 +172,7 @@ const QuizPage = () => {
               ? "Great job! You have a good understanding of this topic."
               : "Keep learning! Try again to improve your score."}
           </p>
-        </div>
+        </div> */}
 
         <div className="flex justify-center space-x-4">
           <button
@@ -220,7 +228,6 @@ const QuizPage = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow-md p-6">
-        {/* Progress Indicator */}
         <div className="flex justify-between items-center mb-6">
           <div className="w-full bg-gray-200 h-2 rounded-full mr-4">
             <div
@@ -237,12 +244,10 @@ const QuizPage = () => {
           </span>
         </div>
 
-        {/* Question */}
         <h2 className="text-lg font-semibold mb-6">
           {currentQuestion.question}
         </h2>
 
-        {/* Options */}
         <div className="space-y-3 mb-6">
           {Object.entries(currentQuestion.options).map(([key, value]) => (
             <button
@@ -274,7 +279,6 @@ const QuizPage = () => {
           ))}
         </div>
 
-        {/* Explanation (shown after answering) */}
         {isAnswerSubmitted && (
           <div className="bg-gray-50 p-4 rounded-md shadow-md mb-6">
             <h3 className="font-semibold mb-2">Explanation:</h3>
@@ -282,7 +286,6 @@ const QuizPage = () => {
           </div>
         )}
 
-        {/* Actions */}
         <div className="flex justify-between">
           {!isAnswerSubmitted ? (
             <button

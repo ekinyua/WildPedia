@@ -14,7 +14,7 @@ export interface Species {
   description?: string;
   image?: string;
   compositeKey?: string;
-  conservationStatus?: string;
+  threat_status?: string;
 }
 
 export interface User {
@@ -87,4 +87,36 @@ export interface Organization {
   websiteUrl?: string;
   logoUrl?: string;
   country: string;
+}
+
+export interface UserBadge {
+  type: string;
+  name: string;
+  description: string;
+  awarded_at: string;
+}
+
+export interface UserStats {
+  user_id: number;
+  xp: number;
+  quizzes_completed: number;
+  correct_answers: number;
+  badges: UserBadge[];
+  rank?: number;
+}
+
+export interface LeaderboardEntry {
+  user_id: number;
+  username: string;
+  xp: number;
+  quizzes_completed: number;
+  correct_answers: number;
+  badges: UserBadge[];
+  rank: number;
+}
+
+export interface QuizResult {
+  xpEarned: number;
+  stats: UserStats;
+  newBadges: UserBadge[];
 }

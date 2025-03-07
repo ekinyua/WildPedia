@@ -4,7 +4,7 @@ const userModel = require('../models/user.model');
 const { google } = require('./auth.config');
 const logger = require('../logger');
 
-// Configure Google OAuth Strategy
+// Google OAuth strategy
 passport.use(new GoogleStrategy({
     clientID: google.clientID,
     clientSecret: google.clientSecret,
@@ -35,7 +35,6 @@ passport.use(new GoogleStrategy({
     }
 ));
 
-// Serialize and deserialize user (required for sessions)
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });

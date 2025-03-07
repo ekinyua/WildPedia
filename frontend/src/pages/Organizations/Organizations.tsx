@@ -1,9 +1,10 @@
-// src/pages/Organizations/Organizations.tsx
 import { useState, useEffect } from "react";
 import { IoChevronDownSharp } from "react-icons/io5";
 import OrganizationCard from "../../components/common/OrganizationCard/OrganizationCard";
 import { Organization } from "../../models";
 import { mockOrganizations } from "../../mock/mockData";
+import Header from "../../components/layouts/Header";
+import Footer from "../../components/layouts/Footer";
 
 const Organizations = () => {
   const [organizations, setOrganizations] = useState<Organization[]>([]);
@@ -15,8 +16,6 @@ const Organizations = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // In a real implementation, you would fetch from the API
-    // For now, we'll use the mock data
     const fetchOrganizations = async () => {
       setIsLoading(true);
       try {
@@ -34,7 +33,6 @@ const Organizations = () => {
   }, []);
 
   useEffect(() => {
-    // Filter organizations based on selected country
     if (selectedCountry === "all") {
       setFilteredOrganizations(organizations);
     } else {
@@ -48,7 +46,7 @@ const Organizations = () => {
 
   const handleCountryChange = (country: string) => {
     setSelectedCountry(country);
-    setVisibleCount(4); // Reset visible count when changing filter
+    setVisibleCount(4);
   };
 
   const loadMore = () => {
@@ -56,7 +54,8 @@ const Organizations = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto py-2">
+      <Header />
       <div className="space-y-8">
         <div className="bg-blue-50 p-8 rounded-xl mb-8">
           <h1 className="text-3xl font-bold mb-4">
@@ -158,6 +157,8 @@ const Organizations = () => {
             </p>
           </div>
         )}
+
+        <Footer />
       </div>
     </div>
   );

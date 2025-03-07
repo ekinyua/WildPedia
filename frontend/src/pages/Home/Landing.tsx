@@ -6,6 +6,8 @@ import { FaBookOpen } from "react-icons/fa6";
 import SpeciesCard from "../../components/common/SpeciesCard/SpeciesCard";
 import { Species } from "../../models";
 import { getSpecies } from "../../services/speciesService";
+import Header from "../../components/layouts/Header";
+import Footer from "../../components/layouts/Footer";
 
 const Landing = () => {
   const [searchParams] = useSearchParams();
@@ -14,7 +16,7 @@ const Landing = () => {
   const [species, setSpecies] = useState<Species[]>([]);
   const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isMuted, setIsMuted] = useState(true); // State for mute toggle
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const fetchSpecies = async () => {
@@ -48,47 +50,32 @@ const Landing = () => {
   };
 
   return (
-    <div className="space-y-8 pb-10">
-      {/* Hero Section with Enhanced 360° Video */}
-      <div className="space-y-4">
-        <div className="text-center text-gray-700">
-          <p className="text-xl animate-fade-in">
-            Explore African wildlife in 360°—drag to look around or use a VR
-            headset!
-          </p>
-        </div>
-        <div className="relative h-[80vh] w-full rounded-xl overflow-hidden">
+    <div className="pb-10">
+      <Header />
+
+      <div className="mb-4">
+        <div className="relative h-[90vh] w-full rounded-xl overflow-hidden mb-4">
           <iframe
             className="absolute top-0 left-0 w-full h-full"
             src={`https://www.youtube-nocookie.com/embed/qGLvIN4NNZU?start=107&autoplay=1&mute=${
               isMuted ? 1 : 0
-            }&loop=1&playlist=qGLvIN4NNZU&rel=0&modestbranding=1&controls=0`}
+            }&loop=1&playlist=qGLvIN4NNZU&rel=0&modestbranding=1&controls=0&vq=hd1080`}
             title="African Wildlife 360° Video"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           ></iframe>
-          {/* <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-            <div className="text-center text-white p-6">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fade-in-up">
-                Discover Local Biodiversity
-              </h1>
-              <button
-                onClick={toggleMute}
-                className="mt-4 px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors"
-              >
-                {isMuted ? "Unmute Sound" : "Mute Sound"}
-              </button>
-            </div>
-          </div> */}
+
           <div className="absolute bottom-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
-            Click to go fullscreen for the ultimate experience
+            Doube click to go fullscreen for the ultimate experience
+          </div>
+          <div className="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
+            drag to look around or use a VR headset!
           </div>
         </div>
       </div>
 
-      {/* Search Bar Section */}
       <section className="max-w-xl mx-auto">
         <form onSubmit={handleSearchSubmit}>
           <div className="flex items-center relative">
@@ -110,7 +97,6 @@ const Landing = () => {
         </form>
       </section>
 
-      {/* Species Near You Section */}
       <section className="space-y-6">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">
@@ -141,7 +127,6 @@ const Landing = () => {
         )}
       </section>
 
-      {/* How It Works Section */}
       <section className="bg-green-50 rounded-xl p-8 space-y-6">
         <h1 className="text-2xl font-bold text-center">How WildPedia Works</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -180,7 +165,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Why Biodiversity Matters Section */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-6 rounded-xl shadow-sm">
         <div className="space-y-6">
           <h1 className="text-2xl font-bold">Why Biodiversity Matters</h1>
@@ -216,6 +200,7 @@ const Landing = () => {
           />
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-// iconic-species-import.js
 require('dotenv').config();
 const { Client } = require('pg');
 const fetch = require('node-fetch');

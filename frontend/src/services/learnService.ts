@@ -1,7 +1,13 @@
 // src/services/learnService.ts
-import { QuizQuestion } from "../models";
+import {
+  QuizQuestion,
+  UserStats,
+  LeaderboardEntry,
+  QuizResult,
+} from "../models";
 import { learningApi } from "./api/learningApiClient";
 import { mockQuizQuestions } from "../mock/mockData";
+import { authApi } from "./api/authApiClient";
 
 // Flag to switch between mock and real API for quiz questions
 const USE_MOCK_DATA = false;
@@ -115,26 +121,53 @@ export async function generateCustomQuiz(
   }
 }
 
+export async function getUserStats(): Promise<UserStats> {
+  try {
+    const response = await authApi.get<{ userId: number; stats: UserStats }>(
+      "/stats/stats"
+    );
+    return response.stats;
+  } catch (error) {
+    console.error("Error fetching user stats:", error);
+    throw error;
+  }
+}
+
 // Record quiz results for a user
 export async function submitQuizResults(
-  userId: number,
-  category: string,
-  score: number,
-  totalQuestions: number,
-  region?: string
-): Promise<{ success: boolean }> {
-  if (USE_MOCK_DATA) {
-    await delay(300);
-    // Just simulate success
-    return { success: true };
+  correctAnswers: number,
+  totalQuestions: number
+): Promise<QuizResult> {
+  try {
+    const response = await authApi.post<QuizResult>("/stats/quiz-results", {
+      correctAnswers,
+      totalQuestions,
+    });
+    return response;
+  } catch (error) {
+    console.error("Error submitting quiz results:", error);
+    throw error;
   }
+}
 
-  // Since there's no endpoint for this, we'll just simulate success
-  await delay(300);
-  console.log(
-    `Quiz results submitted: ${userId}, ${category}, ${score}/${totalQuestions}, region: ${region}`
-  );
-  return { success: true };
+export async function getLeaderboard(
+  limit: number = 10
+): Promise<{ leaderboard: LeaderboardEntry[]; userRank: number | null }> {
+  try {
+    const params = new URLSearchParams({
+      limit: limit.toString(),
+    });
+
+    const response = await authApi.get<{
+      leaderboard: LeaderboardEntry[];
+      userRank: number | null;
+    }>(`/stats/leaderboard?${params.toString()}`);
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching leaderboard:", error);
+    throw error;
+  }
 }
 
 // Get available learning categories - ALWAYS use mock data for this

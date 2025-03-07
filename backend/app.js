@@ -7,7 +7,7 @@ const logger = require("./logger");
 const passport = require('./config/passport');
 const session = require('express-session');
 
-// Import all routes
+// Route imports
 const adminRoutes = require('./routes/adminRoutes');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
@@ -42,14 +42,16 @@ app.use(passport.initialize());
 logger.info("Application started successfully.");
 
 const visionRoutes = require('./routes/vision.routes');
+const userStatsRoutes = require('./routes/user_stats.routes');
 
-// Mount all route groups
+// Mounting all route groups
 app.use('/api/admin/species', adminRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/cultural-content', culturalContentRoutes);
 app.use('/api/species-facts', speciesFactsRoutes);
 app.use('/api/vision', visionRoutes);
+app.use('/api/stats', userStatsRoutes);
 
 // Protected test route
 app.use('/api/protected', verifyToken, (req, res) => {
@@ -150,6 +152,7 @@ app.get("/api/species/:compositeKey", async (req, res) => {
             genus: species.genus,
             specificEpithet: species.specific_epithet,
             habitat: species.habitat,
+            threat_status: species.threat_status,
             description: species.description,
             image: species.image_url || 'placeholder.jpg',
             compositeKey: species.composite_key

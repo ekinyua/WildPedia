@@ -15,6 +15,7 @@ import ProfilePage from "../pages/User/ProfilePage";
 import GoogleCallback from "../pages/Auth/GoogleCallback";
 import Organizations from "../pages/Organizations/Organizations";
 import NotFound from "../pages/NotFound";
+import Leaderboard from "../pages/Leaderbord";
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -77,6 +78,10 @@ export const router = createBrowserRouter([
       {
         path: "*",
         element: <NotFound />,
+      },
+      {
+        path: "leaderboard",
+        element: <Leaderboard />,
       },
     ],
   },

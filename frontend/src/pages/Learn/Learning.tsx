@@ -1,4 +1,3 @@
-// src/pages/Learn/Learning.tsx
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
@@ -105,8 +104,7 @@ const Learning = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      {/* Header */}
+    <div className="max-w-7xl mx-auto rounded-lg shadow-md overflow-hidden p-6">
       <div className="flex justify-between items-center mb-6 bg-white p-4 rounded-lg shadow-sm">
         <Link
           to="/"
@@ -155,7 +153,6 @@ const Learning = () => {
         quizzes.
       </p>
 
-      {/* Region Selector */}
       <div className="mb-8">
         <select
           title="Region"
@@ -171,14 +168,12 @@ const Learning = () => {
         </select>
       </div>
 
-      {/* Error Message */}
       {error && (
         <div className="bg-red-100 text-red-700 p-4 rounded-md mb-6">
           {error}
         </div>
       )}
 
-      {/* Categories Grid */}
       {isLoading ? (
         <div className="flex justify-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>

@@ -1,4 +1,3 @@
-// src/pages/Auth/SignUp.tsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -8,7 +7,6 @@ const SignUp = () => {
   const navigate = useNavigate();
   const { register, error, clearError } = useAuth();
 
-  // Form state
   const [formData, setFormData] = useState({
     username: "",
     fullName: "",
@@ -24,7 +22,6 @@ const SignUp = () => {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -32,7 +29,6 @@ const SignUp = () => {
       [name]: type === "checkbox" ? checked : value,
     });
 
-    // Clear field error when user types
     if (formErrors[name]) {
       setFormErrors({
         ...formErrors,
@@ -41,7 +37,6 @@ const SignUp = () => {
     }
   };
 
-  // Validate form
   const validateForm = () => {
     const errors: Record<string, string> = {};
 
@@ -74,14 +69,11 @@ const SignUp = () => {
     return errors;
   };
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Reset errors
     clearError();
 
-    // Validate form
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
@@ -104,7 +96,6 @@ const SignUp = () => {
       // Redirect to home page after successful registration
       navigate("/");
     } catch (err: any) {
-      // API errors should be handled by the auth context
     } finally {
       setIsSubmitting(false);
     }
@@ -123,14 +114,12 @@ const SignUp = () => {
           <p className="text-gray-600">Fill in your details to get started</p>
         </div>
 
-        {/* API Error */}
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
             {error}
           </div>
         )}
 
-        {/* Basic Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
             <label
@@ -174,7 +163,6 @@ const SignUp = () => {
           </div>
         </div>
 
-        {/* Email */}
         <div className="mb-6">
           <label
             htmlFor="email"
@@ -198,7 +186,6 @@ const SignUp = () => {
           )}
         </div>
 
-        {/* Password */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
             <label
@@ -251,7 +238,6 @@ const SignUp = () => {
           </div>
         </div>
 
-        {/* Additional Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
             <label
@@ -290,7 +276,6 @@ const SignUp = () => {
           </div>
         </div>
 
-        {/* Expertise */}
         <div className="mb-6">
           <label
             htmlFor="expertiseArea"
@@ -309,7 +294,6 @@ const SignUp = () => {
           />
         </div>
 
-        {/* Terms Agreement */}
         <div className="mb-6">
           <label
             className={`flex items-start space-x-2 ${
@@ -341,7 +325,6 @@ const SignUp = () => {
           )}
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
@@ -357,7 +340,6 @@ const SignUp = () => {
           )}
         </button>
 
-        {/* Login Link */}
         <p className="text-center text-gray-700 mt-6">
           Already have an account?{" "}
           <Link to="/login" className="text-green-700 hover:text-green-800">

@@ -1,0 +1,39 @@
+Question 1: What is matter?
+A) Anything that has volume
+B) Anything that takes up space
+C) Anything that has mass
+D) Anything that has weight
+Correct Answer: B
+Explanation: The lecture notes define matter as anything that takes up space.
+
+Question 2: Which of the following is NOT a state of matter described in the lecture?
+A) Solid
+B) Liquid
+C) Plasma
+D) Gas
+Correct Answer: C
+Explanation: The lecture notes discuss solids, liquids, and gases as states of matter. Plasma is another state of matter, but it is not mentioned in these notes.
+
+Question 3: What happens to the gravitational potential energy between an object and Earth when the object is raised to a higher position?
+A) It decreases
+B) It increases
+C) It stays the same
+D) It depends on the object's mass
+Correct Answer: B
+Explanation: According to the lecture notes, the gravitational potential energy increases when the distance between the object and Earth's center increases.
+
+Question 4: What is thermal energy?
+A) The energy stored in an object due to its position
+B) The energy of moving atoms
+C) The energy an object has due to its motion
+D) The energy stored in an object due to its temperature
+Correct Answer: B
+Explanation: The lecture notes define thermal energy as the energy of moving atoms.
+
+Question 5: If two opposing forces act on an object with different magnitudes, what can be said about the net force?
+A) There is no net force
+B) The net force is balanced
+C) The net force is unbalanced
+D) The net force is zero
+Correct Answer: C
+Explanation: The lecture notes state that when opposing forces have different magnitudes, the forces are unbalanced, resulting in a net force on the object.

@@ -1,10 +1,14 @@
-// src/pages/Species/SpeciesDetails.tsx
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { FaLanguage, FaPlus, FaThumbsUp, FaThumbsDown } from "react-icons/fa";
+import { Link, useParams } from "react-router-dom";
+import {
+  FaLanguage,
+  FaPlus,
+  FaThumbsUp,
+  FaThumbsDown,
+  FaHome,
+} from "react-icons/fa";
 import { GiHabitatDome } from "react-icons/gi";
-import { IoLocationSharp } from "react-icons/io5";
-import { MdOutlineNature } from "react-icons/md";
+import { MdFactCheck, MdOutlineNature } from "react-icons/md";
 import { Species, CulturalContent, SpeciesFact } from "../../models";
 import {
   getSpeciesDetails,
@@ -33,6 +37,7 @@ const SpeciesDetails = () => {
       try {
         // Fetch species details
         const speciesData = await getSpeciesDetails(compositeKey);
+        console.log("Species data:", speciesData);
         setSpecies(speciesData);
 
         // Fetch cultural content
@@ -55,6 +60,10 @@ const SpeciesDetails = () => {
 
     fetchSpeciesData();
   }, [compositeKey, activeLanguage]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [compositeKey]);
 
   const handleLanguageChange = (language: "en" | "rw" | "sw") => {
     setActiveLanguage(language);
@@ -105,9 +114,17 @@ const SpeciesDetails = () => {
 
   return (
     <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-      {/* Hero Image & Title */}
+      <div className="absolute top-4 left-4 z-10">
+        <Link
+          to="/"
+          className="bg-white bg-opacity-80 p-2 rounded-full text-green-600 hover:text-green-700 hover:bg-opacity-100 transition-colors"
+        >
+          <FaHome size={24} />
+        </Link>
+      </div>
+
       <div className="relative">
-        <div className="h-64 bg-gray-300">
+        <div className="h-80 bg-gray-300">
           {species.image && (
             <img
               src={species.image}
@@ -132,9 +149,7 @@ const SpeciesDetails = () => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="p-6 space-y-6">
-        {/* Description */}
         <section>
           <h2 className="text-xl font-bold mb-4">Description</h2>
           <p className="text-gray-700">
@@ -142,7 +157,6 @@ const SpeciesDetails = () => {
               "A large evergreen tree native to the mountainous regions of Africa, reaching heights of up to 40 meters."}
           </p>
 
-          {/* Translation Buttons */}
           <div className="flex flex-wrap gap-2 mt-4">
             <button
               className="flex items-center gap-1 bg-green-600 text-white px-3 py-1 rounded-md text-sm"
@@ -173,7 +187,6 @@ const SpeciesDetails = () => {
           </div>
         </section>
 
-        {/* Myths & Legends */}
         <section className="border-t pt-4">
           <h2 className="text-xl font-bold mb-4">Myths & Legends</h2>
           {getMyths().length > 0 ? (
@@ -191,7 +204,6 @@ const SpeciesDetails = () => {
           )}
         </section>
 
-        {/* Local Proverbs */}
         <section className="border-t pt-4">
           <h2 className="text-xl font-bold mb-4">Local Proverbs</h2>
           {getProverbs().length > 0 ? (
@@ -209,49 +221,35 @@ const SpeciesDetails = () => {
           )}
         </section>
 
-        {/* Quick Facts & Add Information */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
           <div className="space-y-4">
             <h3 className="text-lg font-bold">Quick Facts</h3>
-            {facts.length > 0 ? (
-              <ul className="space-y-3">
-                {facts.map((fact) => (
-                  <li key={fact.id} className="flex gap-2 items-start">
-                    <span className="text-green-600 mt-1">
-                      {fact.category === "habitat" ? (
-                        <GiHabitatDome />
-                      ) : fact.category === "physical_characteristics" ? (
-                        <MdOutlineNature />
-                      ) : (
-                        <IoLocationSharp />
-                      )}
-                    </span>
-                    <span>{fact.fact}</span>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <ul className="space-y-3">
-                <li className="flex gap-2 items-start">
-                  <span className="text-green-600 mt-1">
-                    <IoLocationSharp />
-                  </span>
-                  <span>Found in Volcanoes National Park</span>
-                </li>
-                <li className="flex gap-2 items-start">
+
+            <div className="space-y-3">
+              {species.habitat && (
+                <div className="flex gap-2 items-start">
                   <span className="text-green-600 mt-1">
                     <GiHabitatDome />
                   </span>
-                  <span>Thrives in high altitudes</span>
-                </li>
-                <li className="flex gap-2 items-start">
+                  <div>
+                    <span className="font-medium">Habitat: </span>
+                    <span>{species.habitat}</span>
+                  </div>
+                </div>
+              )}
+
+              {species.threat_status && (
+                <div className="flex gap-2 items-start">
                   <span className="text-green-600 mt-1">
-                    <MdOutlineNature />
+                    <MdFactCheck />
                   </span>
-                  <span>Used in weaving</span>
-                </li>
-              </ul>
-            )}
+                  <div>
+                    <span className="font-medium">Conservation Status: </span>
+                    <span>{species.threat_status}</span>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="space-y-4">

@@ -1,4 +1,3 @@
-// src/components/layouts/Header.tsx
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/AuthContext";
@@ -8,9 +7,12 @@ import {
   FaCamera,
   FaUserCog,
   FaLeaf,
+  FaTrophy,
 } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
 import { MdOutlineLogin } from "react-icons/md";
+import { getUserStats } from "../../services/learnService";
+import { UserStats } from "../../models";
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -19,6 +21,7 @@ const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [userStats, setUserStats] = useState<UserStats | null>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -50,9 +53,24 @@ const Header = () => {
     setShowMobileMenu(false);
   };
 
+  useEffect(() => {
+    const fetchUserStats = async () => {
+      if (user) {
+        try {
+          const stats = await getUserStats();
+          setUserStats(stats);
+        } catch (error) {
+          console.error("Error fetching user stats:", error);
+        }
+      }
+    };
+
+    fetchUserStats();
+  }, [user]);
+
   return (
-    <header className="bg-white shadow">
-      <div className="max-w-7xl mx-auto px-4 py-4">
+    <header className="">
+      <div className="max-w-9xl mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
           {/* Logo & Brand */}
           <Link to="/" className="flex items-center space-x-2">
@@ -83,15 +101,29 @@ const Header = () => {
 
           {/* Nav Links */}
           <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/" className="text-gray-700 hover:text-green-600">
+            <Link
+              to="/"
+              className="text-gray-700 hover:text-green-600 cursor-pointer"
+            >
               Home
             </Link>
-            <Link to="/learn" className="text-gray-700 hover:text-green-600">
+            <Link
+              to="/learn"
+              className="text-gray-700 hover:text-green-600 cursor-pointer"
+            >
               Learn
             </Link>
+
+            <Link
+              to="/leaderboard"
+              className="text-gray-700 hover:text-green-600 transition-colors"
+            >
+              Leaderboard
+            </Link>
+
             <Link
               to="/organizations"
-              className="text-gray-700 hover:text-green-600"
+              className="text-gray-700 hover:text-green-600 cursor-pointer"
             >
               Organizations
             </Link>
@@ -100,10 +132,21 @@ const Header = () => {
             {user && (
               <Link
                 to="/identify"
-                className="text-gray-700 hover:text-green-600 flex items-center"
+                className="text-gray-700 hover:text-green-600 flex items-center cursor-pointer"
               >
                 <FaCamera className="mr-1" /> Identify
               </Link>
+            )}
+
+            {user && userStats && (
+              <div className="hidden md:flex items-center mr-4 bg-gray-50 rounded-full px-3 py-1">
+                <div className="flex items-center">
+                  <FaTrophy className="text-yellow-500 mr-1" />
+                  <span className="font-bold text-gray-700">
+                    {userStats.xp} XP
+                  </span>
+                </div>
+              </div>
             )}
 
             {user ? (
@@ -203,21 +246,21 @@ const Header = () => {
             </form>
             <Link
               to="/"
-              className="block py-2 text-gray-700 hover:text-green-600"
+              className="block py-2 text-gray-700 hover:text-green-600 cursor-pointer"
               onClick={() => setShowMobileMenu(false)}
             >
               Home
             </Link>
             <Link
               to="/learn"
-              className="block py-2 text-gray-700 hover:text-green-600"
+              className="block py-2 text-gray-700 hover:text-green-600 cursor-pointer"
               onClick={() => setShowMobileMenu(false)}
             >
               Learn
             </Link>
             <Link
               to="/organizations"
-              className="block py-2 text-gray-700 hover:text-green-600"
+              className="block py-2 text-gray-700 hover:text-green-600 cursor-pointer"
               onClick={() => setShowMobileMenu(false)}
             >
               Organizations
@@ -226,21 +269,21 @@ const Header = () => {
               <>
                 <Link
                   to="/identify"
-                  className="py-2 text-gray-700 hover:text-green-600 flex items-center"
+                  className="py-2 text-gray-700 hover:text-green-600 flex items-center cursor-pointer"
                   onClick={() => setShowMobileMenu(false)}
                 >
                   <FaCamera className="mr-2" /> Identify Species
                 </Link>
                 <Link
                   to="/profile"
-                  className="py-2 text-gray-700 hover:text-green-600 flex items-center"
+                  className="py-2 text-gray-700 hover:text-green-600 flex items-center cursor-pointer"
                   onClick={() => setShowMobileMenu(false)}
                 >
                   <FaUserCog className="mr-2" /> My Profile
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left py-2 text-gray-700 hover:text-green-600 flex items-center"
+                  className="w-full text-left py-2 text-gray-700 hover:text-green-600 flex items-center cursor-pointer"
                   title="logout"
                 >
                   <FaSignOutAlt className="mr-2" /> Logout
@@ -249,7 +292,7 @@ const Header = () => {
             ) : (
               <Link
                 to="/login"
-                className="block py-2 text-gray-700 hover:text-green-600"
+                className="block py-2 text-gray-700 hover:text-green-600 cursor-pointer"
                 onClick={() => setShowMobileMenu(false)}
               >
                 Login

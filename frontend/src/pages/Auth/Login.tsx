@@ -27,7 +27,6 @@ const Login = () => {
   // Get the intended destination from the location state, or default to homepage
   const from = (location.state as any)?.from?.pathname || "/";
 
-  // checking for error message in URL (from Google Auth)
   useEffect(() => {
     const errorMsg = searchParams.get("error");
     if (errorMsg) {
@@ -84,14 +83,12 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Error Message */}
         {(formError || error) && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
             {formError || error}
           </div>
         )}
 
-        {/* Username Field */}
         <div className="space-y-2">
           <label htmlFor="username" className="text-gray-700 font-medium">
             Username
@@ -109,7 +106,6 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Password Field */}
         <div className="space-y-2">
           <label htmlFor="password" className="text-gray-700 font-medium">
             Password
@@ -127,7 +123,6 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Remember Me & Forgot Password */}
         <div className="flex justify-between items-center">
           <label
             htmlFor="remember"
@@ -147,7 +142,6 @@ const Login = () => {
           </a>
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={isSubmitting}
@@ -163,14 +157,12 @@ const Login = () => {
           )}
         </button>
 
-        {/* Divider */}
         <div className="flex items-center">
           <div className="flex-grow border-t border-gray-300"></div>
           <span className="px-3 text-gray-500 text-sm">OR</span>
           <div className="flex-grow border-t border-gray-300"></div>
         </div>
 
-        {/* Google Login Button */}
         <button
           type="button"
           onClick={handleGoogleLogin}
@@ -180,7 +172,6 @@ const Login = () => {
           <span>Continue with Google</span>
         </button>
 
-        {/* Sign Up Link */}
         <p className="text-center text-gray-700">
           Don't have an account?{" "}
           <Link to="/signup" className="text-green-700 hover:text-green-800">

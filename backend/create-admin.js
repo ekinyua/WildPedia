@@ -6,7 +6,7 @@
 //     console.log('Hashed password:', hash);
 // }
 
-// hashPassword('kizangila');
+// hashPassword('password');
 
 const crypto = require('crypto');
 

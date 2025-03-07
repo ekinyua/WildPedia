@@ -8,7 +8,7 @@ const authController = {
         try {
             const { username, email, password, ...profileData } = req.body;
 
-            // Check if username or email already exists
+            // Checking if username or email already exists
             const existingUser = await userModel.findByUsername(username) ||
                 await userModel.findByEmail(email);
 

@@ -921,3 +921,40 @@ euralninevisionproject-449711-aa07c7cc5bae.json'
 2025-03-06T11:15:59.813Z [INFO]: Starting species identification with Vision API
 2025-03-06T11:16:00.204Z [INFO]: Identified species: Giraffids with confidence 0.9942243695259094
 2025-03-06T11:16:00.212Z [INFO]: Saved uploaded image: C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\uploads\de8eed43-b5bc-4fa9-9852-7ea8d348546e-download (2).jpeg
+2025-03-06T13:07:54.313Z [ERROR]: Starting new log session...
+2025-03-06T13:07:55.631Z [INFO]: Application started successfully.
+2025-03-06T13:07:58.063Z [INFO]: Server running on port 5000
+2025-03-06T15:23:56.880Z [INFO]: Starting species identification with Vision API
+2025-03-06T15:23:58.180Z [INFO]: Identified species: Giraffids with confidence 0.9942243695259094
+2025-03-06T15:23:58.194Z [INFO]: Saved uploaded image: C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\uploads\b527e7e7-a99c-4118-ba31-a6ea015bc714-download (2).jpeg
+2025-03-06T21:16:12.614Z [ERROR]: Starting new log session...
+2025-03-06T21:16:13.029Z [INFO]: Application started successfully.
+2025-03-06T21:16:14.310Z [INFO]: Server running on port 5000
+2025-03-06T21:55:59.603Z [INFO]: Google auth attempt for: Elvis Njenga (114625478163443473340)
+2025-03-06T23:29:28.100Z [INFO]: Google auth attempt for: Elvis Njenga (114625478163443473340)
+2025-03-06T23:45:32.527Z [ERROR]: Starting new log session...
+2025-03-06T23:45:32.947Z [INFO]: Application started successfully.
+2025-03-06T23:45:34.063Z [INFO]: Server running on port 5000
+2025-03-06T23:48:25.844Z [INFO]: Starting species identification with Vision API
+2025-03-06T23:48:27.218Z [INFO]: Identified species: Giraffids with confidence 0.9942243695259094
+2025-03-06T23:48:27.514Z [INFO]: Saved uploaded image: C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\uploads\b8d9319b-fb4e-4f45-afa5-19b2abd93b24-download (2).jpeg
+2025-03-07T13:30:33.518Z [ERROR]: Starting new log session...
+2025-03-07T13:30:33.881Z [INFO]: Application started successfully.
+2025-03-07T13:30:34.883Z [INFO]: Server running on port 5000
+2025-03-07T13:30:55.298Z [INFO]: Google auth attempt for: Elvis Njenga (114625478163443473340)
+2025-03-07T13:40:56.825Z [ERROR]: TypeError: schema.validate is not a function
+    at C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\middleware\validation.middleware.js:148:34
+    at Layer.handle [as handle_request] (C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\node_modules\express\lib\router\route.js:149:13)
+    at verifyToken (C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\middleware\auth.middleware.js:27:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-03-07T13:49:17.010Z [INFO]: Google auth attempt for: Elvis Njenga (114625478163443473340)
+2025-03-07T13:50:50.082Z [ERROR]: TypeError: schema.validate is not a function
+    at C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\middleware\validation.middleware.js:148:34
+    at Layer.handle [as handle_request] (C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\node_modules\express\lib\router\route.js:149:13)
+    at verifyToken (C:\Users\Lenovo\Projects\alu-capstone_project\WildPedia\backend\middleware\auth.middleware.js:27:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-03-07T13:54:03.814Z [ERROR]: Starting new log session...
+2025-03-07T13:54:04.095Z [INFO]: Application started successfully.
+2025-03-07T13:54:05.056Z [INFO]: Server running on port 5000

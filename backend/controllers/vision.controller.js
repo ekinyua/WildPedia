@@ -1,4 +1,3 @@
-// backend/controllers/vision.controller.js
 const visionService = require('../services/visionService');
 const logger = require('../logger');
 const path = require('path');
