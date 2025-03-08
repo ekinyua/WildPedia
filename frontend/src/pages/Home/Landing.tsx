@@ -8,6 +8,7 @@ import { Species } from "../../models";
 import { getSpecies } from "../../services/speciesService";
 import Header from "../../components/layouts/Header";
 import Footer from "../../components/layouts/Footer";
+import SketchfabEmbed from "../../components/common/SketchFabEmbed/SketchfabEmbed";
 
 const Landing = () => {
   const [searchParams] = useSearchParams();
@@ -67,16 +68,13 @@ const Landing = () => {
             allowFullScreen
           ></iframe>
 
-          <div className="absolute bottom-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
-            Doube click to go fullscreen for the ultimate experience
-          </div>
-          <div className="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
-            drag to look around or use a VR headset!
+          <div className="absolute bottom-4 left-4 text-gray-300 text-sm bg-black/60 bg-opacity-50 px-2 py-1 rounded-md">
+            Drag to look around or use a VR headset!
           </div>
         </div>
       </div>
 
-      <section className="max-w-xl mx-auto">
+      <section className="max-w-xl mx-auto mt-6">
         <form onSubmit={handleSearchSubmit}>
           <div className="flex items-center relative">
             <input
@@ -89,7 +87,7 @@ const Landing = () => {
             <button
               type="submit"
               title="Search"
-              className="p-2 rounded-full bg-green-600 absolute right-2 hover:bg-green-700 transition-colors"
+              className="p-2 rounded-full bg-green-600 absolute right-2 hover:bg-green-700 transition-colors cursor-pointer"
             >
               <IoMdSearch className="text-white text-xl" />
             </button>
@@ -134,9 +132,12 @@ const Landing = () => {
             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-600 p-3 rounded-full text-white">
               <MdOutlinePhotoCamera size={24} />
             </div>
-            <h3 className="font-bold text-xl mb-2 text-center">Take a Photo</h3>
+            <h3 className="font-bold text-xl mb-2 text-center">
+              SNAP & IDENTIFY
+            </h3>
             <p className="text-gray-600 text-center">
-              Upload or capture a photo of the species you want to identify
+              Capture any plant or animal with your camera for instant species
+              identification.
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm relative pt-12">
@@ -144,11 +145,11 @@ const Landing = () => {
               <IoMdSearch size={24} />
             </div>
             <h3 className="font-bold text-xl mb-2 text-center">
-              Get Instant Results
+              DISCOVER STORIES
             </h3>
             <p className="text-gray-600 text-center">
-              Our AI technology identifies species and provides detailed
-              information
+              Uncover cultural significance and ecological roles of species in
+              your region.
             </p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm relative pt-12">
@@ -156,10 +157,10 @@ const Landing = () => {
               <FaBookOpen size={24} />
             </div>
             <h3 className="font-bold text-xl mb-2 text-center">
-              Learn & Share
+              LEARN AND CONTRIBUTE
             </h3>
             <p className="text-gray-600 text-center">
-              Access comprehensive information and share your discoveries
+              Access knowledge and share your insights to our growing database.
             </p>
           </div>
         </div>
@@ -175,30 +176,32 @@ const Landing = () => {
           </p>
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-green-50 p-4 rounded-lg">
-              <p className="text-green-600 text-3xl font-bold">1500+</p>
-              <p className="text-gray-700">Species Documented</p>
+              <p className="text-green-600 text-3xl font-bold">1M+</p>
+              <p className="text-gray-700">
+                Species Facing Extinction Globally
+              </p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
-              <p className="text-green-600 text-3xl font-bold">50+</p>
-              <p className="text-gray-700">Conservation Areas</p>
+              <p className="text-green-600 text-3xl font-bold">76%</p>
+              <p className="text-gray-700">
+                Decline in African Wildlife Since 1970
+              </p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
-              <p className="text-green-600 text-3xl font-bold">10K+</p>
-              <p className="text-gray-700">Community Contributors</p>
+              <p className="text-green-600 text-3xl font-bold">$2.7T</p>
+              <p className="text-gray-700">
+                Potential Annual GDP Loss Due to Biodiversity Decline by 2030
+              </p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
-              <p className="text-green-600 text-3xl font-bold">20+</p>
-              <p className="text-gray-700">Partner Organizations</p>
+              <p className="text-green-600 text-3xl font-bold">12K</p>
+              <p className="text-gray-700">
+                Hectares of Kenyan Forest Lost Annually
+              </p>
             </div>
           </div>
         </div>
-        <div>
-          <img
-            src="/biodiversity.jpg"
-            alt="Biodiversity"
-            className="w-full h-full object-cover rounded-lg"
-          />
-        </div>
+        <SketchfabEmbed />
       </section>
       <Footer />
     </div>

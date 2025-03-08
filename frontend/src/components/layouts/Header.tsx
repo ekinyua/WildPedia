@@ -73,7 +73,7 @@ const Header = () => {
       <div className="max-w-9xl mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
           {/* Logo & Brand */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2 cursor-pointer">
             <FaLeaf className="text-green-600 text-xl" />
             <span className="text-xl font-bold text-green-600">WildPedia</span>
           </Link>
@@ -85,14 +85,14 @@ const Header = () => {
           >
             <input
               type="search"
-              placeholder="Search for species..."
+              placeholder="Search for species...."
               className="border rounded-full pl-4 pr-10 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button
               type="submit"
-              className="p-1 rounded-full bg-green-600 absolute right-2 top-1/2 transform -translate-y-1/2"
+              className="p-1 rounded-full bg-green-600 absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
               title="Search"
             >
               <IoMdSearch className="text-white" size={18} />
@@ -142,7 +142,7 @@ const Header = () => {
               <div className="hidden md:flex items-center mr-4 bg-gray-50 rounded-full px-3 py-1">
                 <div className="flex items-center">
                   <FaTrophy className="text-yellow-500 mr-1" />
-                  <span className="font-bold text-gray-700">
+                  <span className="font-bold text-gray-700 text-xs">
                     {userStats.xp} XP
                   </span>
                 </div>
@@ -153,7 +153,7 @@ const Header = () => {
               <div className="relative" ref={menuRef}>
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="flex items-center space-x-2 focus:outline-none"
+                  className="flex items-center space-x-2 focus:outline-none cursor-pointer"
                   aria-haspopup="true"
                   aria-expanded={isMenuOpen ? "true" : "false"}
                 >
@@ -162,7 +162,7 @@ const Header = () => {
                       <img
                         src={user.profileImageUrl}
                         alt={user.username}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover cursor-pointer"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-green-50 text-green-600">
@@ -210,7 +210,7 @@ const Header = () => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-6 w-6 cursor-pointer"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -238,7 +238,7 @@ const Header = () => {
               />
               <button
                 type="submit"
-                className="p-1 rounded-full bg-green-600 absolute right-2 top-1/2 transform -translate-y-1/2"
+                className="p-1 rounded-full bg-green-600 absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
                 title="search"
               >
                 <IoMdSearch className="text-white" size={18} />

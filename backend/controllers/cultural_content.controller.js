@@ -7,6 +7,17 @@ const culturalContentController = {
             const { speciesId, contentType, title, content, language = 'en', source } = req.body;
             const authorId = req.user.id;
 
+            // Add this debug logging
+            console.log("Attempting to insert with speciesId:", speciesId);
+            console.log("speciesId type:", typeof speciesId);
+            console.log("speciesId length:", speciesId.length);
+
+            // Log to database for later analysis
+            await pool.query(
+                'INSERT INTO debug_species_ids (submitted_id) VALUES ($1)',
+                [speciesId]
+            );
+
             // Input validation
             if (!speciesId || !contentType || !title || !content) {
                 return res.status(400).json({
@@ -41,33 +52,33 @@ const culturalContentController = {
 
     async getSpeciesContent(req, res) {
         try {
-          const { speciesId } = req.params;
-          const { language = 'en' } = req.query;
-          
-          // If user is admin/moderator, show all content
-          const statusFilter = req.user.isAdmin || req.user.isModerator
-            ? ['pending', 'approved', 'rejected']
-            : ['approved'];
-      
-          const content = await culturalContentModel.getBySpeciesId(
-            speciesId, 
-            language, 
-            statusFilter
-          );
-          
-          res.json({
-            speciesId,
-            language,
-            content
-          });
+            const { speciesId } = req.params;
+            const { language = 'en' } = req.query;
+
+            // If user is admin/moderator, show all content
+            const statusFilter = req.user.isAdmin || req.user.isModerator
+                ? ['pending', 'approved', 'rejected']
+                : ['approved'];
+
+            const content = await culturalContentModel.getBySpeciesId(
+                speciesId,
+                language,
+                statusFilter
+            );
+
+            res.json({
+                speciesId,
+                language,
+                content
+            });
         } catch (error) {
-          logger.error(`Error fetching species content: ${error.message}`);
-          res.status(500).json({
-            message: "Error fetching cultural content",
-            error: error.message
-          });
+            logger.error(`Error fetching species content: ${error.message}`);
+            res.status(500).json({
+                message: "Error fetching cultural content",
+                error: error.message
+            });
         }
-      },
+    },
 
     async updateContent(req, res) {
         try {

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { FaCloudUploadAlt } from "react-icons/fa";
+import { FaArrowLeft, FaCloudUploadAlt } from "react-icons/fa";
 import { identifySpeciesFromImage } from "../../services/speciesService";
 import { Species } from "../../models";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SpeciesUpload = () => {
   const navigate = useNavigate();
@@ -115,6 +115,12 @@ const SpeciesUpload = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      <Link
+        to="/"
+        className="flex items-center space-x-2 text-green-600 font-medium hover:text-green-700"
+      >
+        <FaArrowLeft /> <span>Back to Home</span>
+      </Link>
       <h1 className="text-3xl font-bold mb-6">Identify Species</h1>
 
       {/* Upload Section */}
@@ -140,7 +146,7 @@ const SpeciesUpload = () => {
           </p>
           <button
             type="button"
-            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
+            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors cursor-pointer"
           >
             Select Image
           </button>
@@ -157,7 +163,7 @@ const SpeciesUpload = () => {
               <button
                 onClick={handleUpload}
                 disabled={isUploading}
-                className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors w-full disabled:bg-gray-400"
+                className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors w-full disabled:bg-gray-400 cursor-pointer"
               >
                 {isUploading ? "Identifying..." : "Identify Species"}
               </button>
@@ -205,12 +211,12 @@ const SpeciesUpload = () => {
               </div>
               <button
                 onClick={viewSpeciesDetails}
-                className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full"
+                className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full cursor-pointer"
               >
                 Search Database
               </button>
             </div>
-            s
+
             <div className="space-y-4">
               <div className="bg-gray-100 p-4 rounded-md">
                 <h3 className="font-bold mb-2">Species Information</h3>

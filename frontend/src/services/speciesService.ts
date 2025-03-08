@@ -82,6 +82,24 @@ export async function getSpeciesCulturalContent(
   return response.content;
 }
 
+// Post cultural content for a species
+export async function addCulturalContent(data: {
+  speciesId: string;
+  contentType: "myth" | "legend" | "proverb";
+  title: string;
+  content: string;
+  language: string;
+  source?: string;
+}): Promise<CulturalContent> {
+  console.log("Submitting cultural content with speciesId:", data.speciesId);
+
+  if (!data.speciesId || data.speciesId.trim() === "") {
+    throw new Error("Species ID cannot be empty");
+  }
+
+  return api.post<CulturalContent>("/api/cultural-content", data);
+}
+
 // Get scientific facts for a species
 export async function getSpeciesFacts(
   speciesId: string,

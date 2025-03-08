@@ -6,17 +6,22 @@ import {
   FaThumbsUp,
   FaThumbsDown,
   FaHome,
+  FaTimes,
 } from "react-icons/fa";
 import { GiHabitatDome } from "react-icons/gi";
-import { MdFactCheck, MdOutlineNature } from "react-icons/md";
+import { MdFactCheck } from "react-icons/md";
 import { Species, CulturalContent, SpeciesFact } from "../../models";
 import {
   getSpeciesDetails,
   getSpeciesCulturalContent,
   getSpeciesFacts,
 } from "../../services/speciesService";
+import { useAuth } from "../../store/AuthContext";
+import AddCulturalContentForm from "../../components/common/AddCulturalContentForm/AddCulturalContentForm";
 
 const SpeciesDetails = () => {
+  const [showModal, setShowModal] = useState(false);
+  const { user } = useAuth();
   const { compositeKey } = useParams<{ compositeKey: string }>();
   const [species, setSpecies] = useState<Species | null>(null);
   const [culturalContent, setCulturalContent] = useState<CulturalContent[]>([]);
@@ -26,6 +31,23 @@ const SpeciesDetails = () => {
   const [activeLanguage, setActiveLanguage] = useState<"en" | "rw" | "sw">(
     "en"
   );
+  const [defaultContentType, setDefaultContentType] = useState<
+    "myth" | "legend" | "proverb"
+  >("myth");
+
+  const refreshCulturalContent = async () => {
+    if (!compositeKey) return;
+    try {
+      const contentData = await getSpeciesCulturalContent(
+        compositeKey,
+        activeLanguage
+      );
+      setCulturalContent(contentData);
+      setShowModal(false);
+    } catch (err) {
+      console.error("Error refreshing cultural content:", err);
+    }
+  };
 
   useEffect(() => {
     const fetchSpeciesData = async () => {
@@ -38,6 +60,7 @@ const SpeciesDetails = () => {
         // Fetch species details
         const speciesData = await getSpeciesDetails(compositeKey);
         console.log("Species data:", speciesData);
+        console.log("Composite key from API:", speciesData.compositeKey);
         setSpecies(speciesData);
 
         // Fetch cultural content
@@ -104,6 +127,7 @@ const SpeciesDetails = () => {
           <button
             onClick={() => window.history.back()}
             className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            title="back"
           >
             Go Back
           </button>
@@ -117,7 +141,7 @@ const SpeciesDetails = () => {
       <div className="absolute top-4 left-4 z-10">
         <Link
           to="/"
-          className="bg-white bg-opacity-80 p-2 rounded-full text-green-600 hover:text-green-700 hover:bg-opacity-100 transition-colors"
+          className=" bg-opacity-40 p-2 rounded-full text-green-500 hover:text-green-700 hover:bg-opacity-100 transition-colors"
         >
           <FaHome size={24} />
         </Link>
@@ -159,26 +183,28 @@ const SpeciesDetails = () => {
 
           <div className="flex flex-wrap gap-2 mt-4">
             <button
-              className="flex items-center gap-1 bg-green-600 text-white px-3 py-1 rounded-md text-sm"
+              className="flex items-center gap-1 bg-green-600 text-white px-3 py-1 rounded-md text-sm cursor-pointer"
               onClick={() => handleLanguageChange("rw")}
+              title="Translate to Kinyarwanda"
             >
               <FaLanguage /> Translate to Kinyarwanda
             </button>
             <button
-              className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-md text-sm"
+              className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-md text-sm cursor-pointer"
               onClick={() => handleLanguageChange("sw")}
+              title="Translate to Swahili"
             >
               <FaLanguage /> Translate to Swahili
             </button>
             <div className="ml-auto flex gap-2">
               <button
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 cursor-pointer"
                 title="Like"
               >
                 <FaThumbsUp />
               </button>
               <button
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 cursor-pointer"
                 title="Dislike"
               >
                 <FaThumbsDown />
@@ -198,9 +224,20 @@ const SpeciesDetails = () => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 italic">
-              Traditional myth content goes here...
-            </p>
+            <div className="bg-gray-50 p-4 rounded-md text-center">
+              <p className="text-gray-600 mb-2">
+                No myths or legends have been added for this species yet.
+              </p>
+              <button
+                onClick={() => {
+                  setDefaultContentType("myth");
+                  user ? setShowModal(true) : (window.location.href = "/login");
+                }}
+                className="text-green-600 hover:text-green-700 flex items-center gap-1 mx-auto cursor-pointer"
+              >
+                <FaPlus size={14} /> Add a myth or legend
+              </button>
+            </div>
           )}
         </section>
 
@@ -215,9 +252,20 @@ const SpeciesDetails = () => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 italic">
-              Local proverbs content goes here...
-            </p>
+            <div className="bg-gray-50 p-4 rounded-md text-center">
+              <p className="text-gray-600 mb-2">
+                No local proverbs have been added for this species yet.
+              </p>
+              <button
+                onClick={() => {
+                  setDefaultContentType("proverb");
+                  user ? setShowModal(true) : (window.location.href = "/login");
+                }}
+                className="text-green-600 hover:text-green-700 flex items-center gap-1 mx-auto cursor-pointer"
+              >
+                <FaPlus size={14} /> Add a proverb
+              </button>
+            </div>
           )}
         </section>
 
@@ -254,12 +302,45 @@ const SpeciesDetails = () => {
 
           <div className="space-y-4">
             <h3 className="text-lg font-bold">Add Information</h3>
-            <button className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition flex items-center justify-center gap-2">
-              <FaPlus /> Add New Entry
+            <button
+              className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition flex items-center justify-center gap-2 cursor-pointer"
+              onClick={() => {
+                setDefaultContentType("myth"); // Default to myth for the main button
+                user ? setShowModal(true) : (window.location.href = "/login");
+              }}
+            >
+              <FaPlus /> Add Cultural Content
             </button>
           </div>
         </div>
       </div>
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Add Cultural Content</h3>
+              <button
+                onClick={() => setShowModal(false)}
+                className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                title="Close"
+              >
+                <FaTimes />
+              </button>
+            </div>
+
+            <p className="text-xs text-gray-500 mb-4">
+              Species ID: {species?.compositeKey}
+            </p>
+
+            <AddCulturalContentForm
+              speciesId={species?.compositeKey || ""}
+              onSuccess={refreshCulturalContent}
+              onCancel={() => setShowModal(false)}
+              defaultContentType={defaultContentType}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
