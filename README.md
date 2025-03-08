@@ -54,6 +54,8 @@ https://www.figma.com/design/vOxac0bbbkDZxrBK1nVHdg/Capstone-Project?node-id=56-
 
 ## Video Recording
 
+https://drive.google.com/file/d/1ha18yLMkY463gN4lDmp9FZt_TeLM86ZB/view?usp=sharing
+
 ## Database Schema
 
 https://drive.google.com/file/d/1FSooS9udCPcSsObXODU5JpMr5S7AnoC_/view?usp=sharing
