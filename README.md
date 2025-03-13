@@ -2,8 +2,6 @@
 
 **Explore, Learn, and Contribute to the World of Biodiversity!**
 
-[Demo Link (if available)]
-
 ![Landing page](landing_1.png)
 
 ## Overview
@@ -12,35 +10,35 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
 
 **Key Features:**
 
-*   **Species Exploration:** Discover detailed information about species using data from the GBIF API.
-*   **Cultural Knowledge Sharing:** Contribute myths, legends, and proverbs related to different species.
-*   **Gamified Learning:** Earn badges, take quizzes, and track your progress as you learn.
-*   **Image Recognition:** Identify species from images using the Google Vision API.
-*   **Multi-Language Support:** Access content in multiple languages.
+- **Species Exploration:** Discover detailed information about species using data from the GBIF API.
+- **Cultural Knowledge Sharing:** Contribute myths, legends, and proverbs related to different species.
+- **Gamified Learning:** Earn badges, take quizzes, and track your progress as you learn.
+- **Image Recognition:** Identify species from images using the Google Vision API.
+- **Multi-Language Support:** Access content in multiple languages.
 
 ![Identify Species](species_identify.png)
 
 ## Project Structure
 
-*   **Frontend:** React application built with Tailwind CSS (see [`frontend/README.md`](./frontend/README.md)).
-*   **Backend:** Node.js API built with Express, MySQL, and Redis (see [`backend/README.md`](./backend/README.md)).
+- **Frontend:** React application built with Tailwind CSS (see [`frontend/README.md`](./frontend/README.md)).
+- **Backend:** Node.js API built with Express, MySQL, and Redis (see [`backend/README.md`](./backend/README.md)).
 
 ## Tech Stack
 
-*   **Frontend:**
-    *   React
-    *   Tailwind CSS
-    *   [Other relevant libraries, e.g., Axios, React Router]
-*   **Backend:**
-    *   Node.js
-    *   Express
-    *   MySQL
-    *   Redis
-    *   [Other relevant libraries, e.g., Sequelize/Knex, Passport]
-*   **Storage:** AWS S3 (for image storage)
-*   **APIs:**
-    *   GBIF API
-    *   Google Vision API
+- **Frontend:**
+  - React
+  - Tailwind CSS
+  - [Other relevant libraries, e.g., Axios, React Router]
+- **Backend:**
+  - Node.js
+  - Express
+  - MySQL
+  - Redis
+  - [Other relevant libraries, e.g., Sequelize/Knex, Passport]
+- **Storage:** AWS S3 (for image storage)
+- **APIs:**
+  - GBIF API
+  - Google Vision API
 
 ## Setup - Get Started Locally
 
@@ -59,8 +57,8 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
 
 3.  **Configure environment variables:**
 
-    *   Create a `.env` file in both the `frontend` and `backend` directories.
-    *   Refer to `.env.example` files (if present) for the required variables (API keys, database credentials, etc.).
+    - Create a `.env` file in both the `frontend` and `backend` directories.
+    - Refer to `.env.example` files (if present) for the required variables (API keys, database credentials, etc.).
 
 4.  **Start the development servers:**
 
@@ -89,8 +87,8 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
 
 5.  **Access the application:**
 
-    *   Frontend: `http://localhost:3000` (or the port specified in your frontend configuration)
-    *   Backend: `http://localhost:5000` (or the port specified in your backend configuration)
+    - Frontend: `http://localhost:3000` (or the port specified in your frontend configuration)
+    - Backend: `http://localhost:5000` (or the port specified in your backend configuration)
 
 ## Contributing
 

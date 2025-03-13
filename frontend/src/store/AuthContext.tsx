@@ -1,4 +1,3 @@
-// src/store/AuthContext.tsx
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { User } from "../models";
 import {
@@ -7,6 +6,7 @@ import {
   logout as logoutService,
   register as registerService,
 } from "../services/authService";
+import * as jwt_decode from "jwt-decode";
 
 interface AuthContextType {
   user: User | null;
@@ -41,12 +41,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const initAuth = async () => {
       setIsLoading(true);
       try {
-        const currentUser = getCurrentUser();
-        setUser(currentUser);
+        const token = localStorage.getItem("token");
+        if (token) {
+          const decodedToken: { exp: number } = jwt_decode.jwtDecode(token);
+          if (decodedToken.exp * 1000 < Date.now()) {
+            // Token has expired
+            console.warn("Token expired, logging out");
+            logoutService();
+            setUser(null);
+          } else {
+            const currentUser = getCurrentUser();
+            setUser(currentUser);
+          }
+        } else {
+          setUser(null);
+        }
       } catch (err) {
         console.error("Error initializing auth", err);
         // If there's an error loading the user, clear local storage
         logoutService();
+        setUser(null);
       } finally {
         setIsLoading(false);
       }

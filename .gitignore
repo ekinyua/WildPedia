@@ -1,1 +1,13 @@
-/node_modules
+.aider*
+.env
+*.env
+node_modules/
+logs/
+*.log
+dist/
+build/
+postgres_data/
+*.pem
+*.key
+*.crt
+*.json
