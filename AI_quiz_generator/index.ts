@@ -1,4 +1,3 @@
-// quiz-api-server.ts
 import express from "express";
 import type { Request, Response } from "express";
 import dotenv from "dotenv";
@@ -344,7 +343,7 @@ const agentTools = [new TavilySearchResults({ maxResults: 3 })];
 const agentModel = new ChatGoogleGenerativeAI({
   model: "gemini-2.0-pro-exp-02-05",
   apiKey: GOOGLE_API_KEY || "", // Provide empty string fallback
-  temperature: 0.7, // Higher temperature for more variation
+  temperature: 0.2, // Lower temperature for more deterministic output
 });
 
 // Initialize memory to persist state between graph runs
@@ -357,26 +356,35 @@ const agent = createReactAgent({
 
 // Function to generate quiz questions
 async function generateQuizQuestions(
-  content: string,
+  topic: string,
   numQuestions: number = 5,
-  subject: string = "physics"
+  subject: string = "conservation"
 ): Promise<QuizResponse | ErrorResponse> {
-  if (!content) {
-    throw new Error("No content provided");
+  if (!topic) {
+    throw new Error("No topic provided");
   }
 
   // Generate a random seed for question variety
   const randomSeed = Math.floor(Math.random() * 1000);
 
-  const prompt = `Based on the following ${subject} content, generate ${numQuestions} unique and creative multiple choice quiz questions. 
+  const prompt = `You are a quiz generator with expertise in ${subject}.
   
-  Each question should:
-  1. Test understanding of key concepts from the content
-  2. Have 4 options (A, B, C, D) with only one correct answer
-  3. Include the correct answer and a brief explanation
-  4. Use randomization seed: ${randomSeed} to ensure variety
+  Generate ${numQuestions} multiple-choice quiz questions about the topic: "${topic}".
+  
+  Use your knowledge to create informative and educational questions. Each question should:
+  1. Test understanding of key concepts from the content.
+  2. Have 4 options (A, B, C, D) with only one correct answer.
+  3. Include the correct answer and a brief explanation.
+  4. Use randomization seed: ${randomSeed} to ensure variety.
 
-  FORMAT (return JSON format):
+  Return the quiz questions in JSON format. The JSON should have a
+"questions" array. Each object in the array should have "question",
+"options", "correctAnswer", and "explanation" fields. The "options" field
+should be an object with keys "A", "B", "C", and "D". The "correctAnswer"
+field should be one of "A", "B", "C", or "D".
+
+  Here is the JSON format:
+  \`\`\`json
   {
     "questions": [
       {
@@ -392,9 +400,10 @@ async function generateQuizQuestions(
       }
     ]
   }
+  \`\`\`
 
-  CONTENT:
-  ${content}`;
+  Topic:
+  ${topic}`;
 
   try {
     // Create a unique thread_id each time for different context
@@ -426,7 +435,27 @@ async function generateQuizQuestions(
         jsonContent = jsonMatch[1];
       }
 
-      return JSON.parse(jsonContent) as QuizResponse;
+      const parsedQuiz = JSON.parse(jsonContent) as QuizResponse;
+
+      // Validate the parsed JSON
+      if (!parsedQuiz.questions || !Array.isArray(parsedQuiz.questions)) {
+        throw new Error("Invalid JSON format: Missing 'questions' array.");
+      }
+
+      parsedQuiz.questions.forEach((question, index) => {
+        if (
+          !question.question ||
+          !question.options ||
+          !question.correctAnswer ||
+          !question.explanation
+        ) {
+          throw new Error(
+            `Invalid JSON format: Missing fields in question ${index + 1}.`
+          );
+        }
+      });
+
+      return parsedQuiz;
     } catch (parseError) {
       console.error("Failed to parse response as JSON:", parseError);
       // Return the raw content if parsing fails

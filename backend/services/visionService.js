@@ -6,12 +6,12 @@ const fs = require('fs');
 // Log the environment variable
 console.log('Google Vision keyfile path:', process.env.GOOGLE_VISION_KEYFILE);
 
-// Try different paths to locate the key file
+// paths to locate the key file
 const possiblePaths = [
     process.env.GOOGLE_VISION_KEYFILE,
-    path.resolve(__dirname, '../neuralninevisionproject-449711-aa07c7cc5bae.json'),
-    path.resolve(__dirname, '../../neuralninevisionproject-449711-aa07c7cc5bae.json'),
-    './neuralninevisionproject-449711-aa07c7cc5bae.json'
+    path.resolve(__dirname, '../neuralninevisionproject-449711-a04d0c8ec335.json'),
+    path.resolve(__dirname, '../../neuralninevisionproject-449711-a04d0c8ec335.json'),
+    './neuralninevisionproject-449711-a04d0c8ec335.json'
 ];
 
 let keyFilename = null;
