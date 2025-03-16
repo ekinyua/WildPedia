@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import { MdLocationOn, MdOutlinePhotoCamera } from "react-icons/md";
@@ -13,6 +13,7 @@ import SketchfabEmbed from "../../components/common/SketchFabEmbed/SketchfabEmbe
 const Landing = () => {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
+  const resultsRef = useRef<HTMLDivElement>(null);
   const [search, setSearch] = useState(searchQuery);
   const [species, setSpecies] = useState<Species[]>([]);
   const [location, setLocation] = useState("");
@@ -26,6 +27,13 @@ const Landing = () => {
         const response = await getSpecies(searchQuery);
         setSpecies(response.results);
         setLocation(response.location);
+
+        if (searchQuery && resultsRef.current) {
+          setTimeout(() => {
+            resultsRef.current?.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        }
+        console.log("Species data:", response.results);
       } catch (error) {
         console.error("Error fetching species:", error);
       } finally {
@@ -38,12 +46,13 @@ const Landing = () => {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const params = new URLSearchParams();
     if (search) {
+      const params = new URLSearchParams();
       params.append("search", search);
+      window.history.pushState({}, "", `/?${params.toString()}`);
+      window.dispatchEvent(new Event("popstate"));
+      setSearch("");
     }
-    window.history.pushState({}, "", `/?${params.toString()}`);
-    window.dispatchEvent(new Event("popstate"));
   };
 
   const toggleMute = () => {
@@ -74,7 +83,7 @@ const Landing = () => {
         </div>
       </div>
 
-      <section className="max-w-xl mx-auto mt-6">
+      <section className="max-w-xl mx-auto mt-6" ref={resultsRef}>
         <form onSubmit={handleSearchSubmit}>
           <div className="flex items-center relative">
             <input

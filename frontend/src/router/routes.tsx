@@ -45,11 +45,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "learn",
-        element: <Learning />,
+        element: (
+          <ProtectedRoute>
+            <Learning />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "learn/:category",
-        element: <QuizPage />,
+        element: (
+          <ProtectedRoute>
+            <QuizPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "organizations",

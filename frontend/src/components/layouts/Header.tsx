@@ -114,12 +114,14 @@ const Header = () => {
               Learn
             </Link>
 
-            <Link
-              to="/leaderboard"
-              className="text-gray-700 hover:text-green-600 transition-colors"
-            >
-              Leaderboard
-            </Link>
+            {user && (
+              <Link
+                to="/leaderboard"
+                className="text-gray-700 hover:text-green-600 transition-colors"
+              >
+                Leaderboard
+              </Link>
+            )}
 
             <Link
               to="/organizations"

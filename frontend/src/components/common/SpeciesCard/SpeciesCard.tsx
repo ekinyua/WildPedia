@@ -11,23 +11,24 @@ const SpeciesCard = ({ species, className = "" }: SpeciesCardProps) => {
   const getStatusColor = (status?: string) => {
     if (!status) return "bg-gray-300/40";
 
-    switch (status.toLowerCase()) {
-      case "least concern":
-        return "bg-green-500/40 text-green-800";
-      case "near threatened":
-        return "bg-yellow-500/40 text-yellow-800";
-      case "vulnerable":
-        return "bg-orange-500/40 text-orange-800";
-      case "endangered":
-        return "bg-red-500/40 text-red-800";
-      case "critically endangered":
-        return "bg-red-600/60 text-red-900";
-      case "extinct in the wild":
-      case "extinct":
-        return "bg-black/60 text-white";
-      default:
-        return "bg-gray-300/40";
-    }
+    const statusLower = status.toLowerCase();
+
+    // Check for substrings instead of exact matches
+    if (statusLower.includes("least concern"))
+      return "bg-green-500/40 text-green-800";
+    if (statusLower.includes("near threatened"))
+      return "bg-yellow-500/40 text-yellow-800";
+    if (statusLower.includes("vulnerable"))
+      return "bg-orange-500/40 text-orange-800";
+    if (
+      statusLower.includes("endangered") &&
+      !statusLower.includes("critically")
+    )
+      return "bg-red-500/40 text-red-800";
+    if (statusLower.includes("critically")) return "bg-red-600/60 text-red-900";
+    if (statusLower.includes("extinct")) return "bg-black/60 text-white";
+
+    return "bg-gray-300/40";
   };
 
   return (
@@ -46,6 +47,7 @@ const SpeciesCard = ({ species, className = "" }: SpeciesCardProps) => {
             {species.vernacularNames?.[0] || "Unknown"}
           </h3>
           <p className="italic text-gray-600">{species.scientificName}</p>
+
           {species.threat_status && (
             <span
               className={`${getStatusColor(

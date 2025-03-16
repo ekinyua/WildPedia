@@ -18,10 +18,13 @@ import {
 } from "../../services/speciesService";
 import { useAuth } from "../../store/AuthContext";
 import AddCulturalContentForm from "../../components/common/AddCulturalContentForm/AddCulturalContentForm";
+import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "../../services/authService";
 
 const SpeciesDetails = () => {
   const [showModal, setShowModal] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { compositeKey } = useParams<{ compositeKey: string }>();
   const [species, setSpecies] = useState<Species | null>(null);
   const [culturalContent, setCulturalContent] = useState<CulturalContent[]>([]);
@@ -34,6 +37,29 @@ const SpeciesDetails = () => {
   const [defaultContentType, setDefaultContentType] = useState<
     "myth" | "legend" | "proverb"
   >("myth");
+
+  const getStatusColor = (status?: string) => {
+    if (!status) return "bg-gray-300/40";
+
+    const statusLower = status.toLowerCase();
+
+    // Check for substrings instead of exact matches
+    if (statusLower.includes("least concern"))
+      return "bg-green-500/40 text-green-800";
+    if (statusLower.includes("near threatened"))
+      return "bg-yellow-500/40 text-yellow-800";
+    if (statusLower.includes("vulnerable"))
+      return "bg-orange-500/40 text-orange-800";
+    if (
+      statusLower.includes("endangered") &&
+      !statusLower.includes("critically")
+    )
+      return "bg-red-500/40 text-red-800";
+    if (statusLower.includes("critically")) return "bg-red-600/60 text-red-900";
+    if (statusLower.includes("extinct")) return "bg-black/60 text-white";
+
+    return "bg-gray-300/40";
+  };
 
   const refreshCulturalContent = async () => {
     if (!compositeKey) return;
@@ -48,6 +74,14 @@ const SpeciesDetails = () => {
       console.error("Error refreshing cultural content:", err);
     }
   };
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate("/login", {
+        state: { from: { pathname: window.location.pathname } },
+      });
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchSpeciesData = async () => {
@@ -293,7 +327,13 @@ const SpeciesDetails = () => {
                   </span>
                   <div>
                     <span className="font-medium">Conservation Status: </span>
-                    <span>{species.threat_status}</span>
+                    <span
+                      className={`${getStatusColor(
+                        species.threat_status
+                      )} rounded-md p-1 inline-block px-2 text-sm`}
+                    >
+                      {species.threat_status}
+                    </span>
                   </div>
                 </div>
               )}
