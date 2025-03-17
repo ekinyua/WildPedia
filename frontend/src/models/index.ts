@@ -33,14 +33,21 @@ export interface User {
 export interface CulturalContent {
   id: number;
   speciesId: string;
+  content_type: "myth" | "legend" | "proverb";
   contentType: "myth" | "legend" | "proverb";
   title: string;
   content: string;
   language: "en" | "rw" | "sw";
   source?: string;
   authorId: number;
+  author_name?: string;
   authorName?: string;
   status: "pending" | "approved" | "rejected";
+  votes: number;
+  upvotes: number;
+  downvotes: number;
+  userVoteDirection?: "up" | "down" | null;
+  hasVoted?: boolean;
   createdAt: string;
   updatedAt: string;
 }

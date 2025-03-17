@@ -20,6 +20,7 @@ import { useAuth } from "../../store/AuthContext";
 import AddCulturalContentForm from "../../components/common/AddCulturalContentForm/AddCulturalContentForm";
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../../services/authService";
+import { voteForContent } from "../../services/speciesService";
 
 const SpeciesDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -34,6 +35,21 @@ const SpeciesDetails = () => {
   const [activeLanguage, setActiveLanguage] = useState<"en" | "rw" | "sw">(
     "en"
   );
+
+  const handleVote = async (contentId: number, direction: "up" | "down") => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await voteForContent(contentId, direction);
+      await refreshCulturalContent();
+    } catch (error) {
+      console.error(`Error voting for content:`, error);
+    }
+  };
+
   const [defaultContentType, setDefaultContentType] = useState<
     "myth" | "legend" | "proverb"
   >("myth");
@@ -128,16 +144,19 @@ const SpeciesDetails = () => {
 
   // Function to get myths and legends from cultural content
   const getMyths = () => {
-    return culturalContent.filter(
-      (content) =>
-        content.contentType === "myth" || content.contentType === "legend"
-    );
+    console.log("cultural content", culturalContent);
+    return culturalContent.filter((content) => {
+      console.log("Content Type:", content.content_type);
+      return (
+        content.content_type === "myth" || content.content_type === "legend"
+      );
+    });
   };
 
   // Function to get proverbs from cultural content
   const getProverbs = () => {
     return culturalContent.filter(
-      (content) => content.contentType === "proverb"
+      (content) => content.content_type === "proverb"
     );
   };
 
@@ -247,99 +266,213 @@ const SpeciesDetails = () => {
           </div>
         </section>
 
-        <section className="border-t pt-4">
-          <h2 className="text-xl font-bold mb-4">Myths & Legends</h2>
-          {getMyths().length > 0 ? (
-            <div className="space-y-3">
-              {getMyths().map((content) => (
-                <div key={content.id}>
-                  <p className="text-gray-700">{content.content}</p>
+        <div className="space-y-4 border-t border-gray-400 border-dotted pt-4">
+          <h3 className="text-lg font-bold">Quick Facts</h3>
+
+          <div className="space-y-3">
+            {species.habitat && (
+              <div className="flex gap-2 items-start">
+                <span className="text-green-600 mt-1">
+                  <GiHabitatDome />
+                </span>
+                <div>
+                  <span className="font-medium">Habitat: </span>
+                  <span>{species.habitat}</span>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-gray-50 p-4 rounded-md text-center">
-              <p className="text-gray-600 mb-2">
-                No myths or legends have been added for this species yet.
-              </p>
-              <button
-                onClick={() => {
-                  setDefaultContentType("myth");
-                  user ? setShowModal(true) : (window.location.href = "/login");
-                }}
-                className="text-green-600 hover:text-green-700 flex items-center gap-1 mx-auto cursor-pointer"
-              >
-                <FaPlus size={14} /> Add a myth or legend
-              </button>
-            </div>
-          )}
-        </section>
+              </div>
+            )}
 
-        <section className="border-t pt-4">
-          <h2 className="text-xl font-bold mb-4">Local Proverbs</h2>
-          {getProverbs().length > 0 ? (
-            <div className="space-y-3">
-              {getProverbs().map((content) => (
-                <div key={content.id}>
-                  <p className="text-gray-700">{content.content}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-gray-50 p-4 rounded-md text-center">
-              <p className="text-gray-600 mb-2">
-                No local proverbs have been added for this species yet.
-              </p>
-              <button
-                onClick={() => {
-                  setDefaultContentType("proverb");
-                  user ? setShowModal(true) : (window.location.href = "/login");
-                }}
-                className="text-green-600 hover:text-green-700 flex items-center gap-1 mx-auto cursor-pointer"
-              >
-                <FaPlus size={14} /> Add a proverb
-              </button>
-            </div>
-          )}
-        </section>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-4">
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold">Quick Facts</h3>
-
-            <div className="space-y-3">
-              {species.habitat && (
-                <div className="flex gap-2 items-start">
-                  <span className="text-green-600 mt-1">
-                    <GiHabitatDome />
+            {species.threat_status && (
+              <div className="flex gap-2 items-start">
+                <span className="text-green-600 mt-1">
+                  <MdFactCheck />
+                </span>
+                <div>
+                  <span className="font-medium">Conservation Status: </span>
+                  <span
+                    className={`${getStatusColor(
+                      species.threat_status
+                    )} rounded-md p-1 inline-block px-2 text-sm`}
+                  >
+                    {species.threat_status}
                   </span>
-                  <div>
-                    <span className="font-medium">Habitat: </span>
-                    <span>{species.habitat}</span>
-                  </div>
                 </div>
-              )}
-
-              {species.threat_status && (
-                <div className="flex gap-2 items-start">
-                  <span className="text-green-600 mt-1">
-                    <MdFactCheck />
-                  </span>
-                  <div>
-                    <span className="font-medium">Conservation Status: </span>
-                    <span
-                      className={`${getStatusColor(
-                        species.threat_status
-                      )} rounded-md p-1 inline-block px-2 text-sm`}
-                    >
-                      {species.threat_status}
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
+        </div>
 
+        <section className="border-t border-gray-400 border-dotted pt-4">
+          <h2 className="text-xl font-bold mb-4">Myths & Legends</h2>
+          {(() => {
+            const myths = getMyths();
+            return myths.length > 0 ? (
+              <div className="space-y-3">
+                {myths.map((content) => (
+                  <div
+                    key={content.id}
+                    className="bg-gray-50 p-4 rounded-md shadow-sm"
+                  >
+                    <div className="flex justify-between items-start">
+                      {/* Content */}
+                      <div className="flex-1">
+                        <h3 className="font-medium mb-2">{content.title}</h3>
+                        <p className="text-gray-700">{content.content}</p>
+                        <div className="text-sm text-gray-500 mt-3">
+                          Shared by: {content.authorName || "Anonymous"}
+                        </div>
+                      </div>
+
+                      {/* Voting UI */}
+                      <div className="flex flex-row items-center ml-4 pl-4">
+                        {/* Upvote */}
+                        <button
+                          onClick={() => handleVote(content.id, "up")}
+                          className={`flex items-center space-x-1 cursor-pointer p-1 rounded ${
+                            content.userVoteDirection === "up"
+                              ? "bg-green-100 text-green-600"
+                              : "text-gray-500 hover:text-green-600"
+                          }`}
+                          title="Upvote this content"
+                        >
+                          <FaThumbsUp />
+                          <span className="text-sm font-medium">
+                            {content.upvotes || 0}
+                          </span>
+                        </button>
+
+                        {/* Net votes */}
+                        {/* <div className="text-sm font-bold my-1">
+                          {(content.upvotes || 0) - (content.downvotes || 0)}
+                        </div> */}
+
+                        {/* Downvote */}
+                        <button
+                          onClick={() => handleVote(content.id, "down")}
+                          className={`flex items-center space-x-1 cursor-pointer p-1 rounded ${
+                            content.userVoteDirection === "down"
+                              ? "bg-red-100 text-red-600"
+                              : "text-gray-500 hover:text-red-600"
+                          }`}
+                          title="Downvote this content"
+                        >
+                          <FaThumbsDown />
+                          <span className="text-sm font-medium">
+                            {content.downvotes || 0}
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-gray-50 p-4 rounded-md text-center">
+                <p className="text-gray-600 mb-2">
+                  No myths or legends have been added for this species yet.
+                </p>
+                <button
+                  onClick={() => {
+                    setDefaultContentType("myth");
+                    user
+                      ? setShowModal(true)
+                      : (window.location.href = "/login");
+                  }}
+                  className="text-green-600 hover:text-green-700 flex items-center gap-1 mx-auto cursor-pointer"
+                >
+                  <FaPlus size={14} /> Add a myth or legend
+                </button>
+              </div>
+            );
+          })()}
+        </section>
+
+        <section className="border-t border-gray-400 border-dotted pt-4">
+          <h2 className="text-xl font-bold mb-4">Local Proverbs</h2>
+          {(() => {
+            const proverbs = getProverbs();
+            return proverbs.length > 0 ? (
+              <div className="space-y-3">
+                {proverbs.map((content) => (
+                  <div
+                    key={content.id}
+                    className="bg-gray-50 p-4 rounded-md shadow-sm"
+                  >
+                    <div className="flex justify-between items-start">
+                      {/* Content */}
+                      <div className="flex-1">
+                        <h3 className="font-medium mb-2">{content.title}</h3>
+                        <p className="text-gray-700">{content.content}</p>
+                        <div className="text-sm text-gray-500 mt-3">
+                          Shared by: {content.authorName || "Anonymous"}
+                        </div>
+                      </div>
+
+                      {/* Voting UI */}
+                      <div className="flex flex-row items-center ml-4 pl-4">
+                        {/* Upvote */}
+                        <button
+                          onClick={() => handleVote(content.id, "up")}
+                          className={`flex items-center space-x-1 cursor-pointer p-1 rounded ${
+                            content.userVoteDirection === "up"
+                              ? "bg-green-100 text-green-600"
+                              : "text-gray-500 hover:text-green-600"
+                          }`}
+                          title="Upvote this content"
+                        >
+                          <FaThumbsUp />
+                          <span className="text-sm font-medium">
+                            {content.upvotes || 0}
+                          </span>
+                        </button>
+
+                        {/* Net votes */}
+                        {/* <div className="text-sm font-bold my-1">
+                          {(content.upvotes || 0) - (content.downvotes || 0)}
+                        </div> */}
+
+                        {/* Downvote */}
+                        <button
+                          onClick={() => handleVote(content.id, "down")}
+                          className={`flex items-center space-x-1 cursor-pointer p-1 rounded ${
+                            content.userVoteDirection === "down"
+                              ? "bg-red-100 text-red-600"
+                              : "text-gray-500 hover:text-red-600"
+                          }`}
+                          title="Downvote this content"
+                        >
+                          <FaThumbsDown />
+                          <span className="text-sm font-medium">
+                            {content.downvotes || 0}
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-gray-50 p-4 rounded-md text-center">
+                <p className="text-gray-600 mb-2">
+                  No local proverbs have been added for this species yet.
+                </p>
+                <button
+                  onClick={() => {
+                    setDefaultContentType("proverb");
+                    user
+                      ? setShowModal(true)
+                      : (window.location.href = "/login");
+                  }}
+                  className="text-green-600 hover:text-green-700 flex items-center gap-1 mx-auto cursor-pointer"
+                >
+                  <FaPlus size={14} /> Add a proverb
+                </button>
+              </div>
+            );
+          })()}
+        </section>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-gray-400 border-dotted pt-4">
           <div className="space-y-4">
             <h3 className="text-lg font-bold">Add Information</h3>
             <button

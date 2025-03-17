@@ -1,5 +1,6 @@
 const culturalContentModel = require('../models/cultural_content.model');
 const logger = require('../logger');
+const pool = require('../models/db')
 
 const culturalContentController = {
     async createContent(req, res) {
@@ -54,16 +55,17 @@ const culturalContentController = {
         try {
             const { speciesId } = req.params;
             const { language = 'en' } = req.query;
+            const userId = req.user?.id || null;
 
             // If user is admin/moderator, show all content
-            const statusFilter = req.user.isAdmin || req.user.isModerator
-                ? ['pending', 'approved', 'rejected']
-                : ['approved'];
+            // const statusFilter = req.user.isAdmin || req.user.isModerator
+            //     ? ['pending', 'approved', 'rejected']
+            //     : ['approved'];
 
             const content = await culturalContentModel.getBySpeciesId(
                 speciesId,
                 language,
-                statusFilter
+                userId
             );
 
             res.json({

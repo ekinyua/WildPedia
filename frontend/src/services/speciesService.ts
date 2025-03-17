@@ -63,6 +63,15 @@ export async function getSpeciesDetails(
   return api.get<Species>(`/api/species/${compositeKey}`);
 }
 
+export async function voteForContent(
+  contentId: number,
+  direction: "up" | "down"
+): Promise<CulturalContent> {
+  return api.post<CulturalContent>(`/api/cultural-content/${contentId}/vote`, {
+    direction,
+  });
+}
+
 // Get cultural content for a species
 export async function getSpeciesCulturalContent(
   speciesId: string,
@@ -70,16 +79,18 @@ export async function getSpeciesCulturalContent(
 ): Promise<CulturalContent[]> {
   if (USE_MOCK_DATA) {
     await delay(400);
-    return mockCulturalContent.filter(
-      (content) =>
-        content.speciesId === speciesId && content.language === language
-    );
+    return mockCulturalContent
+      .filter(
+        (content) =>
+          content.speciesId === speciesId && content.language === language
+      )
+      .sort((a, b) => (b.votes || 0) - (a.votes || 0));
   }
 
   const response = await api.get<{ content: CulturalContent[] }>(
     `/api/cultural-content/species/${speciesId}?language=${language}`
   );
-  return response.content;
+  return response.content.sort((a, b) => (b.votes || 0) - (a.votes || 0));
 }
 
 // Post cultural content for a species

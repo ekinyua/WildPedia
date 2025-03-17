@@ -6,9 +6,9 @@ const culturalContentModel = {
         try {
             const result = await pool.query(
                 `INSERT INTO cultural_content 
-         (species_id, content_type, title, content, language, source, author_id)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)
-         RETURNING *`,
+                 (species_id, content_type, title, content, language, source, author_id, status)
+                 VALUES ($1, $2, $3, $4, $5, $6, $7, 'approved')
+                 RETURNING *`,
                 [speciesId, contentType, title, content, language, source, authorId]
             );
             return result.rows[0];
@@ -18,18 +18,19 @@ const culturalContentModel = {
         }
     },
 
-    async getBySpeciesId(speciesId, language = 'en', includeStatus = ['approved']) {
+    async getBySpeciesId(speciesId, language = 'en', userId = null) {
         try {
             const result = await pool.query(
                 `SELECT cc.*, u.username as author_name,
-         (SELECT username FROM users WHERE id = cc.last_modified_by) as modifier_name
-         FROM cultural_content cc
-         JOIN users u ON cc.author_id = u.id
-         WHERE cc.species_id = $1 
-         AND cc.language = $2 
-         AND cc.status = ANY($3)
-         ORDER BY cc.created_at DESC`,
-                [speciesId, language, includeStatus]
+             (SELECT username FROM users WHERE id = cc.last_modified_by) as modifier_name,
+             (SELECT vote_direction FROM cultural_content_votes 
+              WHERE content_id = cc.id AND user_id = $3) as user_vote_direction
+             FROM cultural_content cc
+             JOIN users u ON cc.author_id = u.id
+             WHERE cc.species_id = $1 
+             AND cc.language = $2 
+             ORDER BY (cc.upvotes - cc.downvotes) DESC, cc.created_at DESC`,
+                [speciesId, language, userId]
             );
             return result.rows;
         } catch (error) {
