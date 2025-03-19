@@ -28,14 +28,12 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
 - **Frontend:**
   - React
   - Tailwind CSS
-  - [Other relevant libraries, e.g., Axios, React Router]
 - **Backend:**
   - Node.js
   - Express
-  - MySQL
+  - Postgresql
   - Redis
-  - [Other relevant libraries, e.g., Sequelize/Knex, Passport]
-- **Storage:** AWS S3 (for image storage)
+- **Storage:** AWS S3 (for sound storage)
 - **APIs:**
   - GBIF API
   - Google Vision API
@@ -94,9 +92,6 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
 
 We welcome contributions to WildPedia! Please see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for guidelines on how to contribute.
 
-## License
-
-[Specify the license, e.g., MIT License]
 
 ## Figma Design
 
