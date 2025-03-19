@@ -28,7 +28,8 @@ const culturalContentModel = {
              FROM cultural_content cc
              JOIN users u ON cc.author_id = u.id
              WHERE cc.species_id = $1 
-             AND cc.language = $2 
+             AND cc.language = $2
+             AND cc.deleted_at IS NULL 
              ORDER BY (cc.upvotes - cc.downvotes) DESC, cc.created_at DESC`,
                 [speciesId, language, userId]
             );
@@ -97,24 +98,31 @@ const culturalContentModel = {
 
     async delete(contentId, modifierId) {
         try {
-            // First record the deletion in history
-            await pool.query(
-                `INSERT INTO cultural_content_history 
-         (content_id, modified_by, modification_type, old_status, old_content)
-         SELECT id, $2, 'delete', status, content
-         FROM cultural_content
-         WHERE id = $1`,
+            // recoding deleted content as deleted
+            const result = await pool.query(
+                `UPDATE cultural_content
+                 SET deleted_at = CURRENT_TIMESTAMP,
+                     last_modified_by = $2
+                 WHERE id = $1
+                 RETURNING *`,
                 [contentId, modifierId]
             );
 
-            // Then delete the content
-            const result = await pool.query(
-                'DELETE FROM cultural_content WHERE id = $1 RETURNING *',
-                [contentId]
+            if (result.rows.length === 0) {
+                throw new Error('Content not found');
+            }
+
+            // Recording in the history table
+            await pool.query(
+                `INSERT INTO cultural_content_history 
+                 (content_id, modified_by, modification_type, old_status, old_content)
+                 VALUES ($1, $2, 'delete', $3, $4)`,
+                [contentId, modifierId, result.rows[0].status, result.rows[0].content]
             );
+
             return result.rows[0];
         } catch (error) {
-            logger.error(`Error deleting cultural content: ${error.message}`);
+            logger.error(`Error soft-deleting cultural content: ${error.message}`);
             throw error;
         }
     },

@@ -185,3 +185,20 @@ export async function identifySpeciesFromImage(imageFile: File): Promise<{
     throw error;
   }
 }
+
+// Update cultural content
+export async function updateCulturalContent(
+  contentId: number,
+  data: {
+    title?: string;
+    content?: string;
+    source?: string;
+  }
+): Promise<CulturalContent> {
+  return api.put<CulturalContent>(`/api/cultural-content/${contentId}`, data);
+}
+
+// Delete cultural content
+export async function deleteCulturalContent(contentId: number): Promise<void> {
+  return api.delete<void>(`/api/cultural-content/${contentId}`);
+}

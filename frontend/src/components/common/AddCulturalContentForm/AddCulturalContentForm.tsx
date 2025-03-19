@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { addCulturalContent } from "../../../services/speciesService";
+import {
+  addCulturalContent,
+  updateCulturalContent,
+} from "../../../services/speciesService";
+import { CulturalContent } from "../../../models";
 
 interface AddCulturalContentFormProps {
   speciesId: string;
   onSuccess: () => void;
   onCancel: () => void;
   defaultContentType?: "myth" | "legend" | "proverb";
+  editingContent?: CulturalContent | null;
 }
 
 const AddCulturalContentForm = ({
@@ -13,15 +18,16 @@ const AddCulturalContentForm = ({
   onSuccess,
   onCancel,
   defaultContentType = "myth",
+  editingContent = null,
 }: AddCulturalContentFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    contentType: defaultContentType,
-    title: "",
-    content: "",
-    language: "en",
-    source: "",
+    contentType: editingContent?.contentType || defaultContentType,
+    title: editingContent?.title || "",
+    content: editingContent?.content || "",
+    language: editingContent?.language || "en",
+    source: editingContent?.source || "",
   });
 
   const handleChange = (
@@ -39,14 +45,24 @@ const AddCulturalContentForm = ({
     setError(null);
 
     try {
-      await addCulturalContent({
-        speciesId,
-        contentType: formData.contentType,
-        title: formData.title,
-        content: formData.content,
-        language: formData.language,
-        source: formData.source || undefined,
-      });
+      if (editingContent) {
+        // Update existing content
+        await updateCulturalContent(editingContent.id, {
+          title: formData.title,
+          content: formData.content,
+          source: formData.source,
+        });
+      } else {
+        // Create new content
+        await addCulturalContent({
+          speciesId,
+          contentType: formData.contentType,
+          title: formData.title,
+          content: formData.content,
+          language: formData.language,
+          source: formData.source || undefined,
+        });
+      }
       onSuccess();
     } catch (err: any) {
       setError(err.message || "Failed to submit content");

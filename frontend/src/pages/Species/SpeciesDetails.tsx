@@ -15,6 +15,7 @@ import {
   getSpeciesDetails,
   getSpeciesCulturalContent,
   getSpeciesFacts,
+  deleteCulturalContent,
 } from "../../services/speciesService";
 import { useAuth } from "../../store/AuthContext";
 import AddCulturalContentForm from "../../components/common/AddCulturalContentForm/AddCulturalContentForm";
@@ -39,6 +40,27 @@ const SpeciesDetails = () => {
   );
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [editingContent, setEditingContent] = useState<CulturalContent | null>(
+    null
+  );
+
+  // Handler for edit button
+  const handleEditContent = (content: CulturalContent) => {
+    setEditingContent(content);
+    setShowModal(true);
+  };
+
+  // Handler for delete button
+  const handleDeleteContent = async (contentId: number) => {
+    if (window.confirm("Are you sure you want to delete this content?")) {
+      try {
+        await deleteCulturalContent(contentId);
+        await refreshCulturalContent();
+      } catch (error) {
+        console.error("Error deleting content:", error);
+      }
+    }
+  };
 
   const handleVote = async (contentId: number, direction: "up" | "down") => {
     if (!user) {
@@ -379,6 +401,22 @@ const SpeciesDetails = () => {
                         <p className="text-gray-700">{content.content}</p>
                         <div className="text-sm text-gray-500 mt-3">
                           Shared by: {content.author_name || "Anonymous"}
+                          {user && content.authorId === user.id && (
+                            <div className="mt-2 space-x-2">
+                              <button
+                                onClick={() => handleEditContent(content)}
+                                className="bg-blue-600/80 text-white hover:bg-blue-800 rounded-md px-3 py-1 text-sm cursor-pointer"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleDeleteContent(content.id)}
+                                className="bg-red-700/80 text-white hover:bg-red-800 rounded-md px-3 py-1 text-sm cursor-pointer"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -464,6 +502,22 @@ const SpeciesDetails = () => {
                         <p className="text-gray-700">{content.content}</p>
                         <div className="text-sm text-gray-500 mt-3">
                           Shared by: {content.author_name || "Anonymous"}
+                          {user && content.authorId === user.id && (
+                            <div className="mt-2 space-x-2">
+                              <button
+                                onClick={() => handleEditContent(content)}
+                                className="bg-blue-600/80 text-white hover:bg-blue-800 rounded-md px-3 py-1 text-sm cursor-pointer"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleDeleteContent(content.id)}
+                                className="bg-red-700/80 text-white hover:bg-red-800 rounded-md px-3 py-1 text-sm cursor-pointer"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -550,9 +604,16 @@ const SpeciesDetails = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-bold">Add Cultural Content</h3>
+              <h3 className="text-xl font-bold">
+                {editingContent
+                  ? "Edit Cultural Content"
+                  : "Add Cultural Content"}
+              </h3>
               <button
-                onClick={() => setShowModal(false)}
+                onClick={() => {
+                  setShowModal(false);
+                  setEditingContent(null); // Clear editing state when closing
+                }}
                 className="text-gray-500 hover:text-gray-700 cursor-pointer"
                 title="Close"
               >
@@ -566,9 +627,16 @@ const SpeciesDetails = () => {
 
             <AddCulturalContentForm
               speciesId={species?.compositeKey || ""}
-              onSuccess={refreshCulturalContent}
-              onCancel={() => setShowModal(false)}
+              onSuccess={() => {
+                refreshCulturalContent();
+                setEditingContent(null); // Clear editing state on success
+              }}
+              onCancel={() => {
+                setShowModal(false);
+                setEditingContent(null); // Clear editing state on cancel
+              }}
               defaultContentType={defaultContentType}
+              editingContent={editingContent}
             />
           </div>
         </div>
