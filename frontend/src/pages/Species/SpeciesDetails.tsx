@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   FaLanguage,
@@ -21,6 +21,7 @@ import AddCulturalContentForm from "../../components/common/AddCulturalContentFo
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../../services/authService";
 import { voteForContent } from "../../services/speciesService";
+import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 
 const SpeciesDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -35,6 +36,8 @@ const SpeciesDetails = () => {
   const [activeLanguage, setActiveLanguage] = useState<"en" | "rw" | "sw">(
     "en"
   );
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const handleVote = async (contentId: number, direction: "up" | "down") => {
     if (!user) {
@@ -138,6 +141,29 @@ const SpeciesDetails = () => {
     window.scrollTo(0, 0);
   }, [compositeKey]);
 
+  //   animal sounds
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
+  const toggleSound = () => {
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    } else {
+      audioRef.current
+        .play()
+        .catch((e) => console.error("Audio playback error:", e));
+    }
+    setIsPlaying(!isPlaying);
+  };
+
   const handleLanguageChange = (language: "en" | "rw" | "sw") => {
     setActiveLanguage(language);
   };
@@ -233,6 +259,26 @@ const SpeciesDetails = () => {
             {species.description ||
               "A large evergreen tree native to the mountainous regions of Africa, reaching heights of up to 40 meters."}
           </p>
+          {species.sound_url && (
+            <div className="mt-4">
+              <button
+                onClick={toggleSound}
+                className="flex items-center gap-1 bg-green-700 text-white text-sm px-3 py-1 rounded-lg hover:bg-green-600 cursor-pointer ring-2 ring-offset-1 ring-green-400 ring-opacity-60
+  shadow-lg shadow-green-400/50
+  transition-all duration-200"
+              >
+                {isPlaying ? <FaVolumeMute /> : <FaVolumeUp />}
+                {isPlaying ? "Stop" : "Listen to"}{" "}
+                {species.vernacularNames?.[0] || species.scientificName}
+              </button>
+              <audio
+                ref={audioRef}
+                src={species.sound_url}
+                onEnded={() => setIsPlaying(false)}
+                preload="none"
+              />
+            </div>
+          )}
 
           <div className="flex flex-wrap gap-2 mt-4">
             <button
@@ -319,7 +365,7 @@ const SpeciesDetails = () => {
                         <h3 className="font-medium mb-2">{content.title}</h3>
                         <p className="text-gray-700">{content.content}</p>
                         <div className="text-sm text-gray-500 mt-3">
-                          Shared by: {content.authorName || "Anonymous"}
+                          Shared by: {content.author_name || "Anonymous"}
                         </div>
                       </div>
 
@@ -404,7 +450,7 @@ const SpeciesDetails = () => {
                         <h3 className="font-medium mb-2">{content.title}</h3>
                         <p className="text-gray-700">{content.content}</p>
                         <div className="text-sm text-gray-500 mt-3">
-                          Shared by: {content.authorName || "Anonymous"}
+                          Shared by: {content.author_name || "Anonymous"}
                         </div>
                       </div>
 

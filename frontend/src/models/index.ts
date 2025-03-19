@@ -15,6 +15,7 @@ export interface Species {
   image?: string;
   compositeKey?: string;
   threat_status?: string;
+  sound_url?: string;
 }
 
 export interface User {

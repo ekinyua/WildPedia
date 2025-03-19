@@ -68,7 +68,7 @@ const SpeciesUpload = () => {
     setUploadError(null);
 
     try {
-      // Call API to identify species
+      // API Call to identify species
       const result = await identifySpeciesFromImage(selectedFile);
 
       const objectDetection = result.allDetections.find(
@@ -225,7 +225,7 @@ const SpeciesUpload = () => {
                 </p>
               </div>
 
-              {allDetections.length > 0 && (
+              {/* {allDetections.length > 0 && (
                 <div className="bg-gray-100 p-4 rounded-md">
                   <h3 className="font-bold mb-2">All Detections</h3>
                   <div className="max-h-40 overflow-y-auto">
@@ -253,7 +253,7 @@ const SpeciesUpload = () => {
                     </table>
                   </div>
                 </div>
-              )}
+              )} */}
 
               <div className="bg-yellow-50 p-4 rounded-md">
                 <h3 className="font-bold mb-2">Note</h3>

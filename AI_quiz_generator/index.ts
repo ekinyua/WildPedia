@@ -338,7 +338,7 @@ function readFile(filePath: string): string {
   }
 }
 
-// Define the tools for the agent to use
+// Tools for the agent to use
 const agentTools = [new TavilySearchResults({ maxResults: 3 })];
 const agentModel = new ChatGoogleGenerativeAI({
   model: "gemini-2.0-pro-exp-02-05",
