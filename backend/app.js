@@ -156,7 +156,8 @@ app.get("/api/species/:compositeKey", async (req, res) => {
             description: species.description,
             image: species.image_url || 'placeholder.jpg',
             compositeKey: species.composite_key,
-            sound_url: species.sound_url || null
+            sound_url: species.sound_url || null,
+            location: species.location || null
         };
 
         res.json(formattedSpecies);

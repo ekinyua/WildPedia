@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../../services/authService";
 import { voteForContent } from "../../services/speciesService";
 import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const SpeciesDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -73,9 +74,9 @@ const SpeciesDetails = () => {
       statusLower.includes("endangered") &&
       !statusLower.includes("critically")
     )
-      return "bg-red-500/40 text-red-800";
-    if (statusLower.includes("critically")) return "bg-red-600/60 text-red-900";
-    if (statusLower.includes("extinct")) return "bg-black/60 text-white";
+      return "bg-red-500/40 text-white-800";
+    if (statusLower.includes("critically")) return "bg-red-600/70 text-black";
+    if (statusLower.includes("extinct")) return "bg-black/60 text-gray-500";
 
     return "bg-gray-300/40";
   };
@@ -316,18 +317,6 @@ const SpeciesDetails = () => {
           <h3 className="text-lg font-bold">Quick Facts</h3>
 
           <div className="space-y-3">
-            {species.habitat && (
-              <div className="flex gap-2 items-start">
-                <span className="text-green-600 mt-1">
-                  <GiHabitatDome />
-                </span>
-                <div>
-                  <span className="font-medium">Habitat: </span>
-                  <span>{species.habitat}</span>
-                </div>
-              </div>
-            )}
-
             {species.threat_status && (
               <div className="flex gap-2 items-start">
                 <span className="text-green-600 mt-1">
@@ -342,6 +331,30 @@ const SpeciesDetails = () => {
                   >
                     {species.threat_status}
                   </span>
+                </div>
+              </div>
+            )}
+
+            {species.habitat && (
+              <div className="flex gap-2 items-start">
+                <span className="text-green-600 mt-1">
+                  <GiHabitatDome />
+                </span>
+                <div>
+                  <span className="font-medium">Habitat: </span>
+                  <span>{species.habitat}</span>
+                </div>
+              </div>
+            )}
+
+            {species.location && (
+              <div className="flex gap-2 items-start">
+                <span className="text-green-600 mt-1">
+                  <FaMapMarkerAlt />
+                </span>
+                <div>
+                  <span className="font-medium">Found in: </span>
+                  <span>{species.location}</span>
                 </div>
               </div>
             )}
