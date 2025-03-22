@@ -46,6 +46,7 @@ const userStatsRoutes = require('./routes/user_stats.routes');
 
 // Mounting all route groups
 app.use('/api/admin/species', adminRoutes);
+app.use('/api/admin', require('./routes/admin.routes'));
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/cultural-content', culturalContentRoutes);
@@ -63,34 +64,75 @@ app.get("/api/species", async (req, res) => {
     try {
         let location = req.query.location || 'Kigali';
         let searchQuery = req.query.q || '';
+        // Add pagination parameters
+        const limit = parseInt(req.query.limit) || 12;
+        const offset = parseInt(req.query.offset) || 0;
+
         let query;
         let values;
 
         if (searchQuery) {
-            // Search in scientific_name and vernacular_names
+            // Search query with completeness filter
             query = `
                 SELECT *
                 FROM species
-                WHERE scientific_name ILIKE $1
-                OR vernacular_names::text ILIKE $1
+                WHERE (scientific_name ILIKE $1 OR vernacular_names::text ILIKE $1)
+                AND image_url IS NOT NULL 
+                AND description IS NOT NULL 
+                AND scientific_name IS NOT NULL
+                AND array_length(vernacular_names, 1) > 0
                 ORDER BY scientific_name
-                LIMIT 12
+                LIMIT $2 OFFSET $3
             `;
-            values = [`%${searchQuery}%`];
+            values = [`%${searchQuery}%`, limit, offset];
         } else {
-            // Return all species
+            // Default query with completeness filter - Parameter indices corrected
             query = `
                 SELECT *
                 FROM species
+                WHERE image_url IS NOT NULL 
+                AND description IS NOT NULL 
+                AND scientific_name IS NOT NULL
+                AND array_length(vernacular_names, 1) > 0
                 ORDER BY scientific_name
-                LIMIT 12
+                LIMIT $1 OFFSET $2
             `;
-            values = [];
+            values = [limit, offset]; // Only two parameters here
         }
 
-        const result = await pool.query(query, values);
+        // Fix count query as well
+        let countQuery;
+        let countValues;
 
-        // Format the response
+        if (searchQuery) {
+            countQuery = `
+                SELECT COUNT(*) as total
+                FROM species
+                WHERE image_url IS NOT NULL 
+                AND description IS NOT NULL 
+                AND scientific_name IS NOT NULL
+                AND array_length(vernacular_names, 1) > 0
+                AND (scientific_name ILIKE $1 OR vernacular_names::text ILIKE $1)
+            `;
+            countValues = [`%${searchQuery}%`];
+        } else {
+            countQuery = `
+                SELECT COUNT(*) as total
+                FROM species
+                WHERE image_url IS NOT NULL 
+                AND description IS NOT NULL 
+                AND scientific_name IS NOT NULL
+                AND array_length(vernacular_names, 1) > 0
+            `;
+            countValues = [];
+        }
+
+        // Execute both queries
+        const result = await pool.query(query, values);
+        const countResult = await pool.query(countQuery, countValues);
+        const totalCount = parseInt(countResult.rows[0].total);
+
+        // Format the response - rest of your code remains the same
         const formattedResults = result.rows.map(species => ({
             key: species.gbif_key,
             scientificName: species.scientific_name,
@@ -105,7 +147,13 @@ app.get("/api/species", async (req, res) => {
 
         res.json({
             results: formattedResults,
-            location
+            location,
+            pagination: {
+                total: totalCount,
+                limit,
+                offset,
+                hasMore: offset + limit < totalCount
+            }
         });
 
     } catch (error) {

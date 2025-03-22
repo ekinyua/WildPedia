@@ -1,4 +1,3 @@
-// src/router/routes.tsx
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { isAuthenticated } from "../services/authService";
 
@@ -17,10 +16,21 @@ import Organizations from "../pages/Organizations/Organizations";
 import NotFound from "../pages/NotFound";
 import Leaderboard from "../pages/Leaderbord";
 
+// Admin pages
+import AdminLayout from "../pages/Admin/AdminLayout";
+import AdminDashboard from "../pages/Admin/AdminDashboard";
+import SpeciesManagement from "../pages/Admin/SpeciesManagement";
+import ContentModeration from "../pages/Admin/ContentModeration";
+import Analytics from "../pages/Admin/Analytics";
+import UserManagement from "../pages/Admin/UserManagement";
+
 // Protected route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return isAuthenticated() ? <>{children}</> : <Navigate to="/login" />;
 };
+
+// We'll create proper AdminRoute component with useAuth hook in the AdminLayout component
+// instead of using it here at the module level
 
 export const router = createBrowserRouter([
   {
@@ -45,19 +55,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "learn",
-        element: (
-          <ProtectedRoute>
-            <Learning />
-          </ProtectedRoute>
-        ),
+        element: <Learning />,
       },
       {
         path: "learn/:category",
-        element: (
-          <ProtectedRoute>
-            <QuizPage />
-          </ProtectedRoute>
-        ),
+        element: <QuizPage />,
       },
       {
         path: "organizations",
@@ -84,12 +86,39 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "leaderboard",
+        element: <Leaderboard />,
+      },
+      {
         path: "*",
         element: <NotFound />,
       },
+    ],
+  },
+  {
+    path: "admin",
+    // AdminLayout will handle the admin route protection internally using useAuth hook
+    element: <AdminLayout />,
+    children: [
       {
-        path: "leaderboard",
-        element: <Leaderboard />,
+        index: true,
+        element: <AdminDashboard />,
+      },
+      {
+        path: "species",
+        element: <SpeciesManagement />,
+      },
+      {
+        path: "moderation",
+        element: <ContentModeration />,
+      },
+      {
+        path: "analytics",
+        element: <Analytics />,
+      },
+      {
+        path: "users",
+        element: <UserManagement />,
       },
     ],
   },

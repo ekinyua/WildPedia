@@ -30,6 +30,9 @@ export interface User {
   expertiseArea?: string;
   profileImageUrl?: string;
   googleId?: string;
+  is_active: boolean;
+  created_at: string;
+  last_login?: string;
 }
 
 export interface CulturalContent {
@@ -128,4 +131,115 @@ export interface QuizResult {
   xpEarned: number;
   stats: UserStats;
   newBadges: UserBadge[];
+}
+
+export interface TopViewedSpecies {
+  species_id: string;
+  scientific_name: string;
+  view_count: number;
+}
+
+export interface TopSearch {
+  query_text: string;
+  search_count: number;
+}
+
+// Dashboard interfaces
+export interface DashboardSummary {
+  users: {
+    total_users: number;
+    new_users_week: number;
+  };
+  content: {
+    total_content: number;
+    pending_moderation: number;
+  };
+  species: {
+    total_species: number;
+  };
+  views: {
+    total_views: number;
+    views_this_week: number;
+  };
+}
+
+export interface UserStatsData {
+  roleDistribution: Array<{
+    role: string;
+    count: number;
+  }>;
+  registrationStats?: Array<{
+    period: string;
+    count: number;
+  }>;
+}
+
+export interface ContentStatsData {
+  statusDistribution: Array<{
+    status: string;
+    count: number;
+  }>;
+  typeDistribution?: Array<{
+    type: string;
+    count: number;
+  }>;
+}
+
+export interface SpeciesStatsData {
+  kingdomDistribution: Array<{
+    kingdom: string;
+    count: number;
+  }>;
+  classDistribution?: Array<{
+    class: string;
+    count: number;
+  }>;
+}
+
+// Analytics interfaces
+export interface TopViewedSpecies {
+  species_id: string;
+  scientific_name: string;
+  view_count: number;
+}
+
+export interface TopSearch {
+  query_text: string;
+  search_count: number;
+}
+
+// Content Moderation interfaces
+export interface ModerationContent {
+  id: number;
+  title: string;
+  content: string;
+  content_type: "myth" | "legend" | "proverb";
+  author_id: number;
+  author_name: string;
+  status: "pending" | "approved" | "rejected";
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ModerationQueueResponse {
+  content: ModerationContent[];
+  totalPages: number;
+}
+
+// Species Management interfaces
+export interface SpeciesListItem {
+  composite_key: string;
+  gbif_key: number;
+  scientific_name: string;
+  vernacular_names: string[];
+  kingdom: string;
+  kingdom_key: number;
+  class?: string;
+  class_key?: number;
+  image_url?: string;
+}
+
+export interface SpeciesListResponse {
+  species: SpeciesListItem[];
+  totalPages: number;
 }

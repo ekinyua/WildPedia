@@ -14,37 +14,52 @@ const USE_MOCK_DATA = false;
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Get species list with optional search
-export async function getSpecies(
-  search?: string,
-  location?: string
-): Promise<{ results: Species[]; location: string }> {
-  if (USE_MOCK_DATA) {
-    await delay(500); // Simulate network delay
+// export async function getSpecies(
+//   search?: string,
+//   location?: string
+// ): Promise<{ results: Species[]; location: string }> {
+//   if (USE_MOCK_DATA) {
+//     await delay(500); // Simulate network delay
 
-    let results = [...mockSpecies];
-    if (search) {
-      const searchLower = search.toLowerCase();
-      results = results.filter(
-        (species) =>
-          species.scientificName.toLowerCase().includes(searchLower) ||
-          species.vernacularNames.some((name) =>
-            name.toLowerCase().includes(searchLower)
-          )
-      );
-    }
+//     let results = [...mockSpecies];
+//     if (search) {
+//       const searchLower = search.toLowerCase();
+//       results = results.filter(
+//         (species) =>
+//           species.scientificName.toLowerCase().includes(searchLower) ||
+//           species.vernacularNames.some((name) =>
+//             name.toLowerCase().includes(searchLower)
+//           )
+//       );
+//     }
 
-    return {
-      results,
-      location: location || "Kigali, Rwanda",
-    };
-  }
+//     return {
+//       results,
+//       location: location || "Kigali, Rwanda",
+//     };
+//   }
 
-  // Real API call
-  return api.get<{ results: Species[]; location: string }>(
-    `/api/species${search ? `?q=${search}` : ""}${
-      location ? `&location=${location}` : ""
-    }`
+//   // Real API call
+//   return api.get<{ results: Species[]; location: string }>(
+//     `/api/species${search ? `?q=${search}` : ""}${
+//       location ? `&location=${location}` : ""
+//     }`
+//   );
+// }
+
+export async function getSpecies(searchQuery = "", limit = 12, offset = 0) {
+  const params = new URLSearchParams();
+  if (searchQuery) params.append("q", searchQuery);
+  params.append("limit", limit.toString());
+  params.append("offset", offset.toString());
+
+  const response = await fetch(
+    `${import.meta.env.VITE_API_URL || ""}/api/species?${params.toString()}`
   );
+  if (!response.ok) {
+    throw new Error("Failed to fetch species data");
+  }
+  return await response.json();
 }
 
 // Get species details by ID
@@ -201,4 +216,37 @@ export async function updateCulturalContent(
 // Delete cultural content
 export async function deleteCulturalContent(contentId: number): Promise<void> {
   return api.delete<void>(`/api/cultural-content/${contentId}`);
+}
+
+export async function recordSearch(
+  query: string,
+  resultCount: number
+): Promise<void> {
+  try {
+    // Get or generate a session ID
+    const sessionId =
+      localStorage.getItem("sessionId") ||
+      Math.random().toString(36).substring(2, 15);
+
+    // Store the session ID for future use
+    localStorage.setItem("sessionId", sessionId);
+
+    // Send the search data with session ID in both body and headers
+    await api.post(
+      "/api/admin/analytics/search",
+      {
+        query,
+        resultCount,
+        sessionId,
+      },
+      {
+        headers: {
+          "x-session-id": sessionId,
+        },
+      }
+    );
+  } catch (error) {
+    console.error("Error recording search:", error);
+    // Don't throw error to prevent disrupting user experience
+  }
 }

@@ -24,6 +24,7 @@ import { isAuthenticated } from "../../services/authService";
 import { voteForContent } from "../../services/speciesService";
 import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { api } from "../../services/api/apiClient";
 
 const SpeciesDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -43,6 +44,7 @@ const SpeciesDetails = () => {
   const [editingContent, setEditingContent] = useState<CulturalContent | null>(
     null
   );
+  const viewRecorded = useRef(false);
 
   // Handler for edit button
   const handleEditContent = (content: CulturalContent) => {
@@ -173,6 +175,35 @@ const SpeciesDetails = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const recordView = async () => {
+      // Skip if we've already recorded a view in this component lifecycle
+      if (!compositeKey || viewRecorded.current) return;
+
+      // Mark that we've recorded a view
+      viewRecorded.current = true;
+
+      try {
+        const sessionId =
+          localStorage.getItem("sessionId") ||
+          Math.random().toString(36).substring(2, 15);
+        localStorage.setItem("sessionId", sessionId);
+
+        await api.post(
+          `/api/admin/analytics/view/${compositeKey}`,
+          { sessionId },
+          { headers: { "x-session-id": sessionId } }
+        );
+
+        console.log("Successfully recorded view for:", compositeKey);
+      } catch (error) {
+        console.error("Error recording view:", error);
+      }
+    };
+
+    recordView();
+  }, [compositeKey]);
+
   const toggleSound = () => {
     if (!audioRef.current) return;
 
@@ -239,13 +270,16 @@ const SpeciesDetails = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="absolute top-4 left-4 z-10">
+    <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden relative">
+      <div className="absolute top-5 left-4 z-10 rounded-md">
         <Link
           to="/"
-          className=" bg-opacity-40 p-2 rounded-full text-green-500 hover:text-green-700 hover:bg-opacity-100 transition-colors"
+          className="flex bg-opacity-40 text-black hover:bg-opacity-100 transition-colors items-center justify-center cursor-pointer"
         >
-          <FaHome size={24} />
+          <FaHome
+            size={24}
+            className="hover:bg-green-400 cursor-pointer rounded-md ring-1 ring-offset-1 ring-green-400 ring-opacity-60"
+          />
         </Link>
       </div>
 

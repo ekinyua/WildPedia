@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { IoMdSearch } from "react-icons/io";
 import { MdLocationOn, MdOutlinePhotoCamera } from "react-icons/md";
-import { FaBookOpen } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight, FaBookOpen } from "react-icons/fa6";
 import SpeciesCard from "../../components/common/SpeciesCard/SpeciesCard";
 import { Species } from "../../models";
-import { getSpecies } from "../../services/speciesService";
+import { getSpecies, recordSearch } from "../../services/speciesService";
 import Header from "../../components/layouts/Header";
 import Footer from "../../components/layouts/Footer";
 import SketchfabEmbed from "../../components/common/SketchFabEmbed/SketchfabEmbed";
@@ -19,21 +19,39 @@ const Landing = () => {
   const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const speciesSectionRef = useRef<HTMLDivElement>(null);
+  const itemsPerPage = 12;
 
   useEffect(() => {
     const fetchSpecies = async () => {
       setIsLoading(true);
       try {
-        const response = await getSpecies(searchQuery);
+        const offset = (currentPage - 1) * itemsPerPage;
+        const response = await getSpecies(searchQuery, itemsPerPage, offset);
+
         setSpecies(response.results);
         setLocation(response.location);
 
-        if (searchQuery && resultsRef.current) {
-          setTimeout(() => {
-            resultsRef.current?.scrollIntoView({ behavior: "smooth" });
-          }, 100);
+        if (searchQuery) {
+          recordSearch(searchQuery, response.results.length);
         }
-        console.log("Species data:", response.results);
+
+        // Update pagination state
+        if (response.pagination) {
+          setTotalPages(Math.ceil(response.pagination.total / itemsPerPage));
+          setHasMore(response.pagination.hasMore);
+        }
+
+        // Scroll to the top of the species section after data loads
+        if (speciesSectionRef.current) {
+          speciesSectionRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
       } catch (error) {
         console.error("Error fetching species:", error);
       } finally {
@@ -42,7 +60,7 @@ const Landing = () => {
     };
 
     fetchSpecies();
-  }, [searchQuery]);
+  }, [searchQuery, currentPage]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,7 +122,7 @@ const Landing = () => {
         </form>
       </section>
 
-      <section className="space-y-6">
+      <section className="space-y-6" ref={speciesSectionRef}>
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">
             {searchQuery ? "Search Results" : "Species Near You"}
@@ -120,11 +138,48 @@ const Landing = () => {
             <p className="mt-4 text-gray-600">Loading species data...</p>
           </div>
         ) : species.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {species.map((s) => (
-              <SpeciesCard key={s.key} species={s} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {species.map((s) => (
+                <SpeciesCard key={s.key} species={s} />
+              ))}
+            </div>
+            <div className="flex justify-center mt-6">
+              {totalPages > 1 && (
+                <div className="flex space-x-2">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const currentPosition = window.scrollY;
+                      setCurrentPage((p) => p + -1);
+                      window.scrollTo(0, currentPosition);
+                    }}
+                    disabled={currentPage === 1}
+                    className="text-green-700 disabled:opacity-50 cursor-pointer"
+                  >
+                    <FaArrowLeft />
+                  </button>
+
+                  <span className="px-4 py-2">
+                    Page {currentPage} of {totalPages}
+                  </span>
+
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const currentPosition = window.scrollY;
+                      setCurrentPage((p) => p + 1);
+                      window.scrollTo(0, currentPosition);
+                    }}
+                    disabled={!hasMore}
+                    className="text-green-700 disabled:opacity-50 cursor-pointer"
+                  >
+                    <FaArrowRight />
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
         ) : (
           <div className="text-center py-8 bg-gray-50 rounded-lg">
             <p className="text-gray-600">

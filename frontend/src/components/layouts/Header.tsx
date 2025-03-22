@@ -177,6 +177,15 @@ const Header = () => {
                 {isMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                     <div className="py-1">
+                      {user && user.role === "admin" && (
+                        <Link
+                          to="/admin"
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <FaUserCog className="inline mr-2" /> Admin Dashboard
+                        </Link>
+                      )}
                       <Link
                         to="/profile"
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
