@@ -19,6 +19,19 @@ services:
       timeout: 5s
       retries: 5
 
+  #   db-init:
+  #     image: postgres:17-alpine
+  #     depends_on:
+  #       postgres:
+  #         condition: service_healthy
+  #     volumes:
+  #       - ./biodiversity_db.sql:/biodiversity_db.sql
+  #     command: >
+  #       bash -e "PGPASSWORD=${POSTGRES_PASSWORD} psql -h postgres -U ${POSTGRES_USER} -d ${POSTGRES_DB} -f /biodiversity_db.sql && echo 'Database initialized successfully'"
+  #     networks:
+  #       - app_network
+  #     restart: "no"
+
   auth-backend:
     image: ekinyua/wildpedia-backend:latest
     environment:
@@ -91,3 +104,4 @@ networks:
 
 volumes:
   postgres_data:
+  db_init_data:

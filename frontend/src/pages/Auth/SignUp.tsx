@@ -16,7 +16,7 @@ const SignUp = () => {
     location: "",
     organization: "",
     expertiseArea: "",
-    agreeToTerms: false,
+    // agreeToTerms: false,
   });
 
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -62,9 +62,9 @@ const SignUp = () => {
       errors.confirmPassword = "Passwords do not match";
     }
 
-    if (!formData.agreeToTerms) {
-      errors.agreeToTerms = "You must agree to the terms and privacy policy";
-    }
+    // if (!formData.agreeToTerms) {
+    //   errors.agreeToTerms = "You must agree to the terms and privacy policy";
+    // }
 
     return errors;
   };
@@ -96,6 +96,22 @@ const SignUp = () => {
       // Redirect to home page after successful registration
       navigate("/");
     } catch (err: any) {
+      // Check for specific error responses
+      if (err.response && err.response.data) {
+        // Handle validation errors
+        if (err.response.data.errors) {
+          const errorMap: Record<string, string> = {};
+          err.response.data.errors.forEach((error: any) => {
+            errorMap[error.field] = error.message;
+          });
+          setFormErrors(errorMap);
+        } else {
+          // Handle general error message
+          setError(err.response.data.message || "Registration failed");
+        }
+      } else {
+        setError("Connection error. Please try again later.");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -300,14 +316,14 @@ const SignUp = () => {
               formErrors.agreeToTerms ? "text-red-500" : "text-gray-700"
             }`}
           >
-            <input
+            {/* <input
               type="checkbox"
               name="agreeToTerms"
               checked={formData.agreeToTerms}
               onChange={handleChange}
               className="mt-1 rounded text-green-600 focus:ring-green-500"
-            />
-            <span className="text-sm">
+            /> */}
+            {/* <span className="text-sm">
               I agree to the{" "}
               <a href="#" className="text-green-700 hover:text-green-800">
                 Terms of Service
@@ -316,7 +332,7 @@ const SignUp = () => {
               <a href="#" className="text-green-700 hover:text-green-800">
                 Privacy Policy
               </a>
-            </span>
+            </span> */}
           </label>
           {formErrors.agreeToTerms && (
             <p className="text-red-500 text-sm mt-1">
@@ -328,7 +344,7 @@ const SignUp = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full flex justify-center items-center space-x-2 bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-800 transition-colors disabled:bg-gray-400"
+          className="w-full flex justify-center items-center space-x-2 bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-800 transition-colors disabled:bg-gray-400 cursor-pointer"
         >
           {isSubmitting ? (
             <span>Creating Account...</span>
@@ -352,3 +368,6 @@ const SignUp = () => {
 };
 
 export default SignUp;
+function setError(arg0: any) {
+  throw new Error("Function not implemented.");
+}

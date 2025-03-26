@@ -17,6 +17,8 @@ export interface Species {
   threat_status?: string;
   sound_url?: string;
   location?: string;
+  kiswahiliName?: string;
+  kinyarwandaName?: string;
 }
 
 export interface User {

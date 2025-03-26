@@ -138,12 +138,20 @@ const userModel = {
 
     async getProfile(userId) {
         const result = await pool.query(
-            `SELECT u.username, u.email, u.role, p.*
-       FROM users u
-       LEFT JOIN user_profiles p ON p.user_id = u.id
-       WHERE u.id = $1`,
+            `SELECT u.id, u.username, u.email, u.role, u.profile_image_url, 
+                    u.is_active, u.email_verified, u.last_login, 
+                    p.user_id, p.full_name, p.location, 
+                    p.organization, p.expertise_area
+            FROM users u
+            LEFT JOIN user_profiles p ON p.user_id = u.id
+            WHERE u.id = $1`,
             [userId]
         );
+
+        if (result.rows.length === 0) {
+            return null;
+        }
+
         return result.rows[0];
     },
 

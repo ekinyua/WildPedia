@@ -205,7 +205,9 @@ app.get("/api/species/:compositeKey", async (req, res) => {
             image: species.image_url || 'placeholder.jpg',
             compositeKey: species.composite_key,
             sound_url: species.sound_url || null,
-            location: species.location || null
+            location: species.location || null,
+            kiswahiliName: species.kiswahili_name || null,
+            kinyarwandaName: species.kinyarwanda_name || null
         };
 
         res.json(formattedSpecies);

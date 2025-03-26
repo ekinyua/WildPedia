@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "start": "app.js",
     "dev": "nodemon app.js --host 0.0.0.0"
   },
@@ -36,5 +38,9 @@
     "pg-pool": "^3.7.1",
     "uuid": "^11.1.0",
     "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.1.0"
   }
 }

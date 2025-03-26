@@ -1,4 +1,5 @@
 // src/services/authService.ts
+import { profile } from "console";
 import { User } from "../models";
 import { authApi } from "./api/authApiClient";
 
@@ -16,6 +17,8 @@ const mockUsers = [
     location: "Kigali, Rwanda",
     organization: "Wildlife Conservation Society",
     expertiseArea: "Bird Watching",
+    is_active: true,
+    created_at: new Date().toISOString(),
   },
   {
     id: 2,
@@ -26,6 +29,8 @@ const mockUsers = [
     location: "Nairobi, Kenya",
     organization: "WildPedia Admin",
     expertiseArea: "System Administration",
+    is_active: true,
+    created_at: new Date().toISOString(),
   },
 ];
 
@@ -85,7 +90,7 @@ export async function handleGoogleCallback(token: string): Promise<User> {
     localStorage.setItem("token", token);
 
     // Fetch user details using the token
-    const user = await getCurrentUserFromAPI();
+    const user = await getCurrentUser();
 
     // Store user in localStorage
     localStorage.setItem("user", JSON.stringify(user));
@@ -98,9 +103,28 @@ export async function handleGoogleCallback(token: string): Promise<User> {
 }
 
 // Function to get current user directly from API (not localStorage)
-async function getCurrentUserFromAPI(): Promise<User> {
+export async function getCurrentUser(): Promise<User> {
   try {
-    const user = await authApi.get<User>("/auth/profile");
+    const userData = await authApi.get<any>("/auth/profile");
+
+    console.log("Raw user data from API:", userData);
+
+    // Map snake_case to camelCase
+    const user: User = {
+      id: userData.id || userData.user_id,
+      username: userData.username,
+      email: userData.email,
+      role: userData.role,
+      fullName: userData.full_name,
+      location: userData.location,
+      organization: userData.organization,
+      expertiseArea: userData.expertise_area,
+      profileImageUrl: userData.profile_image_url,
+      is_active: false,
+      created_at: "",
+    };
+
+    console.log("Mapped user data:", user);
     return user;
   } catch (error) {
     console.error("Error fetching current user:", error);
@@ -163,17 +187,17 @@ export function logout(): void {
 }
 
 // Get current user from localStorage
-export function getCurrentUser(): User | null {
-  const userStr = localStorage.getItem("user");
-  if (!userStr) return null;
+// export function getCurrentUser(): User | null {
+//   const userStr = localStorage.getItem("user");
+//   if (!userStr) return null;
 
-  try {
-    return JSON.parse(userStr) as User;
-  } catch (e) {
-    console.error("Error parsing user from localStorage", e);
-    return null;
-  }
-}
+//   try {
+//     return JSON.parse(userStr) as User;
+//   } catch (e) {
+//     console.error("Error parsing user from localStorage", e);
+//     return null;
+//   }
+// }
 
 // Check if user is authenticated
 export function isAuthenticated(): boolean {
@@ -185,20 +209,49 @@ export async function updateUserProfile(
   profileData: Partial<User>
 ): Promise<User> {
   try {
-    // Map frontend fields to backend fields if they're different
+    // Ensure we have string values even if they're empty
     const backendData = {
-      full_name: profileData.fullName,
-      location: profileData.location,
-      organization: profileData.organization,
-      expertise_area: profileData.expertiseArea,
+      full_name: profileData.fullName || "",
+      location: profileData.location || "",
+      organization: profileData.organization || "",
+      expertise_area: profileData.expertiseArea || "",
     };
 
+    console.log("Sending profile update data:", backendData);
+
     const response = await authApi.put<User>("/auth/profile", backendData);
-    localStorage.setItem("user", JSON.stringify(response));
+
+    // If update is successful, update local storage
+    if (response) {
+      const currentUser = getCurrentUser();
+      if (currentUser) {
+        // Update relevant fields while preserving the rest
+        const updatedUser = {
+          ...currentUser,
+          fullName: backendData.full_name,
+          location: backendData.location,
+          organization: backendData.organization,
+          expertiseArea: backendData.expertise_area,
+        };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+      }
+    }
+
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Profile update error:", error);
-    throw error;
+
+    // Extract and log detailed error information
+    if (error.response) {
+      console.error("Error response status:", error.response.status);
+      console.error("Error response data:", error.response.data);
+      throw new Error(
+        error.response.data.message ||
+          `Update failed with status ${error.response.status}`
+      );
+    }
+
+    throw new Error("Failed to update profile: Network or server error");
   }
 }
 
@@ -245,10 +298,22 @@ export async function uploadProfileImage(file: File): Promise<User> {
 
     const data = await response.json();
 
-    // Update user in localStorage
+    // Debug what we're getting back
+    console.log("Profile image upload response:", data);
+
+    // Update user in localStorage with the correct property
     const currentUser = getCurrentUser();
     if (currentUser) {
-      currentUser.profileImageUrl = data.profileImageUrl;
+      // Make sure we're using the right property name
+      (
+        await // Make sure we're using the right property name
+        currentUser
+      ).profileImageUrl =
+        data.profileImageUrl ||
+        data.user.profileImageUrl ||
+        data.user.profile_image_url;
+
+      console.log("Updated user with new profile image:", currentUser);
       localStorage.setItem("user", JSON.stringify(currentUser));
     }
 

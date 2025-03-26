@@ -46,12 +46,12 @@ const Landing = () => {
         }
 
         // Scroll to the top of the species section after data loads
-        if (speciesSectionRef.current) {
-          speciesSectionRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
+        // if (speciesSectionRef.current) {
+        //   speciesSectionRef.current.scrollIntoView({
+        //     behavior: "smooth",
+        //     block: "start",
+        //   });
+        // }
       } catch (error) {
         console.error("Error fetching species:", error);
       } finally {
@@ -78,10 +78,10 @@ const Landing = () => {
   };
 
   return (
-    <div className="pb-10">
+    <div className="">
       <Header />
 
-      <div className="mb-4">
+      <div className="mb-2">
         <div className="relative h-[90vh] w-full rounded-xl overflow-hidden mb-4">
           <iframe
             className="absolute top-0 left-0 w-full h-full"
@@ -100,6 +100,97 @@ const Landing = () => {
           </div>
         </div>
       </div>
+
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-6 rounded-xl shadow-sm">
+        <div className="space-y-6">
+          <h1 className="text-2xl font-bold">Why Biodiversity Matters</h1>
+          <p className="text-gray-700">
+            Understanding and protecting biodiversity is crucial for maintaining
+            healthy ecosystems and ensuring a sustainable future for our planet.
+            Every species plays a vital role in the delicate balance of nature.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-green-50 p-4 rounded-lg shadow-sm">
+              <p className="text-green-600 text-3xl font-bold">1M+</p>
+              <p className="text-gray-700">
+                Species Facing Extinction Globally
+              </p>
+            </div>
+            <div className="bg-green-50 p-4 rounded-lg shadow-sm">
+              <p className="text-green-600 text-3xl font-bold">76%</p>
+              <p className="text-gray-700">
+                Decline in African Wildlife Since 1970
+              </p>
+            </div>
+            <div className="bg-green-50 p-4 rounded-lg shadow-sm">
+              <p className="text-green-600 text-3xl font-bold">$2.7T</p>
+              <p className="text-gray-700">
+                Potential Annual GDP Loss Due to Biodiversity Decline by 2030
+              </p>
+            </div>
+            <div className="bg-green-50 p-4 rounded-lg shadow-sm">
+              <p className="text-green-600 text-3xl font-bold">12K</p>
+              <p className="text-gray-700">
+                Hectares of Kenyan Forest Lost Annually
+              </p>
+            </div>
+          </div>
+          <div className="border-1 border-dotted border-gray-200 p-4 rounded-lg space-y-4 shadow-md">
+            <h1 className="text-2xl font-bold ">Why Wildpedia</h1>
+            <p className="text-gray-700 ">
+              Preserves indigenous knowledge alongside scientific data
+            </p>
+            <p className="text-gray-700">
+              Creates accessible biodiversity education
+            </p>
+            <p className="text-gray-700">
+              Fosters community-driven conservation awareness
+            </p>
+          </div>
+        </div>
+        <SketchfabEmbed />
+      </section>
+
+      <section className="bg-green-50 rounded-xl p-8 space-y-6">
+        <h1 className="text-2xl font-bold text-center">How WildPedia Works</h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-6 rounded-lg shadow-sm relative pt-12">
+            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-600 p-3 rounded-full text-white">
+              <MdOutlinePhotoCamera size={24} />
+            </div>
+            <h3 className="font-bold text-xl mb-2 text-center">
+              SNAP & IDENTIFY
+            </h3>
+            <p className="text-gray-600 text-center">
+              Capture any plant or animal with your camera for instant species
+              identification.
+            </p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-sm relative pt-12">
+            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-600 p-3 rounded-full text-white">
+              <IoMdSearch size={24} />
+            </div>
+            <h3 className="font-bold text-xl mb-2 text-center">
+              DISCOVER STORIES
+            </h3>
+            <p className="text-gray-600 text-center">
+              Uncover cultural significance and ecological roles of species in
+              your region.
+            </p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-sm relative pt-12">
+            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-600 p-3 rounded-full text-white">
+              <FaBookOpen size={24} />
+            </div>
+            <h3 className="font-bold text-xl mb-2 text-center">
+              LEARN AND CONTRIBUTE
+            </h3>
+            <p className="text-gray-600 text-center">
+              Access knowledge and share your insights to our growing database.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <section className="max-w-xl mx-auto mt-6" ref={resultsRef}>
         <form onSubmit={handleSearchSubmit}>
@@ -189,84 +280,6 @@ const Landing = () => {
         )}
       </section>
 
-      <section className="bg-green-50 rounded-xl p-8 space-y-6">
-        <h1 className="text-2xl font-bold text-center">How WildPedia Works</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-6 rounded-lg shadow-sm relative pt-12">
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-600 p-3 rounded-full text-white">
-              <MdOutlinePhotoCamera size={24} />
-            </div>
-            <h3 className="font-bold text-xl mb-2 text-center">
-              SNAP & IDENTIFY
-            </h3>
-            <p className="text-gray-600 text-center">
-              Capture any plant or animal with your camera for instant species
-              identification.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-sm relative pt-12">
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-600 p-3 rounded-full text-white">
-              <IoMdSearch size={24} />
-            </div>
-            <h3 className="font-bold text-xl mb-2 text-center">
-              DISCOVER STORIES
-            </h3>
-            <p className="text-gray-600 text-center">
-              Uncover cultural significance and ecological roles of species in
-              your region.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-sm relative pt-12">
-            <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-600 p-3 rounded-full text-white">
-              <FaBookOpen size={24} />
-            </div>
-            <h3 className="font-bold text-xl mb-2 text-center">
-              LEARN AND CONTRIBUTE
-            </h3>
-            <p className="text-gray-600 text-center">
-              Access knowledge and share your insights to our growing database.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white p-6 rounded-xl shadow-sm">
-        <div className="space-y-6">
-          <h1 className="text-2xl font-bold">Why Biodiversity Matters</h1>
-          <p className="text-gray-700">
-            Understanding and protecting biodiversity is crucial for maintaining
-            healthy ecosystems and ensuring a sustainable future for our planet.
-            Every species plays a vital role in the delicate balance of nature.
-          </p>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-green-50 p-4 rounded-lg">
-              <p className="text-green-600 text-3xl font-bold">1M+</p>
-              <p className="text-gray-700">
-                Species Facing Extinction Globally
-              </p>
-            </div>
-            <div className="bg-green-50 p-4 rounded-lg">
-              <p className="text-green-600 text-3xl font-bold">76%</p>
-              <p className="text-gray-700">
-                Decline in African Wildlife Since 1970
-              </p>
-            </div>
-            <div className="bg-green-50 p-4 rounded-lg">
-              <p className="text-green-600 text-3xl font-bold">$2.7T</p>
-              <p className="text-gray-700">
-                Potential Annual GDP Loss Due to Biodiversity Decline by 2030
-              </p>
-            </div>
-            <div className="bg-green-50 p-4 rounded-lg">
-              <p className="text-green-600 text-3xl font-bold">12K</p>
-              <p className="text-gray-700">
-                Hectares of Kenyan Forest Lost Annually
-              </p>
-            </div>
-          </div>
-        </div>
-        <SketchfabEmbed />
-      </section>
       <Footer />
     </div>
   );

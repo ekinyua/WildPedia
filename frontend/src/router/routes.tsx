@@ -29,9 +29,6 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return isAuthenticated() ? <>{children}</> : <Navigate to="/login" />;
 };
 
-// We'll create proper AdminRoute component with useAuth hook in the AdminLayout component
-// instead of using it here at the module level
-
 export const router = createBrowserRouter([
   {
     path: "/",

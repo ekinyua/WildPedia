@@ -51,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             setUser(null);
           } else {
             const currentUser = getCurrentUser();
-            setUser(currentUser);
+            setUser(await currentUser);
           }
         } else {
           setUser(null);

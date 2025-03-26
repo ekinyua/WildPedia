@@ -5,7 +5,7 @@ import {
   useLocation,
   useSearchParams,
 } from "react-router-dom";
-import { FaArrowRightLong, FaLeaf } from "react-icons/fa6";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { IoPersonOutline } from "react-icons/io5";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
@@ -76,7 +76,7 @@ const Login = () => {
         className="flex flex-col space-y-5 shadow-lg p-10 rounded-lg bg-white"
       >
         <div className="flex flex-col items-center space-y-3 mb-4">
-          <FaLeaf className="text-green-700 text-4xl" />
+          <img src="/wildpedia_logo.png" className="h-40" />
           <h1 className="text-2xl font-bold text-gray-800">Welcome Back</h1>
           <p className="text-gray-600 text-center">
             Sign in to your WildPedia account

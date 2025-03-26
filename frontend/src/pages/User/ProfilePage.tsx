@@ -1,6 +1,6 @@
 // src/pages/User/ProfilePage.tsx
 import { useState, useEffect, FormEvent, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaUser,
   FaEnvelope,
@@ -11,6 +11,7 @@ import {
   FaSave,
   FaTimes,
   FaCamera,
+  FaArrowLeft,
 } from "react-icons/fa";
 import { useAuth } from "../../store/AuthContext";
 import {
@@ -18,6 +19,7 @@ import {
   uploadProfileImage,
   getCurrentUser,
 } from "../../services/authService";
+import { ArrowLeft } from "@mui/icons-material";
 
 const ProfilePage = () => {
   const { user, setUser } = useAuth();
@@ -36,20 +38,22 @@ const ProfilePage = () => {
     expertiseArea: user?.expertiseArea || "",
   });
 
+  console.log("ProfilePage rendering. Auth context user:", user);
+
   // Redirect if not logged in
-  useEffect(() => {
-    if (!user) {
-      navigate("/login", { state: { from: { pathname: "/profile" } } });
-    } else {
-      // Initialize form data from user
-      setFormData({
-        fullName: user.fullName || "",
-        location: user.location || "",
-        organization: user.organization || "",
-        expertiseArea: user.expertiseArea || "",
-      });
-    }
-  }, [user, navigate]);
+  //   useEffect(() => {
+  //     if (!user) {
+  //       navigate("/login", { state: { from: { pathname: "/profile" } } });
+  //     } else {
+  //       // Initialize form data from user
+  //       setFormData({
+  //         fullName: user.fullName || "",
+  //         location: user.location || "",
+  //         organization: user.organization || "",
+  //         expertiseArea: user.expertiseArea || "",
+  //       });
+  //     }
+  //   }, [user, navigate]);
 
   // Handle input changes
   const handleInputChange = (
@@ -88,7 +92,7 @@ const ProfilePage = () => {
       // Get updated user data
       const updatedUser = getCurrentUser();
       if (updatedUser) {
-        setUser(updatedUser);
+        setUser(await updatedUser);
       }
 
       setSuccess("Profile updated successfully!");
@@ -129,6 +133,12 @@ const ProfilePage = () => {
       <div className="bg-white shadow-md rounded-lg overflow-hidden">
         {/* Profile Header */}
         <div className="bg-green-700 text-white p-6">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 text-green-300 font-medium hover:text-green-200"
+          >
+            <FaArrowLeft /> <span>Back to Home</span>
+          </Link>
           <h1 className="text-2xl font-bold">Your Profile</h1>
           <p className="mt-2 opacity-80">
             Manage your personal information and preferences

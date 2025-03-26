@@ -194,6 +194,7 @@ export async function identifySpeciesFromImage(imageFile: File): Promise<{
     }
 
     const data = await response.json();
+    console.log("Identification result:", data);
     return data.result;
   } catch (error) {
     console.error("Error identifying species:", error);

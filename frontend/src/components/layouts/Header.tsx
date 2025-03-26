@@ -74,8 +74,7 @@ const Header = () => {
         <div className="flex justify-between items-center">
           {/* Logo & Brand */}
           <Link to="/" className="flex items-center space-x-2 cursor-pointer">
-            <FaLeaf className="text-green-600 text-xl" />
-            <span className="text-xl font-bold text-green-600">WildPedia</span>
+            <img src="/wildpedia_logo.png" className="h-12 p-0 m-0" />
           </Link>
 
           {/* Search */}

@@ -295,16 +295,16 @@ const SpeciesDetails = () => {
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
           <h1 className="text-3xl font-bold text-white">
-            {species.scientificName}
+            {/* {species.scientificName} */}
+            {species.vernacularNames && species.vernacularNames.length > 0 && (
+              <p>{species.vernacularNames[0]}</p>
+            )}
           </h1>
-          <div className="flex flex-wrap gap-x-6 mt-2 text-white text-sm">
+          <div className="flex flex-wrap gap-x-6 mt-2 text-white text-smd">
             <p>
               Scientific Name:{" "}
               <span className="italic">{species.scientificName}</span>
             </p>
-            {species.vernacularNames && species.vernacularNames.length > 0 && (
-              <p>Local Name: {species.vernacularNames[0]}</p>
-            )}
           </div>
         </div>
       </div>
@@ -337,7 +337,7 @@ const SpeciesDetails = () => {
             </div>
           )}
 
-          <div className="flex flex-wrap gap-2 mt-4">
+          {/* <div className="flex flex-wrap gap-2 mt-4">
             <button
               className="flex items-center gap-1 bg-green-600 text-white px-3 py-1 rounded-md text-sm cursor-pointer"
               onClick={() => handleLanguageChange("rw")}
@@ -366,13 +366,39 @@ const SpeciesDetails = () => {
                 <FaThumbsDown />
               </button>
             </div>
-          </div>
+          </div> */}
         </section>
 
         <div className="space-y-4 border-t border-gray-400 border-dotted pt-4">
           <h3 className="text-lg font-bold">Quick Facts</h3>
 
           <div className="space-y-3">
+            {/* Kiswahili Name */}
+            {species.kiswahiliName && (
+              <div className="flex gap-2 items-start">
+                <span className="text-green-600 mt-1">
+                  <FaLanguage />
+                </span>
+                <div>
+                  <span className="font-medium">Kiswahili Name: </span>
+                  <span>{species.kiswahiliName}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Kinyarwanda Name */}
+            {species.kinyarwandaName && (
+              <div className="flex gap-2 items-start">
+                <span className="text-green-600 mt-1">
+                  <FaLanguage />
+                </span>
+                <div>
+                  <span className="font-medium">Kinyarwanda Name: </span>
+                  <span>{species.kinyarwandaName}</span>
+                </div>
+              </div>
+            )}
+
             {species.threat_status && (
               <div className="flex gap-2 items-start">
                 <span className="text-green-600 mt-1">

@@ -3,6 +3,8 @@ const logger = require('../logger');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { uploadProfileToS3, deleteProfileFromS3 } = require('../config/profile-s3-config');
+
 
 
 // storage for profile images
@@ -111,7 +113,7 @@ const userController = {
 
     // Add the uploadProfileImage method
     async uploadProfileImage(req, res) {
-        upload(req, res, async (err) => {
+        uploadProfileToS3(req, res, async (err) => {
             if (err) {
                 return res.status(400).json({
                     message: err.message || "Error uploading image"
@@ -125,12 +127,24 @@ const userController = {
             }
 
             try {
-                // Create URL for the uploaded image
-                const baseUrl = process.env.BASE_URL || `http://${req.get('host')}`;
-                const imagePath = `/uploads/profiles/${req.file.filename}`;
-                const imageUrl = `${baseUrl}${imagePath}`;
+                // Get the S3 URL from the uploaded file
+                const imageUrl = req.file.location;
 
-                // Update user with profile image URL
+                // Get current user to check if we need to delete an old image
+                const currentUser = await userModel.findById(req.user.id);
+
+                // If user already has a profile image in S3, delete it
+                if (currentUser.profile_image_url &&
+                    currentUser.profile_image_url.includes(process.env.S3_BUCKET_NAME)) {
+                    try {
+                        await deleteProfileFromS3(currentUser.profile_image_url);
+                    } catch (deleteError) {
+                        console.error("Failed to delete old profile image:", deleteError);
+                        // Continue with the update even if deletion fails
+                    }
+                }
+
+                // Update user with the new S3 image URL
                 const updatedUser = await userModel.updateProfileImage(req.user.id, imageUrl);
 
                 res.json({
@@ -145,7 +159,7 @@ const userController = {
                     }
                 });
             } catch (error) {
-                logger.error(`Error updating profile image: ${error.message}`);
+                console.error(`Error updating profile image: ${error.message}`);
                 res.status(500).json({
                     message: "Error updating profile image",
                     error: error.message

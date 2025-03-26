@@ -260,7 +260,7 @@ const SpeciesUpload = () => {
                 <p className="text-sm text-yellow-800">
                   This identification is based on image recognition technology
                   and may not be 100% accurate. For definitive species
-                  identification, please consult with a specialist.
+                  identification, please consult with a conservation expert.
                 </p>
               </div>
             </div>

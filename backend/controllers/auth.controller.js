@@ -48,6 +48,26 @@ const authController = {
                 token
             });
         } catch (error) {
+            if (error.isJoi) {
+                // Format Joi validation errors in a user-friendly way
+                const errorDetails = error.details.map(detail => ({
+                    field: detail.context.key,
+                    message: detail.message.replace(/['"]/g, '')
+                }));
+                return res.status(400).json({
+                    message: "Validation failed",
+                    errors: errorDetails
+                });
+            }
+
+            // Handle duplicate user errors more specifically
+            if (error.message.includes('duplicate key') || error.message.includes('already in use')) {
+                return res.status(400).json({
+                    message: "Account already exists",
+                    error: "A user with this email or username already exists"
+                });
+            }
+
             res.status(500).json({
                 message: "Error registering user",
                 error: error.message
@@ -167,15 +187,29 @@ const authController = {
 
     async updateProfile(req, res) {
         try {
+            console.log("Profile update request body:", req.body);
+            console.log("User ID from token:", req.user?.id);
+
+            if (!req.user || !req.user.id) {
+                return res.status(401).json({
+                    message: "Authentication error - user info not available"
+                });
+            }
+
             const updatedProfile = await userModel.updateProfile(req.user.id, req.body);
             if (!updatedProfile) {
                 return res.status(404).json({ message: "Profile not found" });
             }
+
+            console.log("Profile updated successfully:", updatedProfile);
             res.json(updatedProfile);
         } catch (error) {
+            console.error("Profile update error details:", error);
             res.status(500).json({
                 message: "Error updating profile",
-                error: error.message
+                error: error.message,
+                //  stack trace in development environment
+                stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
             });
         }
     },

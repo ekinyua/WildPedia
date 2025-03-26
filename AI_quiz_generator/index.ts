@@ -368,42 +368,42 @@ async function generateQuizQuestions(
   const randomSeed = Math.floor(Math.random() * 1000);
 
   const prompt = `You are a quiz generator with expertise in ${subject}.
+    
+    Generate ${numQuestions} multiple-choice quiz questions about the topic: "${topic}".
+    
+    Use your knowledge to create informative and educational questions. Each question should:
+    1. Test understanding of key concepts from the content.
+    2. Have 4 options (A, B, C, D) with only one correct answer.
+    3. Include the correct answer and a brief explanation.
+    4. Use randomization seed: ${randomSeed} to ensure variety.
   
-  Generate ${numQuestions} multiple-choice quiz questions about the topic: "${topic}".
+    Return the quiz questions in JSON format. The JSON should have a
+  "questions" array. Each object in the array should have "question",
+  "options", "correctAnswer", and "explanation" fields. The "options" field
+  should be an object with keys "A", "B", "C", and "D". The "correctAnswer"
+  field should be one of "A", "B", "C", or "D".
   
-  Use your knowledge to create informative and educational questions. Each question should:
-  1. Test understanding of key concepts from the content.
-  2. Have 4 options (A, B, C, D) with only one correct answer.
-  3. Include the correct answer and a brief explanation.
-  4. Use randomization seed: ${randomSeed} to ensure variety.
-
-  Return the quiz questions in JSON format. The JSON should have a
-"questions" array. Each object in the array should have "question",
-"options", "correctAnswer", and "explanation" fields. The "options" field
-should be an object with keys "A", "B", "C", and "D". The "correctAnswer"
-field should be one of "A", "B", "C", or "D".
-
-  Here is the JSON format:
-  \`\`\`json
-  {
-    "questions": [
-      {
-        "question": "Question text here",
-        "options": {
-          "A": "Option A text",
-          "B": "Option B text",
-          "C": "Option C text",
-          "D": "Option D text"
-        },
-        "correctAnswer": "A",
-        "explanation": "Explanation of the correct answer"
-      }
-    ]
-  }
-  \`\`\`
-
-  Topic:
-  ${topic}`;
+    Here is the JSON format:
+    \`\`\`json
+    {
+      "questions": [
+        {
+          "question": "Question text here",
+          "options": {
+            "A": "Option A text",
+            "B": "Option B text",
+            "C": "Option C text",
+            "D": "Option D text"
+          },
+          "correctAnswer": "A",
+          "explanation": "Explanation of the correct answer"
+        }
+      ]
+    }
+    \`\`\`
+  
+    Topic:
+    ${topic}`;
 
   try {
     // Create a unique thread_id each time for different context
@@ -419,12 +419,18 @@ field should be one of "A", "B", "C", or "D".
       quizState.messages.length - 1
     ] as BaseMessage;
 
-    // Check if content exists and is a string
-    if (!lastMessage || typeof lastMessage.content !== "string") {
+    // Extract quizContent
+    let quizContent = "";
+    if (Array.isArray(lastMessage.content)) {
+      quizContent = lastMessage.content
+        .filter((item: any) => item.type === "text")
+        .map((item: any) => item.text)
+        .join("");
+    } else if (typeof lastMessage.content === "string") {
+      quizContent = lastMessage.content;
+    } else {
       throw new Error("Failed to get valid response from AI model");
     }
-
-    const quizContent = lastMessage.content;
 
     // Try to parse the response as JSON
     try {
@@ -477,6 +483,19 @@ app.get("/health", function (req: Request, res: Response) {
   res.status(200).json({ status: "UP", message: "Quiz API is running" });
 });
 
+app.get("/health/ai-model", async (req, res) => {
+  try {
+    // Simple test prompt
+    const response = await agentModel.invoke([
+      new HumanMessage("Say hello world"),
+    ]);
+    res.json({ status: "AI model connection successful" });
+  } catch (error) {
+    console.error("AI model connection failed:", error);
+    res.status(500).json({ error: "Failed to connect to AI model" });
+  }
+});
+
 // Generate quiz from file
 app.post("/quiz/fromFile", function (req: Request, res: Response) {
   (async function () {
@@ -520,7 +539,7 @@ app.post("/quiz/fromText", function (req: Request, res: Response) {
       const quiz = await generateQuizQuestions(
         content,
         numQuestions || 5,
-        subject || "physics"
+        subject || "conservation"
       );
 
       res.status(200).json(quiz);

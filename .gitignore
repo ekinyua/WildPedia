@@ -11,3 +11,5 @@ postgres_data/
 *.key
 *.crt
 *.json
+frontend/coverage/
+backend/coverage/

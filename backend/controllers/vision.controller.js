@@ -5,10 +5,17 @@ const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 
 const uploadDir = path.join(__dirname, '../uploads');
+console.log('Upload directory path:', uploadDir);
+console.log('Upload directory exists:', fs.existsSync(uploadDir));
 
 // Ensure uploads directory exists
 if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
+    try {
+        fs.mkdirSync(uploadDir, { recursive: true });
+        console.log('Created upload directory');
+    } catch (err) {
+        console.error('Error creating upload directory:', err);
+    }
 }
 
 const visionController = {
@@ -29,6 +36,8 @@ const visionController = {
             // Save the image for future reference
             const fileName = `${uuidv4()}-${req.file.originalname}`;
             const filePath = path.join(uploadDir, fileName);
+
+            console.log('File path:', filePath);
 
             // Only save if not in test mode
             if (process.env.NODE_ENV !== 'test') {

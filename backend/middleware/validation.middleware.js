@@ -95,7 +95,8 @@ const schemas = {
             .required()
             .messages({
                 'string.min': 'Password must be at least 8 characters long',
-                'string.pattern.base': 'Password must contain at least one uppercase letter, one lowercase letter, and one number'
+                'string.pattern.base': 'Password must contain at least one uppercase letter, one lowercase letter, and one number',
+                'string.empty': 'Password is required'
             }),
 
         full_name: Joi.string().max(100),
@@ -111,11 +112,11 @@ const schemas = {
     }),
 
     updateProfile: Joi.object({
-        full_name: Joi.string().max(100),
-        bio: Joi.string(),
-        location: Joi.string().max(100),
-        organization: Joi.string().max(100),
-        expertise_area: Joi.string().max(100)
+        full_name: Joi.string().max(100).allow(''),
+        bio: Joi.string().allow(''),
+        location: Joi.string().max(100).allow(''),
+        organization: Joi.string().max(100).allow(''),
+        expertise_area: Joi.string().max(100).allow('')
     }).min(1),
 
     changePassword: Joi.object({
