@@ -13,7 +13,6 @@ SET idle_in_transaction_session_timeout = 0;
 SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
@@ -26,12 +25,16 @@ SET row_security = off;
 -- Name: biodiversity_db; Type: DATABASE; Schema: -; Owner: postgres
 --
 
-CREATE DATABASE biodiversity_db WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en-US';
+-- CREATE DATABASE biodiversity_db WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en-US';
 
 
-ALTER DATABASE biodiversity_db OWNER TO postgres;
+-- ALTER DATABASE biodiversity_db OWNER TO postgres;
+-- DROP DATABASE IF EXISTS biodiversity_db;
+-- CREATE DATABASE biodiversity_db
 
 \connect biodiversity_db
+SET search_path TO public;
+SELECT pg_catalog.set_config('search_path', 'public', false);
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -96,8 +99,12 @@ CREATE TABLE public.cultural_content (
     CONSTRAINT valid_content CHECK ((length(content) >= 10))
 );
 
+ALTER TABLE cultural_content 
+ADD CONSTRAINT fk_cultural_content_species 
+FOREIGN KEY (species_id) REFERENCES species(composite_key);
 
-ALTER TABLE public.cultural_content OWNER TO postgres;
+
+-- ALTER TABLE public.cultural_content OWNER TO postgres;
 
 --
 -- TOC entry 243 (class 1259 OID 17209)
@@ -119,7 +126,7 @@ CREATE TABLE public.cultural_content_history (
 );
 
 
-ALTER TABLE public.cultural_content_history OWNER TO postgres;
+-- ALTER TABLE public.cultural_content_history OWNER TO postgres;
 
 --
 -- TOC entry 242 (class 1259 OID 17208)
@@ -135,7 +142,7 @@ CREATE SEQUENCE public.cultural_content_history_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.cultural_content_history_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.cultural_content_history_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5142 (class 0 OID 0)
@@ -160,7 +167,7 @@ CREATE SEQUENCE public.cultural_content_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.cultural_content_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.cultural_content_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5143 (class 0 OID 0)
@@ -186,7 +193,7 @@ CREATE TABLE public.cultural_content_votes (
 );
 
 
-ALTER TABLE public.cultural_content_votes OWNER TO postgres;
+-- ALTER TABLE public.cultural_content_votes OWNER TO postgres;
 
 --
 -- TOC entry 246 (class 1259 OID 25311)
@@ -202,7 +209,7 @@ CREATE SEQUENCE public.cultural_content_votes_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.cultural_content_votes_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.cultural_content_votes_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5144 (class 0 OID 0)
@@ -225,7 +232,7 @@ CREATE TABLE public.debug_species_ids (
 );
 
 
-ALTER TABLE public.debug_species_ids OWNER TO postgres;
+-- ALTER TABLE public.debug_species_ids OWNER TO postgres;
 
 --
 -- TOC entry 244 (class 1259 OID 17235)
@@ -241,7 +248,7 @@ CREATE SEQUENCE public.debug_species_ids_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.debug_species_ids_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.debug_species_ids_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5145 (class 0 OID 0)
@@ -266,7 +273,7 @@ CREATE TABLE public.password_reset_tokens (
 );
 
 
-ALTER TABLE public.password_reset_tokens OWNER TO postgres;
+-- ALTER TABLE public.password_reset_tokens OWNER TO postgres;
 
 --
 -- TOC entry 230 (class 1259 OID 16913)
@@ -282,7 +289,7 @@ CREATE SEQUENCE public.password_reset_tokens_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.password_reset_tokens_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.password_reset_tokens_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5146 (class 0 OID 0)
@@ -309,7 +316,7 @@ CREATE TABLE public.search_history (
 );
 
 
-ALTER TABLE public.search_history OWNER TO postgres;
+-- ALTER TABLE public.search_history OWNER TO postgres;
 
 --
 -- TOC entry 250 (class 1259 OID 25375)
@@ -325,7 +332,7 @@ CREATE SEQUENCE public.search_history_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.search_history_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.search_history_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5147 (class 0 OID 0)
@@ -374,7 +381,7 @@ CREATE TABLE public.species (
 );
 
 
-ALTER TABLE public.species OWNER TO postgres;
+-- ALTER TABLE public.species OWNER TO postgres;
 
 --
 -- TOC entry 235 (class 1259 OID 17052)
@@ -394,8 +401,12 @@ CREATE TABLE public.species_facts (
     CONSTRAINT valid_fact CHECK ((length(fact) >= 10))
 );
 
+ALTER TABLE species_facts 
+ADD CONSTRAINT fk_species_facts_species 
+FOREIGN KEY (species_id) REFERENCES species(composite_key);
 
-ALTER TABLE public.species_facts OWNER TO postgres;
+
+-- ALTER TABLE public.species_facts OWNER TO postgres;
 
 --
 -- TOC entry 5148 (class 0 OID 0)
@@ -425,7 +436,7 @@ CREATE TABLE public.species_facts_history (
 );
 
 
-ALTER TABLE public.species_facts_history OWNER TO postgres;
+-- ALTER TABLE public.species_facts_history OWNER TO postgres;
 
 --
 -- TOC entry 5149 (class 0 OID 0)
@@ -450,7 +461,7 @@ CREATE SEQUENCE public.species_facts_history_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.species_facts_history_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.species_facts_history_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5150 (class 0 OID 0)
@@ -475,7 +486,7 @@ CREATE SEQUENCE public.species_facts_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.species_facts_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.species_facts_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5151 (class 0 OID 0)
@@ -500,7 +511,7 @@ CREATE SEQUENCE public.species_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.species_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.species_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5152 (class 0 OID 0)
@@ -526,7 +537,7 @@ CREATE TABLE public.species_views (
 );
 
 
-ALTER TABLE public.species_views OWNER TO postgres;
+-- ALTER TABLE public.species_views OWNER TO postgres;
 
 --
 -- TOC entry 248 (class 1259 OID 25352)
@@ -542,7 +553,7 @@ CREATE SEQUENCE public.species_views_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.species_views_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.species_views_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5153 (class 0 OID 0)
@@ -568,7 +579,7 @@ CREATE TABLE public.taxonomic_keys (
 );
 
 
-ALTER TABLE public.taxonomic_keys OWNER TO postgres;
+-- ALTER TABLE public.taxonomic_keys OWNER TO postgres;
 
 --
 -- TOC entry 223 (class 1259 OID 16774)
@@ -584,7 +595,7 @@ CREATE SEQUENCE public.taxonomic_keys_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.taxonomic_keys_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.taxonomic_keys_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5154 (class 0 OID 0)
@@ -612,7 +623,7 @@ CREATE TABLE public.user_profiles (
 );
 
 
-ALTER TABLE public.user_profiles OWNER TO postgres;
+-- ALTER TABLE public.user_profiles OWNER TO postgres;
 
 --
 -- TOC entry 239 (class 1259 OID 17158)
@@ -630,7 +641,7 @@ CREATE TABLE public.user_stats (
 );
 
 
-ALTER TABLE public.user_stats OWNER TO postgres;
+-- ALTER TABLE public.user_stats OWNER TO postgres;
 
 --
 -- TOC entry 5155 (class 0 OID 0)
@@ -662,7 +673,7 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO postgres;
+-- ALTER TABLE public.users OWNER TO postgres;
 
 --
 -- TOC entry 227 (class 1259 OID 16881)
@@ -678,7 +689,7 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5156 (class 0 OID 0)
@@ -703,7 +714,7 @@ CREATE TABLE public.verification_tokens (
 );
 
 
-ALTER TABLE public.verification_tokens OWNER TO postgres;
+-- ALTER TABLE public.verification_tokens OWNER TO postgres;
 
 --
 -- TOC entry 232 (class 1259 OID 16926)
@@ -719,7 +730,7 @@ CREATE SEQUENCE public.verification_tokens_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.verification_tokens_id_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.verification_tokens_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 5157 (class 0 OID 0)
@@ -1176,7 +1187,7 @@ INSERT INTO public.user_stats VALUES (3, 40, 2, 4, '[]', '2025-03-17 15:07:42.42
 
 INSERT INTO public.users VALUES (5, '{}', 'e.kinyua@alustudent.com', 'GOOGLE_AUTH', 'user', true, true, '2025-03-07 16:54:18.304769', '2025-03-07 16:54:18.216181', '2025-03-07 16:54:18.304769', '114969225431350522416', 'https://lh3.googleusercontent.com/a/ACg8ocIIUWyfjLkfN0ehLaKo8nITJ1mMh-vWxYpwriYNC6hpVrotmGU=s96-c');
 INSERT INTO public.users VALUES (3, 'kenyua', 'kinyua0007@gmail.com', '$2b$10$Yadf/dEUq/zUQWaz2hlWAO0jmm7VAODshjB2HgU3fX3zDyOD/yGKK', 'user', true, false, '2025-03-22 11:01:23.964111', '2025-02-20 13:10:04.564812', '2025-03-22 11:01:23.964111', NULL, 'http://localhost:5000/uploads/profiles/profile-3-1742297314210-882729355.jpeg');
-INSERT INTO public.users VALUES (4, 'postgres', 'vulgencepostgres@gmail.com', '$2b$10$uswf150Ls3vQdKmocsSnZOu/yjs9C3zrccHdu3CLhwNxr677iRxdi', 'admin', true, false, '2025-03-22 13:10:00.677011', '2025-02-21 13:44:59.918091', '2025-03-22 13:10:00.677011', '114625478163443473340', 'http://localhost:5000/uploads/profiles/profile-4-1742385790170-639534764.jpeg');
+INSERT INTO public.users VALUES (4, 'elvis', 'vulgenceelvis@gmail.com', '$2b$10$uswf150Ls3vQdKmocsSnZOu/yjs9C3zrccHdu3CLhwNxr677iRxdi', 'admin', true, false, '2025-03-22 13:10:00.677011', '2025-02-21 13:44:59.918091', '2025-03-22 13:10:00.677011', '114625478163443473340', 'http://localhost:5000/uploads/profiles/profile-4-1742385790170-639534764.jpeg');
 
 
 --

@@ -3,4 +3,8 @@ logs
 neuralninevisionproject-*-*.json
 *.json
 
-uploads
+uploads*
+uploads/profiles
+uploads_old
+uploads/
+uploads/profiles/

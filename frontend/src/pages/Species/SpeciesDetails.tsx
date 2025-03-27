@@ -444,7 +444,7 @@ const SpeciesDetails = () => {
         </div>
 
         <section className="border-t border-gray-400 border-dotted pt-4">
-          <h2 className="text-xl font-bold mb-4">Myths & Legends</h2>
+          <h2 className="text-xl font-bold mb-4">Myths, Legends & Proverbs</h2>
           {(() => {
             const myths = getMyths();
             return myths.length > 0 ? (
@@ -526,7 +526,8 @@ const SpeciesDetails = () => {
             ) : (
               <div className="bg-gray-50 p-4 rounded-md text-center">
                 <p className="text-gray-600 mb-2">
-                  No myths or legends have been added for this species yet.
+                  No myths, legends or proverbs have been added for this species
+                  yet.
                 </p>
                 <button
                   onClick={() => {
@@ -537,7 +538,7 @@ const SpeciesDetails = () => {
                   }}
                   className="text-green-600 hover:text-green-700 flex items-center gap-1 mx-auto cursor-pointer"
                 >
-                  <FaPlus size={14} /> Add a myth or legend
+                  <FaPlus size={14} /> Add a myth, legend or proverb
                 </button>
               </div>
             );
@@ -545,7 +546,7 @@ const SpeciesDetails = () => {
         </section>
 
         <section className="border-t border-gray-400 border-dotted pt-4">
-          <h2 className="text-xl font-bold mb-4">Local Proverbs</h2>
+          <h2 className="text-xl font-bold mb-4">Indigenous Knowledge</h2>
           {(() => {
             const proverbs = getProverbs();
             return proverbs.length > 0 ? (
@@ -627,7 +628,7 @@ const SpeciesDetails = () => {
             ) : (
               <div className="bg-gray-50 p-4 rounded-md text-center">
                 <p className="text-gray-600 mb-2">
-                  No local proverbs have been added for this species yet.
+                  No Indigenous Knowledge has been added for this species yet.
                 </p>
                 <button
                   onClick={() => {
@@ -638,7 +639,7 @@ const SpeciesDetails = () => {
                   }}
                   className="text-green-600 hover:text-green-700 flex items-center gap-1 mx-auto cursor-pointer"
                 >
-                  <FaPlus size={14} /> Add a proverb
+                  <FaPlus size={14} /> Add Indigenous Knowledge
                 </button>
               </div>
             );

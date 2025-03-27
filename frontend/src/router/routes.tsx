@@ -15,6 +15,7 @@ import GoogleCallback from "../pages/Auth/GoogleCallback";
 import Organizations from "../pages/Organizations/Organizations";
 import NotFound from "../pages/NotFound";
 import Leaderboard from "../pages/Leaderbord";
+import MuseumPage from "../pages/Museum/MuseumPage";
 
 // Admin pages
 import AdminLayout from "../pages/Admin/AdminLayout";
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
             <ProfilePage />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "museum",
+        element: <MuseumPage />,
       },
       {
         path: "leaderboard",

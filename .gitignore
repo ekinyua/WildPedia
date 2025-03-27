@@ -13,3 +13,6 @@ postgres_data/
 *.json
 frontend/coverage/
 backend/coverage/
+old__biodiversity_db.sql
+old_biodiversity_db_old.sql
+backend/uploads/

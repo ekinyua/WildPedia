@@ -6,6 +6,7 @@ import { PiBugFill } from "react-icons/pi";
 import { VscSnake } from "react-icons/vsc";
 import { FaFish } from "react-icons/fa";
 import { getLearningCategories } from "../../services/learnService";
+import MuseumLinks from "../Museum/MuseumPage";
 
 interface Category {
   id: string;
@@ -220,6 +221,10 @@ const Learning = () => {
           </button>
         </div>
       )}
+
+      <div className="mt-8">
+        <MuseumLinks />
+      </div>
     </div>
   );
 };
