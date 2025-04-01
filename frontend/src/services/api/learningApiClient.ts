@@ -7,7 +7,7 @@ import axios, {
 } from "axios";
 
 // Learning service base URL (quiz API)
-const LEARNING_API_URL = "http://localhost:3000";
+const LEARNING_API_URL = "http://142.93.169.28:3000";
 
 // Create Axios instance with default config for learning service
 const learningInstance: AxiosInstance = axios.create({

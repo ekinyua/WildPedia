@@ -85,13 +85,12 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
 
 5.  **Access the application:**
 
-    - Frontend: `http://localhost:3000` (or the port specified in your frontend configuration)
-    - Backend: `http://localhost:5000` (or the port specified in your backend configuration)
+    - Frontend: `http://142.93.169.28:3000` (or the port specified in your frontend configuration)
+    - Backend: `http://142.93.169.28:5000` (or the port specified in your backend configuration)
 
 ## Contributing
 
 We welcome contributions to WildPedia! Please see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for guidelines on how to contribute.
-
 
 ## Figma Design
 

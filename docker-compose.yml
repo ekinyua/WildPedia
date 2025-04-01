@@ -76,8 +76,8 @@ services:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - VITE_API_URL=http://localhost:5000
-      - VITE_QUIZ_API_URL=http://localhost:3000
+      - VITE_API_URL=http://142.93.169.28:5000
+      - VITE_QUIZ_API_URL=http://142.93.169.28:3000
     depends_on:
       - auth-backend
       - quiz-service

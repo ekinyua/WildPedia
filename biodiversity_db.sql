@@ -1186,8 +1186,8 @@ INSERT INTO public.user_stats VALUES (3, 40, 2, 4, '[]', '2025-03-17 15:07:42.42
 --
 
 INSERT INTO public.users VALUES (5, '{}', 'e.kinyua@alustudent.com', 'GOOGLE_AUTH', 'user', true, true, '2025-03-07 16:54:18.304769', '2025-03-07 16:54:18.216181', '2025-03-07 16:54:18.304769', '114969225431350522416', 'https://lh3.googleusercontent.com/a/ACg8ocIIUWyfjLkfN0ehLaKo8nITJ1mMh-vWxYpwriYNC6hpVrotmGU=s96-c');
-INSERT INTO public.users VALUES (3, 'kenyua', 'kinyua0007@gmail.com', '$2b$10$Yadf/dEUq/zUQWaz2hlWAO0jmm7VAODshjB2HgU3fX3zDyOD/yGKK', 'user', true, false, '2025-03-22 11:01:23.964111', '2025-02-20 13:10:04.564812', '2025-03-22 11:01:23.964111', NULL, 'http://localhost:5000/uploads/profiles/profile-3-1742297314210-882729355.jpeg');
-INSERT INTO public.users VALUES (4, 'elvis', 'vulgenceelvis@gmail.com', '$2b$10$uswf150Ls3vQdKmocsSnZOu/yjs9C3zrccHdu3CLhwNxr677iRxdi', 'admin', true, false, '2025-03-22 13:10:00.677011', '2025-02-21 13:44:59.918091', '2025-03-22 13:10:00.677011', '114625478163443473340', 'http://localhost:5000/uploads/profiles/profile-4-1742385790170-639534764.jpeg');
+INSERT INTO public.users VALUES (3, 'kenyua', 'kinyua0007@gmail.com', '$2b$10$Yadf/dEUq/zUQWaz2hlWAO0jmm7VAODshjB2HgU3fX3zDyOD/yGKK', 'user', true, false, '2025-03-22 11:01:23.964111', '2025-02-20 13:10:04.564812', '2025-03-22 11:01:23.964111', NULL, 'http://142.93.169.28:5000/uploads/profiles/profile-3-1742297314210-882729355.jpeg');
+INSERT INTO public.users VALUES (4, 'elvis', 'vulgenceelvis@gmail.com', '$2b$10$uswf150Ls3vQdKmocsSnZOu/yjs9C3zrccHdu3CLhwNxr677iRxdi', 'admin', true, false, '2025-03-22 13:10:00.677011', '2025-02-21 13:44:59.918091', '2025-03-22 13:10:00.677011', '114625478163443473340', 'http://142.93.169.28:5000/uploads/profiles/profile-4-1742385790170-639534764.jpeg');
 
 
 --

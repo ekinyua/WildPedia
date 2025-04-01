@@ -1,7 +1,7 @@
 // src/services/api/apiClient.ts
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
-const API_BASE_URL = "http://localhost:5000/";
+const API_BASE_URL = "http://142.93.169.28:5000/";
 
 // Create Axios instance with default config
 const axiosInstance: AxiosInstance = axios.create({

@@ -2,7 +2,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 // Auth service base URL
-const AUTH_API_URL = "http://localhost:5000/api";
+const AUTH_API_URL = "http://142.93.169.28:5000/api";
 
 // Create Axios instance with default config for auth service
 const authInstance: AxiosInstance = axios.create({

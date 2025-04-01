@@ -73,7 +73,7 @@ const swaggerDocument = {
   },
   servers: [
     {
-      url: "http://localhost:3000",
+      url: "http://142.93.169.28:3000",
       description: "Development server",
     },
   ],
@@ -552,6 +552,6 @@ app.post("/quiz/fromText", function (req: Request, res: Response) {
 // Start server
 app.listen(PORT, () => {
   console.log(`Quiz API server running on port ${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/health`);
-  console.log(`API Documentation: http://localhost:${PORT}/api-docs`);
+  console.log(`Health check: http://142.93.169.28:${PORT}/health`);
+  console.log(`API Documentation: http://142.93.169.28:${PORT}/api-docs`);
 });

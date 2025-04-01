@@ -135,7 +135,7 @@ export async function getCurrentUser(): Promise<User> {
 // Start Google authentication flow
 export function initiateGoogleLogin(): void {
   const googleAuthUrl = `${
-    import.meta.env.VITE_API_URL || "http://localhost:5000"
+    import.meta.env.VITE_API_URL || "http://142.93.169.28:5000"
   }/api/auth/google`;
   window.location.href = googleAuthUrl;
 }
@@ -280,7 +280,7 @@ export async function uploadProfileImage(file: File): Promise<User> {
     // Make request
     const response = await fetch(
       `${
-        import.meta.env.VITE_API_URL || "http://localhost:5000"
+        import.meta.env.VITE_API_URL || "http://142.93.169.28:5000"
       }/api/users/profile-image`,
       {
         method: "POST",

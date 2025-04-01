@@ -159,7 +159,7 @@ const authController = {
             }
 
             // For browser flow, redirect to frontend with token
-            const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/auth/google-callback?token=${token}`;
+            const redirectUrl = `${process.env.FRONTEND_URL || 'http://142.93.169.28:5173'}/auth/google-callback?token=${token}`;
             res.redirect(redirectUrl);
         } catch (error) {
             console.error('Error in googleCallback:', error);
