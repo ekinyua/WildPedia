@@ -129,7 +129,7 @@ const Organizations = () => {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredOrganizations
-                .slice(0, visibleCount)
+                // .slice(0, visibleCount)
                 .map((organization) => (
                   <OrganizationCard
                     key={organization.id}
@@ -138,7 +138,7 @@ const Organizations = () => {
                 ))}
             </div>
 
-            {visibleCount < filteredOrganizations.length && (
+            {/* {visibleCount < filteredOrganizations.length && (
               <div className="flex justify-center mt-8">
                 <button
                   onClick={loadMore}
@@ -148,7 +148,7 @@ const Organizations = () => {
                   <IoChevronDownSharp />
                 </button>
               </div>
-            )}
+            )} */}
           </>
         ) : (
           <div className="text-center py-12 bg-gray-50 rounded-lg">

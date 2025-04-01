@@ -187,6 +187,13 @@ const userModel = {
     // Find or create Google user
     async findOrCreateGoogleUser({ googleId, email, displayName, picture }) {
         try {
+            console.log('Google auth data:', {
+                googleId,
+                email,
+                displayName: displayName,
+                displayNameType: typeof displayName,
+                picture
+            });
             // First, check if the user exists with this Google ID
             const googleUserResult = await pool.query(
                 'SELECT * FROM users WHERE google_id = $1',
@@ -219,7 +226,24 @@ const userModel = {
             }
 
             // Create a new user
-            const username = this.generateUniqueUsername(displayName);
+            let username = displayName ? displayName.split(' ')[0].toLowerCase() : '';
+
+            // If username is empty or invalid, use part of email instead
+            if (!username || username.length < 3) {
+                username = email.split('@')[0];
+            }
+
+            // Check if username already exists, if so append a number
+            const usernameExists = await pool.query(
+                'SELECT id FROM users WHERE username = $1',
+                [username]
+            );
+
+            if (usernameExists.rows.length > 0) {
+                username = `${username}${Math.floor(Math.random() * 1000)}`;
+            }
+
+            console.log('Generated username for Google auth:', username);
 
             const newUserResult = await pool.query(
                 `INSERT INTO users 
@@ -250,9 +274,9 @@ const userModel = {
         baseUsername = baseUsername.replace(/[^a-z0-9_]/g, '');
 
         // Limit length
-        if (baseUsername.length > 40) {
-            baseUsername = baseUsername.substring(0, 40);
-        }
+        // if (baseUsername.length > 40) {
+        //     baseUsername = baseUsername.substring(0, 40);
+        // }
 
         let username = baseUsername;
         let counter = 1;

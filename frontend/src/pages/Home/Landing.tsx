@@ -46,12 +46,12 @@ const Landing = () => {
         }
 
         // Scroll to the top of the species section after data loads
-        // if (speciesSectionRef.current) {
-        //   speciesSectionRef.current.scrollIntoView({
-        //     behavior: "smooth",
-        //     block: "start",
-        //   });
-        // }
+        if (speciesSectionRef.current && searchQuery) {
+          speciesSectionRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
       } catch (error) {
         console.error("Error fetching species:", error);
       } finally {

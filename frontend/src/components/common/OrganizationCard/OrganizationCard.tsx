@@ -15,7 +15,7 @@ const OrganizationCard = ({
       className={`shadow-sm hover:shadow-md transition-shadow duration-200 p-6 space-y-6 rounded-xl bg-white max-w-md ${className}`}
     >
       <div className="flex items-start gap-4">
-        <span className="inline-block bg-gray-50 p-3 rounded-md border border-gray-100">
+        <span className="inline-block p-1 rounded-md border border-gray-100">
           <img
             src={organization.logoUrl || "/placeholder.jpg"}
             alt={organization.name}

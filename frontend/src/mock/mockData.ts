@@ -131,22 +131,22 @@ export const mockSpeciesFacts: SpeciesFact[] = [
 export const mockOrganizations: Organization[] = [
   {
     id: 1,
-    name: "Forest Protection Alliance",
-    location: "Kigali",
+    name: "Dian Fossey Gorilla Fund",
+    location: "Musanze",
     description:
-      "Focusing on forest conservation, reforestation efforts, and sustainable resource management in Rwanda's national parks.",
-    websiteUrl: "https://forestprotectionalliance.org",
-    logoUrl: "https://placehold.co/200x200/E9F7EF/16a34a?text=FPA",
+      "Dedicated to the conservation and protection of gorillas and their habitats in Rwanda and the Democratic Republic of Congo.",
+    websiteUrl: "https://gorillafund.org",
+    logoUrl: "/dian-fossey-gf.jpg",
     country: "Rwanda",
   },
   {
     id: 2,
-    name: "Wildlife Conservation Kenya",
-    location: "Nairobi",
+    name: "Tsavo Trust",
+    location: "Tsavo National Park",
     description:
-      "Working to protect endangered species and their habitats across Kenya through research, education, and community engagement.",
+      "Dedicated to safeguarding biodiversity and empowering communities in the greater Tsavo Ecosystem.",
     websiteUrl: "https://wildlifeconservationkenya.org",
-    logoUrl: "https://placehold.co/200x200/E9F7EF/16a34a?text=WCK",
+    logoUrl: "/tsavo-trust-1.png",
     country: "Kenya",
   },
   {
@@ -156,7 +156,7 @@ export const mockOrganizations: Organization[] = [
     description:
       "Africa's oldest and largest conservation organization, focusing on species protection, land conservation, and community empowerment.",
     websiteUrl: "https://www.awf.org",
-    logoUrl: "https://placehold.co/200x200/E9F7EF/16a34a?text=AWF",
+    logoUrl: "/awf.jpg",
     country: "Kenya",
   },
   {
@@ -166,48 +166,29 @@ export const mockOrganizations: Organization[] = [
     description:
       "Dedicated to protecting Rwanda's rich natural heritage by focusing on Grey Crowned Cranes and their wetland habitats.",
     websiteUrl: "https://rwandawildlife.org",
-    logoUrl: "https://placehold.co/200x200/E9F7EF/16a34a?text=RWCA",
+    logoUrl: "/rwanda-wildlife.png",
     country: "Rwanda",
   },
+
   {
     id: 5,
-    name: "Tanzania Conservation Foundation",
-    location: "Dar es Salaam",
-    description:
-      "Pioneering community-led conservation approaches to protect Tanzania's unique wildlife and natural resources.",
-    websiteUrl: "https://tanzaniaconservation.org",
-    logoUrl: "https://placehold.co/200x200/E9F7EF/16a34a?text=TCF",
-    country: "Tanzania",
-  },
-  {
-    id: 6,
     name: "Serengeti Watch",
     location: "Arusha",
     description:
       "Monitoring and advocating for the protection of the Serengeti ecosystem, one of Africa's most important wildlife areas.",
     websiteUrl: "https://serengetiwatch.org",
-    logoUrl: "https://placehold.co/200x200/E9F7EF/16a34a?text=SW",
+    logoUrl: "/serengeti-watch.png",
     country: "Tanzania",
   },
   {
-    id: 7,
+    id: 6,
     name: "Uganda Conservation Foundation",
     location: "Kampala",
     description:
       "Focused on rebuilding Uganda's wildlife populations through anti-poaching efforts, habitat restoration, and community engagement.",
     websiteUrl: "https://ugandacf.org",
-    logoUrl: "https://placehold.co/200x200/E9F7EF/16a34a?text=UCF",
+    logoUrl: "uganda-cf.webp",
     country: "Uganda",
-  },
-  {
-    id: 8,
-    name: "Dian Fossey Gorilla Fund",
-    location: "Musanze",
-    description:
-      "Dedicated to the conservation and protection of gorillas and their habitats in Rwanda and the Democratic Republic of Congo.",
-    websiteUrl: "https://gorillafund.org",
-    logoUrl: "https://placehold.co/200x200/E9F7EF/16a34a?text=DFGF",
-    country: "Rwanda",
   },
 ];
 
