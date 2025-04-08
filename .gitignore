@@ -1,6 +1,6 @@
 .aider*
 .env
-*.env
+*.env*
 node_modules/
 logs/
 *.log

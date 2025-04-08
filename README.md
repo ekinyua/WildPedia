@@ -20,8 +20,8 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
 
 ## Project Structure
 
-- **Frontend:** React application built with Tailwind CSS (see [`frontend/README.md`](./frontend/README.md)).
-- **Backend:** Node.js API built with Express, MySQL, and Redis (see [`backend/README.md`](./backend/README.md)).
+- **Frontend:** React application built with Tailwind CSS
+- **Backend:** Node.js API built with Express, PostgreSQL
 
 ## Tech Stack
 
@@ -32,7 +32,6 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
   - Node.js
   - Express
   - Postgresql
-  - Redis
 - **Storage:** AWS S3 (for sound storage)
 - **APIs:**
   - GBIF API
@@ -50,38 +49,21 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
 2.  **Install dependencies:**
 
     ```bash
-    npm install  # Or yarn install
+    npm install
     ```
 
 3.  **Configure environment variables:**
 
     - Create a `.env` file in both the `frontend` and `backend` directories.
-    - Refer to `.env.example` files (if present) for the required variables (API keys, database credentials, etc.).
+    - Refer to `.env.example` files for the required variables (API keys, database credentials, etc.).
 
 4.  **Start the development servers:**
 
     ```bash
     # In separate terminal windows:
-    npm run dev # For the frontend (from the frontend directory)
-    npm run dev # For the backend (from the backend directory)
+    npm run dev
+    npm run dev
     ```
-
-    Or, if you have a tool like `concurrently`:
-
-    ```json
-    //In the root directory
-    npm install concurrently
-    ```
-
-    Add this to your `package.json`
-
-    ```json
-    "scripts": {
-        "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run start\""
-    }
-    ```
-
-    Then run `npm run dev` from the root directory.
 
 5.  **Access the application:**
 
@@ -90,8 +72,7 @@ WildPedia is a web-based platform designed to make learning about biodiversity e
 
 ## Contributing
 
-We welcome contributions to WildPedia! Please see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for guidelines on how to contribute.
-
+We welcome contributions to WildPedia!
 
 ## Figma Design
 
@@ -104,5 +85,3 @@ We welcome contributions to WildPedia! Please see [`CONTRIBUTING.md`](./CONTRIBU
 ## Database Schema
 
 [Link to database schema: https://drive.google.com/file/d/1FSooS9udCPcSsObXODU5JpMr5S7AnoC_/view?usp=sharing]
-
-![Species Details Card](species_details_card.png)
